@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METAN.LV - Instagram | Biometāna ražošana Latvijā</title>
+    <meta name="description" content="METAN.LV Instagram lapa tiek izveidota. Vizuāls saturs par biometāna ražošanu, stacijas ikdienu un zaļās enerģijas attīstību Latvijā.">
+    <meta name="keywords" content="METAN.LV, Instagram, biometāns, vizuāls saturs, zaļā enerģija, Latvija, foto, video">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://metan.lv/social/instagram.html">
+    <meta property="og:title" content="METAN.LV - Instagram lapas izveide">
+    <meta property="og:description" content="Vizuāls saturs par biometāna ražošanu, stacijas ikdienu un zaļās enerģijas attīstību Latvijā.">
+    <meta property="og:image" content="https://metan.lv/images/og-instagram.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://metan.lv/social/instagram.html">
+    <meta property="twitter:title" content="METAN.LV - Instagram lapas izveide">
+    <meta property="twitter:description" content="Vizuāls saturs par biometāna ražošanu, stacijas ikdienu un zaļās enerģijas attīstību Latvijā.">
+    <meta property="twitter:image" content="https://metan.lv/images/og-instagram.jpg">
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://metan.lv/social/instagram.html">
+    
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="lv" href="https://metan.lv/social/instagram.html?lang=lv">
+    <link rel="alternate" hreflang="ru" href="https://metan.lv/social/instagram.html?lang=ru">
+    <link rel="alternate" hreflang="en" href="https://metan.lv/social/instagram.html?lang=en">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-METAN-LV');
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            max-width: 600px;
+            padding: 2rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #f8f9fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .instagram-icon {
+            width: 80px;
+            height: 80px;
+            margin: 2rem auto;
+            background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .instagram-icon::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            background: white;
+            border-radius: 12px;
+        }
+        
+        .instagram-icon::after {
+            content: '📷';
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+        
+        .content-preview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .content-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .content-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #ffeb3b;
+        }
+        
+        .content-item p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #833ab4;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: #833ab4;
+        }
+        
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 0.5rem;
+        }
+        
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .language-selector select option {
+            background: #833ab4;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .content-preview {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-METAN-LV"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    
+    <div class="language-selector">
+        <select id="languageSelect" onchange="changeLanguage()">
+            <option value="lv">🇱🇻 LV</option>
+            <option value="ru">🇷🇺 RU</option>
+            <option value="en">🇬🇧 EN</option>
+        </select>
+    </div>
+    
+    <div class="container">
+        <div class="logo">METAN.LV</div>
+        
+        <div class="instagram-icon"></div>
+        
+        <h1 id="title">Instagram lapa tiek izveidota</h1>
+        
+        <div class="subtitle" id="subtitle">
+            Mēs gatavojam vizuālu saturu par biometāna ražošanu, stacijas ikdienu un zaļās enerģijas attīstību Latvijā. Sagaidiet fotogrāfijas, video un aizkulišu materiālus!
+        </div>
+        
+        <div class="content-preview">
+            <div class="content-item">
+                <h3 id="content1Title">📸 Stacijas ikdiena</h3>
+                <p id="content1Text">Procesa fotogrāfijas un video no biometāna ražošanas</p>
+            </div>
+            <div class="content-item">
+                <h3 id="content2Title">🌱 Zaļās enerģijas stāsti</h3>
+                <p id="content2Text">Izglītojošs saturs par aprites ekonomiku un ilgtspēju</p>
+            </div>
+            <div class="content-item">
+                <h3 id="content3Title">👥 Komandas stāsti</h3>
+                <p id="content3Text">Mūsu speciālistu portenti un ekspertu viedokļi</p>
+            </div>
+            <div class="content-item">
+                <h3 id="content4Title">🏗️ Projekta attīstība</h3>
+                <p id="content4Text">CH₄ Future projekta būvniecības progress</p>
+            </div>
+        </div>
+        
+        <div class="status">
+            <strong id="statusTitle">📅 Paredzamais palaišanas laiks:</strong>
+            <div id="statusText">2025. gada janvāris</div>
+        </div>
+        
+        <div class="buttons">
+            <a href="https://metan.lv" class="btn btn-primary" onclick="trackClick('main_website')">
+                <span id="btnMain">Apmeklēt mūsu vietni</span>
+            </a>
+            <a href="https://metan.lv/investoriem" class="btn btn-secondary" onclick="trackClick('investor_page')">
+                <span id="btnInvestor">Investoriem</span>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <div id="footerText">
+                SIA "Ainavas Nams" | Vizuālā biometāna ražošana Latvijā<br>
+                📧 tsv@metan.lv | 📞 +371 27727724
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Translations
+        const translations = {
+            lv: {
+                title: 'Instagram lapa tiek izveidota',
+                subtitle: 'Mēs gatavojam vizuālu saturu par biometāna ražošanu, stacijas ikdienu un zaļās enerģijas attīstību Latvijā. Sagaidiet fotogrāfijas, video un aizkulišu materiālus!',
+                content1Title: '📸 Stacijas ikdiena',
+                content1Text: 'Procesa fotogrāfijas un video no biometāna ražošanas',
+                content2Title: '🌱 Zaļās enerģijas stāsti',
+                content2Text: 'Izglītojošs saturs par aprites ekonomiku un ilgtspēju',
+                content3Title: '👥 Komandas stāsti',
+                content3Text: 'Mūsu speciālistu portenti un ekspertu viedokļi',
+                content4Title: '🏗️ Projekta attīstība',
+                content4Text: 'CH₄ Future projekta būvniecības progress',
+                statusTitle: '📅 Paredzamais palaišanas laiks:',
+                statusText: '2025. gada janvāris',
+                btnMain: 'Apmeklēt mūsu vietni',
+                btnInvestor: 'Investoriem',
+                footerText: 'SIA "Ainavas Nams" | Vizuālā biometāna ražošana Latvijā<br>📧 ainavasnams@gmail.com | 📞 +371 27727752'
+            },
+            ru: {
+                title: 'Instagram страница создается',
+                subtitle: 'Мы готовим визуальный контент о производстве биометана, повседневной жизни станции и развитии зеленой энергии в Латвии. Ожидайте фотографии, видео и закулисные материалы!',
+                content1Title: '📸 Будни станции',
+                content1Text: 'Фотографии и видео процесса производства биометана',
+                content2Title: '🌱 Истории зеленой энергии',
+                content2Text: 'Образовательный контент о циркулярной экономике и устойчивости',
+                content3Title: '👥 Истории команды',
+                content3Text: 'Портреты наших специалистов и мнения экспертов',
+                content4Title: '🏗️ Развитие проекта',
+                content4Text: 'Прогресс строительства проекта CH₄ Future',
+                statusTitle: '📅 Ожидаемое время запуска:',
+                statusText: 'Январь 2025 года',
+                btnMain: 'Посетить наш сайт',
+                btnInvestor: 'Инвесторам',
+                footerText: 'SIA "Ainavas Nams" | Визуальное производство биометана в Латвии<br>📧 ainavasnams@gmail.com | 📞 +371 27727752'
+            },
+            en: {
+                title: 'Instagram page under construction',
+                subtitle: 'We are preparing visual content about biomethane production, daily life of the station and green energy development in Latvia. Expect photos, videos and behind-the-scenes materials!',
+                content1Title: '📸 Station daily life',
+                content1Text: 'Process photos and videos from biomethane production',
+                content2Title: '🌱 Green energy stories',
+                content2Text: 'Educational content about circular economy and sustainability',
+                content3Title: '👥 Team stories',
+                content3Text: 'Portraits of our specialists and expert opinions',
+                content4Title: '🏗️ Project development',
+                content4Text: 'CH₄ Future project construction progress',
+                statusTitle: '📅 Expected launch time:',
+                statusText: 'January 2025',
+                btnMain: 'Visit our website',
+                btnInvestor: 'For Investors',
+                footerText: 'SIA "Ainavas Nams" | Visual biomethane production in Latvia<br>📧 ainavasnams@gmail.com | 📞 +371 27727752'
+            }
+        };
+        
+        // Get current language from URL or default to LV
+        function getCurrentLanguage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('lang') || 'lv';
+        }
+        
+        // Change language
+        function changeLanguage() {
+            const select = document.getElementById('languageSelect');
+            const lang = select.value;
+            
+            // Update URL
+            const url = new URL(window.location);
+            url.searchParams.set('lang', lang);
+            window.history.pushState({}, '', url);
+            
+            // Update content
+            updateContent(lang);
+            
+            // Track language change
+            trackLanguageChange(lang);
+        }
+        
+        // Update content based on language
+        function updateContent(lang) {
+            const t = translations[lang];
+            if (!t) return;
+            
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('subtitle').textContent = t.subtitle;
+            document.getElementById('content1Title').textContent = t.content1Title;
+            document.getElementById('content1Text').textContent = t.content1Text;
+            document.getElementById('content2Title').textContent = t.content2Title;
+            document.getElementById('content2Text').textContent = t.content2Text;
+            document.getElementById('content3Title').textContent = t.content3Title;
+            document.getElementById('content3Text').textContent = t.content3Text;
+            document.getElementById('content4Title').textContent = t.content4Title;
+            document.getElementById('content4Text').textContent = t.content4Text;
+            document.getElementById('statusTitle').textContent = t.statusTitle;
+            document.getElementById('statusText').textContent = t.statusText;
+            document.getElementById('btnMain').textContent = t.btnMain;
+            document.getElementById('btnInvestor').textContent = t.btnInvestor;
+            document.getElementById('footerText').innerHTML = t.footerText;
+            
+            // Update meta tags
+            document.title = `METAN.LV - Instagram | ${t.title}`;
+            document.querySelector('meta[name="description"]').content = t.subtitle;
+        }
+        
+        // Track clicks
+        function trackClick(buttonType) {
+            if (typeof window.dataLayer !== 'undefined') {
+                window.dataLayer.push({
+                    event: 'social_placeholder_click',
+                    social_platform: 'instagram',
+                    button_type: buttonType,
+                    timestamp: new Date().toISOString()
+                });
+            }
+            console.log('Instagram placeholder click tracked:', buttonType);
+        }
+        
+        // Track language change
+        function trackLanguageChange(lang) {
+            if (typeof window.dataLayer !== 'undefined') {
+                window.dataLayer.push({
+                    event: 'language_change',
+                    social_platform: 'instagram',
+                    new_language: lang,
+                    timestamp: new Date().toISOString()
+                });
+            }
+            console.log('Instagram placeholder language change tracked:', lang);
+        }
+        
+        // Track page view
+        function trackPageView() {
+            if (typeof window.dataLayer !== 'undefined') {
+                window.dataLayer.push({
+                    event: 'page_view',
+                    page_type: 'social_placeholder',
+                    social_platform: 'instagram',
+                    timestamp: new Date().toISOString()
+                });
+            }
+            console.log('Instagram placeholder page view tracked');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLang = getCurrentLanguage();
+            document.getElementById('languageSelect').value = currentLang;
+            updateContent(currentLang);
+            trackPageView();
+        });
+    </script>
+</body>
+</html>

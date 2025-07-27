@@ -1,0 +1,47 @@
+{
+  "rewrites": [
+    {
+      "source": "/g/collect",
+      "destination": "https://www.google-analytics.com/g/collect"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path((?!www\\.).*)",
+      "destination": "https://www.metan.lv/:path*",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "origin-when-cross-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://www.google.com https://maps.googleapis.com https://static.cloudflareinsights.com https://eu-assets.i.posthog.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.google.com https://analytics.google.com https://www.googletagmanager.com https://maps.googleapis.com https://static.cloudflareinsights.com https://eu-assets.i.posthog.com https://metan.lv https://www.metan.lv; frame-src 'self' https://www.googletagmanager.com https://www.google.com https://analytics.google.com; object-src 'none'; base-uri 'self'; form-action 'self'"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "app/api/*/route.ts": {
+      "maxDuration": 10
+    }
+  }
+}

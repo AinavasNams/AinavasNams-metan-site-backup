@@ -1,0 +1,67 @@
+User-agent: *
+Allow: /
+
+# Основные страницы
+Allow: /
+Allow: /par-mums
+Allow: /pakalpojumi
+Allow: /pakalpojumi/apstrade
+Allow: /pakalpojumi/kalkulators
+Allow: /pakalpojumi/savaksana
+Allow: /projekti
+Allow: /projekti/biometans
+Allow: /projekti/biopolimeri
+Allow: /projekti/co2
+Allow: /investoriem
+Allow: /dokumenti
+Allow: /kontakti
+Allow: /roi_kalkulators
+
+# Блокируем системные файлы
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /.well-known/
+Disallow: /public/
+Disallow: /static/
+
+# Разрешаем важные файлы
+Allow: /sitemap.xml
+Allow: /favicon.ico
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+
+# Карта сайта
+Sitemap: https://metan.lv/sitemap.xml
+
+# Время задержки для ботов
+Crawl-delay: 1
+
+# Специальные правила для поисковых систем
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1
+
+# Заблокировать плохих ботов
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
