@@ -65,7 +65,7 @@ function GoogleMapsTest() {
 
         // Обработка ошибок
         script.onerror = (event) => {
-          const errorMsg = `Script load error: ${JSON.stringify(event)}`;
+          const errorMsg = `Script load error: ${JSON.stringify({ type: (event as any)?.type, target: (event as any)?.target?.tagName })}`;
           addLog(`❌ ${errorMsg}`);
           setStatus(`❌ Script load failed`);
           delete (window as any)[callbackName];

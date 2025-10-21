@@ -66,6 +66,11 @@ const frequencies = [
 ];
 
 export default function SimpleServiceCalculator() {
+  const handleAddressSelect = (val: string) => {
+    setCustomerAddress(val);
+    setIsCalculatingDistance(true);
+    setTimeout(() => { setIsCalculatingDistance(false); }, 300);
+  };
   const router = useRouter();
   const [selectedService, setSelectedService] = useState('');
   const [selectedFrequency, setSelectedFrequency] = useState('');
@@ -429,7 +434,7 @@ export default function SimpleServiceCalculator() {
                     <AddressAutocomplete
                       label="Pilsēta vai objekta atrašanās vieta"
                       placeholder="Ievadiet pilsētu (piemēram: Rīga, Roja, Vilnius, Kauņa)..."
-                      value={customerAddress}
+                      value={customerAddress} onSelect={handleAddressSelect}
                       onChange={handleAddressChange}
                       className="w-full"
                     />

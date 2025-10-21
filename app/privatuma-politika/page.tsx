@@ -52,7 +52,7 @@ export default function PrivacyPolicyPage() {
                 <CardContent className="space-y-4">
                   <div className="bg-metan-light/30 p-4 rounded-lg">
                     <p className="font-semibold text-metan-gray">SIA "Ainavas Nams"</p>
-                    <p className="text-gray-600">Reģ. Nr.: 40203507131</p>
+                    <p className="text-gray-600">Reģ. Nr.: 40203328328</p>
                     <p className="text-gray-600">Adrese: Rūpniecības iela 2D, Bēne, Zemgales novads, LV-3017</p>
                     <p className="text-gray-600">E-pasts: tsv@metan.lv</p>
                     <p className="text-gray-600">Tālrunis: +371 27727724</p>

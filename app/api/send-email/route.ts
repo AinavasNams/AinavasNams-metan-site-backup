@@ -368,9 +368,9 @@ const EMAIL_TEMPLATES = {
         <div class="content">
           <div class="from-info">
             <h2 style="margin: 0 0 10px 0; color: #1976d2;">👤 Инвестор: ${name}</h2>
-            <p style="margin: 5px 0;"><strong>📧 Email:</strong> <a href="mailto:${data.email}" style="color: #1976d2; font-weight: bold;">${data.email}</a> <span class="verified-badge">VERIFIED</span></p>
-            <p style="margin: 5px 0;"><strong>📞 Телефон:</strong> ${data.phone || 'Не указан'}</p>
-            ${data.company ? `<p style="margin: 5px 0;"><strong>🏢 Компания:</strong> ${data.company}</p>` : ''}
+            <p style="margin: 5px 0;"><strong>📧 Email:</strong> <a href="mailto:${(data||{}).email}" style="color: #1976d2; font-weight: bold;">${(data||{}).email}</a> <span class="verified-badge">VERIFIED</span></p>
+            <p style="margin: 5px 0;"><strong>📞 Телефон:</strong> ${(data||{}).phone || 'Не указан'}</p>
+            ${(data||{}).company ? `<p style="margin: 5px 0;"><strong>🏢 Компания:</strong> ${(data||{}).company}</p>` : ''}
           </div>
 
           <div class="highlight">
@@ -385,26 +385,26 @@ const EMAIL_TEMPLATES = {
           <table class="data-table">
             <tr>
               <td class="label">Запрошенный документ:</td>
-              <td><strong>${data.documentRequested || 'Не указан'}</strong></td>
+              <td><strong>${(data||{}).documentRequested || 'Не указан'}</strong></td>
             </tr>
             <tr>
               <td class="label">Цель запроса:</td>
-              <td>${data.purpose || 'Не указана'}</td>
+              <td>${(data||{}).purpose || 'Не указана'}</td>
             </tr>
             <tr>
               <td class="label">Время верификации:</td>
-              <td>${data.verified_at ? new Date(data.verified_at).toLocaleString('lv-LV') : 'Не указано'}</td>
+              <td>${(data||{}).verified_at ? new Date(data.verified_at).toLocaleString('lv-LV') : 'Не указано'}</td>
             </tr>
             <tr>
               <td class="label">Метод верификации:</td>
-              <td>${data.verification_method === 'email_code' ? '📧 Email код' : data.verification_method || 'Не указан'}</td>
+              <td>${(data||{}).verification_method === 'email_code' ? '📧 Email код' : data.verification_method || 'Не указан'}</td>
             </tr>
           </table>
 
-          ${data.message ? `
+          ${(data||{}).message ? `
           <h3>💬 Комментарий инвестора:</h3>
           <div class="highlight">
-            <p style="margin: 0;">${data.message}</p>
+            <p style="margin: 0;">${(data||{}).message}</p>
           </div>
           ` : ''}
 
@@ -418,8 +418,8 @@ const EMAIL_TEMPLATES = {
 
           <div class="highlight">
             <p style="margin: 0;"><strong>📞 КОНТАКТЫ ДЛЯ СВЯЗИ:</strong><br>
-            Email: <a href="mailto:${data.email}">${data.email}</a><br>
-            ${data.phone ? `Телефон: <a href="tel:${data.phone}">${data.phone}</a><br>` : ''}
+            Email: <a href="mailto:${(data||{}).email}">${(data||{}).email}</a><br>
+            ${(data||{}).phone ? `Телефон: <a href="tel:${(data||{}).phone}">${(data||{}).phone}</a><br>` : ''}
             Лучшее время для связи: Рабочие дни 9:00-18:00</p>
           </div>
 
@@ -454,6 +454,34 @@ async function getPDFDocument(documentName: string): Promise<{ buffer: Buffer; f
   }
   
   try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
     const fs = require('fs');
     const path = require('path');
     
@@ -497,6 +525,34 @@ async function downloadFromGoogleDocs(documentName: string): Promise<{ buffer: B
   console.log('🔧 Creating test PDF document...');
   
   try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
     // Создаем простой PDF буфер (базовая структура PDF)
     const pdfContent = `%PDF-1.4
 1 0 obj
@@ -605,6 +661,34 @@ function getDownloadLink(documentName?: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
     // Rate limiting
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     const rateCheck = checkRateLimit(ip);
@@ -700,7 +784,7 @@ export async function POST(request: NextRequest) {
       }
       
       // For investor verified emails, always send to company email
-      const actualEmailTo = (type === 'contact_submission' || type === 'investor_verified') ? 'tsv@metan.lv' : (to || 'tsv@metan.lv');
+      const actualEmailTo = (type === 'investor_verified') ? 'tsv@metan.lv' : (to || (data && data.email) || 'tsv@metan.lv');
       
       // Validate email only if it's provided
       if (actualEmailTo !== 'tsv@metan.lv' && !validateEmail(actualEmailTo)) {
@@ -747,14 +831,14 @@ export async function POST(request: NextRequest) {
         { 
           documentName: documentName,
           documentRequested: documentName,
-          senderEmail: to,
+          senderEmail: (data && data.email) || to,
           ...data
         }
       );
 
       // Send company notifications for specific types
       if (type === 'contact_submission') {
-        const companySubject = `[JAUNS KONTAKTS] ${sanitizedName} - ${data.service || 'Vispārīgs jautājums'}`;
+        const companySubject = `[JAUNS KONTAKTS] ${sanitizedName} - ${(data||{}).service || 'Vispārīgs jautājums'}`;
         const companyHtml = `
           <!DOCTYPE html>
           <html>
@@ -780,19 +864,19 @@ export async function POST(request: NextRequest) {
             <div class="content">
               <div class="from-info">
                 <h3 style="margin: 0 0 10px 0; color: #1976d2;">✉️ No: ${sanitizedName}</h3>
-                <p style="margin: 0;"><strong>E-pasts:</strong> ${data.email || 'Nav norādīts'}</p>
-                <p style="margin: 0;"><strong>Telefons:</strong> ${data.phone || 'Nav norādīts'}</p>
+                <p style="margin: 0;"><strong>E-pasts:</strong> ${(data||{}).email || 'Nav norādīts'}</p>
+                <p style="margin: 0;"><strong>Telefons:</strong> ${(data||{}).phone || 'Nav norādīts'}</p>
               </div>
               
               <h2>Kontakta informācija:</h2>
               <table class="data-table">
                 <tr>
                   <td class="label">Pakalpojums:</td>
-                  <td><strong>${data.service || 'Nav norādīts'}</strong></td>
+                  <td><strong>${(data||{}).service || 'Nav norādīts'}</strong></td>
                 </tr>
                 <tr>
                   <td class="label">Ziņojums:</td>
-                  <td>${data.message || 'Nav norādīts'}</td>
+                  <td>${(data||{}).message || 'Nav norādīts'}</td>
                 </tr>
                 <tr>
                   <td class="label">Kontakta laiks:</td>
@@ -802,7 +886,7 @@ export async function POST(request: NextRequest) {
 
               <div class="highlight">
                 <p style="margin: 0;"><strong>📞 DARBĪBA:</strong><br>
-                Atbilde uz <a href="mailto:${data.email}">${data.email}</a> vai zvaniet uz ${data.phone || 'norādīto tālruņa numuru'}</p>
+                Atbilde uz <a href="mailto:${(data||{}).email}">${(data||{}).email}</a> vai zvaniet uz ${(data||{}).phone || 'norādīto tālruņa numuru'}</p>
               </div>
 
               <p><strong>Avots:</strong> Kontakta forma metan.lv<br>
@@ -916,11 +1000,39 @@ async function simulateEmailSending(
   const transporter = createTransporter();
   if (!transporter) {
     console.log('⚠️ No SMTP configuration, will log email instead');
-    logEmailToConsole(type, recipientEmail, name, data);
+    logEmailToConsole(type, recipientEmail, name, (typeof data !== "undefined" ? data : {}));
     return true;
   }
 
   try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
     const template = EMAIL_TEMPLATES[type];
     let subject = '';
     let htmlContent = '';
@@ -972,8 +1084,9 @@ async function simulateEmailSending(
       to: recipientEmail,
       subject: subject,
       html: htmlContent,
-      replyTo: data?.senderEmail || 'tsv@metan.lv',
+      replyTo: data?.senderEmail || data?.email || 'tsv@metan.lv',
       attachments: attachments.length > 0 ? attachments : undefined,
+      contentType: "text/html; charset=UTF-8",
       // Улучшенные заголовки против спама
       headers: {
         'X-Mailer': 'METAN.LV System',
@@ -981,7 +1094,6 @@ async function simulateEmailSending(
         'X-Auto-Response-Suppress': 'OOF, DR, NDR, RN, NRN',
         'Authentication-Results': 'gmail.com; spf=pass',
         'X-Spam-Score': '0',
-        'Content-Type': 'text/html; charset=UTF-8',
         ...(type === 'precise_offer' ? { 
           'X-Business-Priority': 'customer-confirmation',
           'X-Message-Category': 'transactional'
@@ -1002,7 +1114,8 @@ async function simulateEmailSending(
       console.log(`📎 With ${attachments.length} attachment(s):`, attachments.map(a => a.filename));
     }
     
-    const info = await transporter.sendMail(mailOptions);
+process.stdout.write("MAILDEBUG_MAIN " + JSON.stringify({ to: recipientEmail, replyTo: mailOptions.replyTo, from: mailOptions.from, kind: "company_notification" }) + "\n");
+  const info = await transporter.sendMail(mailOptions);
     
     console.log('✅ Email sent successfully:', {
       messageId: info.messageId,
@@ -1016,7 +1129,7 @@ async function simulateEmailSending(
   } catch (error) {
     console.error('❌ Email sending failed:', error);
     console.log('📧 Fallback: logging email to console');
-    logEmailToConsole(type, recipientEmail, name, data);
+    logEmailToConsole(type, recipientEmail, name, (typeof data !== "undefined" ? data : {}));
     return false;
   }
 }
@@ -1026,9 +1139,47 @@ async function simulateCompanyNotification(
   recipientEmail: string,
   subject: string,
   htmlContent: string,
-  data: any
+  data: any = {}
 ): Promise<boolean> {
   console.log(`📧 Sending company notification to: ${recipientEmail}`);
+  data = data || {};
+  // Формируем человекочитаемый Subject/HTML для контактных лидов
+
+  { const s = (v:any)=> String(v ?? "");
+
+    const n = s(data?.name || data?.fullName || data?.clientName);
+
+    const phone = s(data?.phone || data?.tel);
+
+    const em = s(data?.email || data?.senderEmail);
+
+    if (em || phone) {
+
+      subject = `[CONTACT] ${n || "Без имени"} — ${phone || "нет телефона"} — ${em || "-"}`;
+
+      htmlContent = `
+
+        <div style="font-family:Arial,sans-serif;line-height:1.6;color:#222;">
+
+          <h2>Новое обращение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${n || "-"}<br>
+
+          <strong>Email:</strong> ${em || "-"}<br>
+
+          <strong>Телефон:</strong> ${phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${s(data?.service) || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${s(data?.message) || "-"}</p>
+
+          <hr><p style="font-size:12px;color:#777;">Автоматическое уведомление сайта METAN.LV</p>
+
+        </div>`;
+
+    }
+
+  }
   
   const transporter = createTransporter();
   if (!transporter) {
@@ -1043,12 +1194,41 @@ async function simulateCompanyNotification(
   }
 
   try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
     const mailOptions = {
       from: `"METAN.LV Sistēma" <${process.env.SMTP_USER}>`,
       to: recipientEmail,
       subject: subject,
       html: htmlContent,
       replyTo: data.email || 'noreply@metan.lv',
+      contentType: "text/html; charset=UTF-8",
       // Улучшенные заголовки против спама
       priority: 'high' as const,
       headers: {
@@ -1061,11 +1241,12 @@ async function simulateCompanyNotification(
         'Authentication-Results': 'gmail.com; spf=pass',
         'X-Spam-Score': '0',
         'X-Business-Priority': 'critical-lead',
-        'Content-Type': 'text/html; charset=UTF-8'
       }
     };
 
     console.log(`📨 Sending company notification: ${subject}`);
+process.stdout.write("MAILDEBUG_MAIN " + JSON.stringify({ to: recipientEmail, replyTo: mailOptions.replyTo, from: mailOptions.from, kind: "company_notification" }) + "\n");
+process.stdout.write("MAILDEBUG_COMPANY " + JSON.stringify({ to: recipientEmail, replyTo: mailOptions.replyTo, from: mailOptions.from, subject: mailOptions.subject }) + "\n");
     const info = await transporter.sendMail(mailOptions);
     
     console.log('✅ Company notification sent successfully:', {
@@ -1125,18 +1306,18 @@ function generateCompanyNotificationHtml(data: any): string {
   </div>
   <div class="content">
     <div class="from-info">
-      <h2 style="margin: 0 0 15px 0; color: #1976d2; font-size: 22px;">👤 JAUNS KLIENTS: ${data.name}</h2>
+      <h2 style="margin: 0 0 15px 0; color: #1976d2; font-size: 22px;">👤 JAUNS KLIENTS: ${(data||{}).name}</h2>
       <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
         <div>
           <p style="margin: 5px 0;"><strong>📧 E-pasts:</strong></p>
-          <a href="mailto:${data.email}" style="color: #1976d2; font-weight: bold; font-size: 16px;">${data.email}</a>
+          <a href="mailto:${(data||{}).email}" style="color: #1976d2; font-weight: bold; font-size: 16px;">${(data||{}).email}</a>
         </div>
         <div>
           <p style="margin: 5px 0;"><strong>📞 Telefons:</strong></p>
-          <a href="tel:${data.phone}" style="color: #1976d2; font-weight: bold; font-size: 16px;">${data.phone}</a>
+          <a href="tel:${(data||{}).phone}" style="color: #1976d2; font-weight: bold; font-size: 16px;">${(data||{}).phone}</a>
         </div>
       </div>
-      ${data.company ? `<p style="margin: 10px 0 0 0;"><strong>🏢 Uzņēmums:</strong> <span style="font-weight: bold; color: #2c5530;">${data.company}</span></p>` : ''}
+      ${(data||{}).company ? `<p style="margin: 10px 0 0 0;"><strong>🏢 Uzņēmums:</strong> <span style="font-weight: bold; color: #2c5530;">${(data||{}).company}</span></p>` : ''}
     </div>
 
     <div class="calc-summary">
@@ -1144,45 +1325,45 @@ function generateCompanyNotificationHtml(data: any): string {
       <table class="data-table" style="background: white; border-radius: 6px;">
         <tr>
           <td class="label">Pakalpojums:</td>
-          <td><strong style="color: #2c5530; font-size: 16px;">${data.serviceName || 'Nav norādīts'}</strong></td>
+          <td><strong style="color: #2c5530; font-size: 16px;">${(data||{}).serviceName || 'Nav norādīts'}</strong></td>
         </tr>
         <tr>
           <td class="label">Biežums:</td>
-          <td><strong>${data.frequency || 'Nav norādīts'}</strong></td>
+          <td><strong>${(data||{}).frequency || 'Nav norādīts'}</strong></td>
         </tr>
         <tr>
           <td class="label">Attālums:</td>
-          <td><strong>${data.distance || '15'} km</strong></td>
+          <td><strong>${(data||{}).distance || '15'} km</strong></td>
         </tr>
-        ${data.customerAddress && data.customerAddress !== 'Nav norādīta' ? `
+        ${(data||{}).customerAddress && data.customerAddress !== 'Nav norādīta' ? `
         <tr>
           <td class="label">Objekta adrese:</td>
-          <td><strong style="color: #2c5530;">${data.customerAddress}</strong></td>
+          <td><strong style="color: #2c5530;">${(data||{}).customerAddress}</strong></td>
         </tr>
         ` : ''}
         <tr style="border-top: 2px solid #28a745;">
           <td class="label" style="background: #d4edda;">ORIENTĒJOŠĀ CENA:</td>
-          <td style="background: #d4edda;"><span class="price-highlight">${data.monthlyPrice || 'Nav aprēķināta'}€/mēn</span></td>
+          <td style="background: #d4edda;"><span class="price-highlight">${(data||{}).monthlyPrice || 'Nav aprēķināta'}€/mēn</span></td>
         </tr>
-        ${data.yearlyContract ? `
+        ${(data||{}).yearlyContract ? `
         <tr>
           <td class="label">Gada līgums:</td>
           <td><strong style="color: #007bff; font-size: 16px;">✅ AR 20% ATLAIDI</strong></td>
         </tr>
         ` : ''}
-        ${data.preferredContactTime ? `
+        ${(data||{}).preferredContactTime ? `
         <tr>
           <td class="label">Vēlamais zvana laiks:</td>
-          <td><strong style="color: #6f42c1;">${data.preferredContactTime}</strong></td>
+          <td><strong style="color: #6f42c1;">${(data||{}).preferredContactTime}</strong></td>
         </tr>
         ` : ''}
       </table>
     </div>
 
-    ${data.details ? `
+    ${(data||{}).details ? `
     <div class="highlight">
       <h3 style="margin: 0 0 10px 0; color: #856404;">💬 KLIENTA KOMENTĀRS:</h3>
-      <p style="margin: 0; font-style: italic; color: #6c757d; font-size: 16px; line-height: 1.6;">"${data.details}"</p>
+      <p style="margin: 0; font-style: italic; color: #6c757d; font-size: 16px; line-height: 1.6;">"${(data||{}).details}"</p>
     </div>
     ` : ''}
 
@@ -1199,8 +1380,8 @@ function generateCompanyNotificationHtml(data: any): string {
     <div class="contact-actions">
       <h3 style="margin: 0 0 20px 0; color: #007bff; font-size: 22px;">📞 DARBĪBAS PLĀNS</h3>
       <div style="margin: 20px 0;">
-        <a href="tel:${data.phone}" class="action-button" style="background: #28a745;">📞 ZVANĪT TŪLĪT: ${data.phone}</a>
-        <a href="mailto:${data.email}" class="action-button" style="background: #007bff;">📧 RAKSTĪT: ${data.email}</a>
+        <a href="tel:${(data||{}).phone}" class="action-button" style="background: #28a745;">📞 ZVANĪT TŪLĪT: ${(data||{}).phone}</a>
+        <a href="mailto:${(data||{}).email}" class="action-button" style="background: #007bff;">📧 RAKSTĪT: ${(data||{}).email}</a>
       </div>
       <p style="margin: 15px 0; color: #495057; font-size: 14px;">
         <strong>Ieteicamā secība:</strong><br>
@@ -1216,7 +1397,7 @@ function generateCompanyNotificationHtml(data: any): string {
         • Avots: Kalkulators metan.lv<br>
         • ID: PO-${timestamp}<br>
         • Laiks: ${new Date().toISOString()}<br>
-        • IP: ${data.customerIP || 'Nav zināms'}<br>
+        • IP: ${(data||{}).customerIP || 'Nav zināms'}<br>
         • Prioritāte: <span style="color: #dc3545; font-weight: bold;">AUGSTA</span>
       </p>
     </div>

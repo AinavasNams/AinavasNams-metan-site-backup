@@ -95,7 +95,7 @@ export function useGoogleMapsApi(): GoogleMapsApiState {
 3. Network/CSP blocking the request
 
 Domain: ${window.location.hostname}
-Event: ${JSON.stringify(event)}`;
+Event: ${JSON.stringify({ type: (event as any)?.type, message: (event as any)?.message, target: (event as any)?.target?.tagName })}`;
       
       console.error('❌ Google Maps API Error:', error);
       console.error('🔍 Debug info:', {
