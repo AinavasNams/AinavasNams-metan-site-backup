@@ -5,17 +5,185 @@ import { initializePageTracking } from '@/lib/gtm-events';
 import { initializeEnhancedEcommerce } from '@/lib/ga4-events';
 import { initializeGoogleTagGateway, testGoogleTagGateway, CLOUDFLARE_GTM_CONFIG } from '@/lib/cloudflare-gtm-config';
 
+/**
+ * Sanitizes analytics payloads to avoid circular references and unsupported values when
+ * data is forwarded to `JSON.stringify`, `dataLayer.push`, or `gtag`.
+ * The sanitizer removes functions/symbols, flattens DOM/Event objects, and guards against
+ * recursive structures by tracking seen objects.
+ */
+const sanitizeAnalyticsValue = (value: any, seen: WeakSet<object>): any => {
+  if (value === null) {
+    return null;
+  }
+
+  if (value === undefined) {
+    return undefined;
+  }
+
+  const valueType = typeof value;
+
+  if (valueType === 'string' || valueType === 'boolean') {
+    return value;
+  }
+
+  if (valueType === 'number') {
+    return Number.isFinite(value) ? value : undefined;
+  }
+
+  if (valueType === 'bigint') {
+    return value.toString();
+  }
+
+  if (valueType === 'symbol' || valueType === 'function') {
+    return undefined;
+  }
+
+  if (value instanceof Date) {
+    return value.toISOString();
+  }
+
+  if (typeof URL !== 'undefined' && value instanceof URL) {
+    return value.toString();
+  }
+
+  if (typeof RegExp !== 'undefined' && value instanceof RegExp) {
+    return value.toString();
+  }
+
+  if (typeof File !== 'undefined' && value instanceof File) {
+    return {
+      name: value.name,
+      size: value.size,
+      type: value.type,
+      lastModified: value.lastModified,
+    };
+  }
+
+  if (typeof Blob !== 'undefined' && value instanceof Blob) {
+    return {
+      size: value.size,
+      type: value.type,
+    };
+  }
+
+  if (Array.isArray(value)) {
+    const sanitizedArray: any[] = [];
+    for (const item of value) {
+      const sanitizedItem = sanitizeAnalyticsValue(item, seen);
+      if (sanitizedItem !== undefined) {
+        sanitizedArray.push(sanitizedItem);
+      }
+    }
+    return sanitizedArray;
+  }
+
+  if (value instanceof Error) {
+    return {
+      name: value.name,
+      message: value.message,
+      stack: value.stack ? value.stack.split('\n').slice(0, 3).join('\n') : undefined,
+    };
+  }
+
+  if (value instanceof Map) {
+    const mapped: Record<string, any> = {};
+    value.forEach((mapValue, key) => {
+      const sanitizedMapValue = sanitizeAnalyticsValue(mapValue, seen);
+      if (sanitizedMapValue !== undefined) {
+        mapped[String(key)] = sanitizedMapValue;
+      }
+    });
+    return mapped;
+  }
+
+  if (value instanceof Set) {
+    const sanitizedSet: any[] = [];
+    value.forEach((entry) => {
+      const sanitizedEntry = sanitizeAnalyticsValue(entry, seen);
+      if (sanitizedEntry !== undefined) {
+        sanitizedSet.push(sanitizedEntry);
+      }
+    });
+    return sanitizedSet;
+  }
+
+  if (typeof window !== 'undefined') {
+    if (typeof Element !== 'undefined' && value instanceof Element) {
+      return {
+        tag: value.tagName,
+        id: value.id || undefined,
+        class: value.className || undefined,
+      };
+    }
+
+    if (typeof Event !== 'undefined' && value instanceof Event) {
+      const target = value.target;
+      const targetTag =
+        target && typeof (target as Element).tagName === 'string'
+          ? (target as Element).tagName
+          : undefined;
+
+      return {
+        type: value.type,
+        target: targetTag,
+      };
+    }
+  }
+
+  if (valueType === 'object') {
+    if (seen.has(value)) {
+      return undefined;
+    }
+
+    seen.add(value);
+    const sanitizedObject: Record<string, any> = {};
+    for (const [key, nestedValue] of Object.entries(value)) {
+      const sanitizedNestedValue = sanitizeAnalyticsValue(nestedValue, seen);
+      if (sanitizedNestedValue !== undefined) {
+        sanitizedObject[key] = sanitizedNestedValue;
+      }
+    }
+    seen.delete(value);
+
+    return sanitizedObject;
+  }
+
+  return undefined;
+};
+
+const sanitizeAnalyticsPayload = (payload?: Record<string, any> | null): Record<string, any> => {
+  if (!payload || typeof payload !== 'object') {
+    return {};
+  }
+
+  const sanitized = sanitizeAnalyticsValue(payload, new WeakSet());
+
+  return sanitized && typeof sanitized === 'object' ? sanitized : {};
+};
+
+const pushToDataLayer = (payload: Record<string, any>) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  try {
+    window.dataLayer = window.dataLayer || [];
+    const sanitizedPayload = sanitizeAnalyticsPayload(payload);
+    window.dataLayer.push(sanitizedPayload);
+  } catch (error) {
+    console.warn('Analytics dataLayer push prevented', error);
+  }
+};
+
 // Enhanced Analytics with GTM DataLayer support
 export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
   if (typeof window !== 'undefined') {
     try {
-      // GTM DataLayer push
-      window.dataLayer = window.dataLayer || [];
-      
       // Ensure parameters are safely serializable
-      const safeParameters = parameters ? JSON.parse(JSON.stringify(parameters)) : {};
-      
-      window.dataLayer.push({
+      const safeParameters = sanitizeAnalyticsPayload(parameters);
+
+      // GTM DataLayer push
+      pushToDataLayer({
         event: eventName,
         timestamp: new Date().toISOString(),
         page_url: window.location.href,
@@ -54,7 +222,7 @@ export const trackCTA = (ctaType: string, location: string, destination?: string
 export const trackFormSubmission = (formType: string, formData?: Record<string, any>) => {
   try {
     // Ensure formData is safely serializable
-    const safeFormData = formData ? JSON.parse(JSON.stringify(formData)) : {};
+    const safeFormData = sanitizeAnalyticsPayload(formData);
     
     trackEvent('form_submit', {
       form_type: formType,
@@ -82,7 +250,7 @@ export const trackFormSubmission = (formType: string, formData?: Record<string, 
         
         // Enhanced DataLayer event for GTM
         if (window.dataLayer) {
-          window.dataLayer.push({
+          pushToDataLayer({
             event: 'enhanced_conversion',
             conversion_type: formType,
             value: formType === 'contact_form' ? 80 : 75,
@@ -90,7 +258,7 @@ export const trackFormSubmission = (formType: string, formData?: Record<string, 
             transaction_id: `${formType}_${Date.now()}`,
             google_ads_integration: true,
             cloudflare_ready: true,
-            ...formData,
+            ...safeFormData,
           });
           console.log('✅ Enhanced conversion event sent to GTM DataLayer');
         }
@@ -172,11 +340,13 @@ export const trackExternalLink = (url: string, linkText?: string) => {
 
 // Project page tracking with detailed analytics
 export const trackProjectPageView = (projectName: string, userBehavior?: Record<string, any>) => {
+  const safeUserBehavior = sanitizeAnalyticsPayload(userBehavior);
+
   trackEvent('project_page_view', {
     project_name: projectName,
     event_category: 'project_engagement',
     event_label: projectName,
-    ...userBehavior,
+    ...safeUserBehavior,
   });
   
   // Track project interest as potential investor lead with NEW Google events
@@ -199,13 +369,13 @@ export const trackProjectPageView = (projectName: string, userBehavior?: Record<
     
     // GTM DataLayer
     if (window.dataLayer) {
-      window.dataLayer.push({
+      pushToDataLayer({
         event: 'investor_interest',
         project_name: projectName,
         interest_level: 'browsing',
         value: 25,
         currency: 'EUR',
-        ...userBehavior,
+        ...safeUserBehavior,
       });
     }
   }
@@ -279,7 +449,7 @@ export default function Analytics() {
             }
             
             // Дополнительное отслеживание через dataLayer
-            window.dataLayer.push({
+            pushToDataLayer({
               event: 'form_submission_conversion',
               form_id: form.id || `form_${index}`,
               form_action: form.action || window.location.href,
@@ -302,7 +472,7 @@ export default function Analytics() {
         });
         
         // Отслеживаем клики по телефонным номерам
-        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneLinks = document.querySelectorAll<HTMLAnchorElement>('a[href^="tel:"]');
         phoneLinks.forEach((link) => {
           link.addEventListener('click', (e) => {
             console.log('📞 Phone link clicked:', link.href);
@@ -314,7 +484,7 @@ export default function Analytics() {
         });
         
         // Отслеживаем клики по email ссылкам
-        const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+        const emailLinks = document.querySelectorAll<HTMLAnchorElement>('a[href^="mailto:"]');
         emailLinks.forEach((link) => {
           link.addEventListener('click', (e) => {
             console.log('📧 Email link clicked:', link.href);
@@ -373,26 +543,20 @@ export default function Analytics() {
         }
         
         // Test basic Gateway functionality
-        window.dataLayer = window.dataLayer || [];
-        try {
-          window.dataLayer.push({
-            'event': 'gateway_health_check',
-            'timestamp': new Date().toISOString(),
-            'gtm_loaded': !!window.google_tag_manager,
-            'gtag_available': !!window.gtag,
-            'first_party_domain': CLOUDFLARE_GTM_CONFIG.domain
-          });
-        } catch (error) {
-          console.warn('Gateway health check error prevented');
-        }
+        pushToDataLayer({
+          event: 'gateway_health_check',
+          timestamp: new Date().toISOString(),
+          gtm_loaded: !!window.google_tag_manager,
+          gtag_available: !!window.gtag,
+          first_party_domain: CLOUDFLARE_GTM_CONFIG.domain,
+        });
         
         // Test all new conversion events
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          'event': 'test_conversion',
-          'timestamp': new Date().toISOString(),
-          'conversion_value': 1,
-          'currency': 'USD'
+        pushToDataLayer({
+          event: 'test_conversion',
+          timestamp: new Date().toISOString(),
+          conversion_value: 1,
+          currency: 'USD',
         });
       }, 1000);
       
@@ -674,7 +838,7 @@ export const trackPhoneConversion = (phoneNumber: string, url?: string) => {
   
   // GTM DataLayer for comprehensive tracking
   if (typeof window !== 'undefined' && window.dataLayer) {
-    window.dataLayer.push({
+    pushToDataLayer({
       event: 'phone_conversion_enhanced',
       phone_number: phoneNumber,
       value: 90,
@@ -789,26 +953,28 @@ export const trackCalculatorUsage = (calculatorType: string, inputData: Record<s
 
 // Document interest tracking (before download)
 export const trackDocumentInterest = (documentType: string, documentName: string, userInfo?: Record<string, any>) => {
+  const safeUserInfo = sanitizeAnalyticsPayload(userInfo);
+
   trackEvent('document_interest', {
     document_type: documentType,
     document_name: documentName,
     event_category: 'document_engagement',
     event_label: `${documentType}_${documentName}`,
-    ...userInfo,
+    ...safeUserInfo,
   });
   
   // Track business plan and financial documents as high-value
   if (['business_plan', 'financial_model', 'license'].includes(documentType)) {
     console.log('🎯 High-value document interest:', documentName);
     if (typeof window !== 'undefined' && window.dataLayer) {
-      window.dataLayer.push({
+      pushToDataLayer({
         event: 'qualified_document_interest',
         document_type: documentType,
         document_name: documentName,
         value: 40,
         currency: 'EUR',
         lead_quality: 'high',
-        ...userInfo,
+        ...safeUserInfo,
       });
     }
   }
@@ -816,12 +982,14 @@ export const trackDocumentInterest = (documentType: string, documentName: string
 
 // Enhanced investor tracking with detailed funnel
 export const trackInvestorAction = (actionType: string, projectName?: string, userData?: Record<string, any>) => {
+  const safeUserData = sanitizeAnalyticsPayload(userData);
+
   trackEvent('investor_action', {
     action_type: actionType,
     project_name: projectName,
     event_category: 'investor_engagement',
     event_label: `${actionType}_${projectName || 'general'}`,
-    ...userData,
+    ...safeUserData,
   });
   
   // Different conversion values for different investor actions
@@ -836,14 +1004,14 @@ export const trackInvestorAction = (actionType: string, projectName?: string, us
   const value = conversionValues[actionType as keyof typeof conversionValues] || 25;
   
   if (typeof window !== 'undefined' && window.dataLayer) {
-    window.dataLayer.push({
+    pushToDataLayer({
       event: 'investor_conversion',
       action_type: actionType,
       project_name: projectName,
       value: value,
       currency: 'EUR',
       lead_quality: 'very_high',
-      ...userData,
+      ...safeUserData,
     });
   }
 };
@@ -860,7 +1028,7 @@ export const trackContactMethod = (contactType: string, contactValue: string, so
   
   // Track all contact methods as conversions
   if (typeof window !== 'undefined' && window.dataLayer) {
-    window.dataLayer.push({
+    pushToDataLayer({
       event: 'contact_conversion',
       contact_type: contactType,
       source: source,
@@ -873,11 +1041,13 @@ export const trackContactMethod = (contactType: string, contactValue: string, so
 
 // Traffic source and funnel analysis
 export const trackUserJourney = (journeyStep: string, stepData?: Record<string, any>) => {
+  const safeStepData = sanitizeAnalyticsPayload(stepData);
+
   trackEvent('user_journey', {
     journey_step: journeyStep,
     event_category: 'user_flow',
     event_label: journeyStep,
-    ...stepData,
+    ...safeStepData,
   });
   
   // Track progression through sales funnel
@@ -894,13 +1064,13 @@ export const trackUserJourney = (journeyStep: string, stepData?: Record<string, 
   const stepValue = funnelSteps[journeyStep as keyof typeof funnelSteps] || 0;
   
   if (stepValue > 0 && typeof window !== 'undefined' && window.dataLayer) {
-    window.dataLayer.push({
+    pushToDataLayer({
       event: 'funnel_progression',
       journey_step: journeyStep,
       funnel_step: stepValue,
       value: stepValue * 5, // Progressive value increase
       currency: 'EUR',
-      ...stepData,
+      ...safeStepData,
     });
   }
 };
