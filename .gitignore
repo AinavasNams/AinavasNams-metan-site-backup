@@ -33,3 +33,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local secrets and experimental backups
+.env.production
+*.bak
+*.backup
+app/api/send-email/route.ts.*
