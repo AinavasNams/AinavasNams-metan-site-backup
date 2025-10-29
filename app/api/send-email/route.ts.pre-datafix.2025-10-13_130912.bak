@@ -1,0 +1,1406 @@
+import { NextRequest, NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
+
+// SMTP транспорт (работает без изменения DNS!)
+const createTransporter = () => {
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+    return null;
+  }
+  
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD, // App Password from Gmail
+    },
+  });
+};
+
+// Rate limiting - simple in-memory store (in production use Redis)
+const rateLimitStore = new Map<string, { count: number; timestamp: number }>();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 5; // max 5 emails per minute per IP
+
+// Input validation
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function sanitizeInput(input: string): string {
+  if (!input) return '';
+  return input.trim().replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+               .replace(/[<>]/g, '');
+}
+
+function validateOfferData(data: any): { isValid: boolean; errors: string[] } {
+  const errors: string[] = [];
+  
+  if (!data.name || data.name.length < 2 || data.name.length > 100) {
+    errors.push('Invalid name length (2-100 chars)');
+  }
+  
+  if (!data.email || !validateEmail(data.email)) {
+    errors.push('Invalid email format');
+  }
+  
+  if (!data.phone || data.phone.length < 8 || data.phone.length > 20) {
+    errors.push('Invalid phone format');
+  }
+  
+  if (data.details && data.details.length > 1000) {
+    errors.push('Details too long (max 1000 chars)');
+  }
+  
+  return { isValid: errors.length === 0, errors };
+}
+
+function checkRateLimit(ip: string): { allowed: boolean; resetTime?: number } {
+  const now = Date.now();
+  const userLimit = rateLimitStore.get(ip);
+  
+  if (!userLimit || now - userLimit.timestamp > RATE_LIMIT_WINDOW) {
+    rateLimitStore.set(ip, { count: 1, timestamp: now });
+    return { allowed: true };
+  }
+  
+  if (userLimit.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return { 
+      allowed: false, 
+      resetTime: userLimit.timestamp + RATE_LIMIT_WINDOW 
+    };
+  }
+  
+  userLimit.count++;
+  return { allowed: true };
+}
+
+type EmailType = 'document_request' | 'contact_submission' | 'precise_offer' | 'investor_verified';
+
+// Email templates
+const EMAIL_TEMPLATES = {
+  document_request: {
+    subject: (documentName?: string) => `METAN.LV - Dokuments "${documentName || 'Dokuments'}" pieejams`,
+    html: (name: string, documentName?: string, hasAttachment: boolean = false, downloadLinks?: string[]) => `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>METAN.LV - Dokumenta piegāde</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background: linear-gradient(135deg, #2D5A27 0%, #4A7C59 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
+          .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
+          .button { display: inline-block; background: #2D5A27; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 10px 5px; }
+          .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+          .logo { font-size: 24px; font-weight: bold; }
+          .attachment-info { background: #e8f5e8; border-left: 4px solid #2D5A27; padding: 15px; border-radius: 6px; margin: 20px 0; }
+          .download-links { background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; border-radius: 6px; margin: 20px 0; }
+          .download-button { display: inline-block; background: #ff9800; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px; margin: 8px; font-weight: bold; }
+          .attachment-icon { font-size: 48px; text-align: center; margin: 10px 0; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="logo">📄 METAN.LV</div>
+          <p>Biometāna ražošana Latvijā</p>
+        </div>
+        <div class="content">
+          <h2>Sveicināti, ${name}! 🎉</h2>
+          <p>Paldies par jūsu interesi par mūsu projektu! Dokuments <strong>"${documentName}"</strong> ir pieejams lejupielādei.</p>
+          
+          ${hasAttachment ? `
+          <div class="attachment-info">
+            <div class="attachment-icon">📎</div>
+            <h3 style="margin: 0 0 10px 0; color: #2D5A27; text-align: center;">📄 Dokuments pievienots!</h3>
+            <p style="margin: 5px 0; text-align: center;"><strong>Fails:</strong> ${documentName} (PDF formāts)</p>
+            <p style="margin: 5px 0; text-align: center;"><strong>Lielums:</strong> Optimizēts apskatei</p>
+            <p style="margin: 10px 0 0 0; text-align: center; font-size: 14px; color: #666;">
+              💡 <em>Dokumentu var atvērt ar jebkuru PDF skatītāju</em>
+            </p>
+          </div>
+          ` : `
+          <div class="download-links">
+            <div class="attachment-icon">🔗</div>
+            <h3 style="margin: 0 0 15px 0; color: #f57c00; text-align: center;">📄 Lejupielādēt dokumentu</h3>
+            <p style="margin: 10px 0; text-align: center;">Noklikšķiniet uz saites, lai lejupielādētu PDF dokumentu:</p>
+            <div style="text-align: center; margin: 20px 0;">
+              ${getDownloadLink(documentName)}
+            </div>
+            <p style="margin: 15px 0 0 0; text-align: center; font-size: 14px; color: #666;">
+              💡 <em>Saite ved uz Google Drive, kur var lejupielādēt PDF formātu</em>
+            </p>
+          </div>
+          `}
+          
+          <div style="background: #e3f2fd; padding: 15px; border-radius: 6px; margin: 20px 0;">
+            <h3 style="margin: 0 0 10px 0; color: #1976d2;">📋 Pieprasījuma detaļas:</h3>
+            <p style="margin: 5px 0;"><strong>Dokuments:</strong> ${documentName}</p>
+            <p style="margin: 5px 0;"><strong>Piegādes laiks:</strong> ${new Date().toLocaleString('lv-LV')}</p>
+            <p style="margin: 5px 0;"><strong>Statuss:</strong> ${hasAttachment ? '✅ Pievienots' : '🔗 Saite nosūtīta'}</p>
+          </div>
+
+          <h3 style="color: #2D5A27;">🤝 Nākamie soļi:</h3>
+          <ul>
+            ${hasAttachment ? `
+            <li>✅ Apskatiet pievienoto PDF dokumentu</li>
+            <li>📞 Ja ir jautājumi - zvaniet vai rakstiet</li>
+            <li>🤝 Varam organizēt tikšanos detalizētākai diskusijai</li>
+            ` : `
+            <li>🔗 Noklikšķiniet uz saites un lejupielādējiet dokumentu</li>
+            <li>📧 Ja saite nedarbojas, rakstiet mums uz tsv@metan.lv</li>
+            <li>📞 Jautājumi? Zvaniet +371 27727724</li>
+            `}
+          </ul>
+
+          <div style="background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="margin: 0 0 15px 0; color: #2D5A27; text-align: center;">📞 Kontakti konsultācijām</h3>
+            <div style="display: flex; justify-content: space-around; text-align: center;">
+              <div>
+                <p style="margin: 5px 0;"><strong>📧 E-pasts:</strong></p>
+                <a href="mailto:tsv@metan.lv" style="color: #2D5A27; text-decoration: none;">tsv@metan.lv</a>
+              </div>
+              <div>
+                <p style="margin: 5px 0;"><strong>📞 Tālrunis:</strong></p>
+                <a href="tel:+37127727724" style="color: #2D5A27; text-decoration: none;">+371 27727724</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <p>Ar cieņu,<br><strong>SIA "Ainavas Nams" komanda</strong></p>
+          <p>🌍 <a href="https://metan.lv">metan.lv</a> | Zaļā enerģija no organiskajiem atkritumiem</p>
+          <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+          <p style="font-size: 12px; color: #999;">
+            Šis e-pasts tika nosūtīts automātiski pēc jūsu pieprasījuma vietnē metan.lv.<br>
+            SIA "Ainavas Nams" | Rūpniecības iela 2D, Bēne, Dobeles nov., LV-3711
+          </p>
+        </div>
+      </body>
+      </html>
+    `,
+  },
+  contact_submission: {
+    subject: () => 'METAN.LV - Paldies par jūsu ziņojumu!',
+    html: (name: string) => `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>METAN.LV - Kontakta forma</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background: linear-gradient(135deg, #2D5A27 0%, #4A7C59 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
+          .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
+          .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+          .logo { font-size: 24px; font-weight: bold; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="logo">🌱 METAN.LV</div>
+          <p>Biometāna ražošana Latvijā</p>
+        </div>
+        <div class="content">
+          <h2>Paldies, ${name}!</h2>
+          <p>Mēs esam saņēmuši jūsu ziņojumu un novērtējam jūsu interesi par mūsu pakalpojumiem.</p>
+          <p>Mūsu komanda ar jums sazināsies <strong>darba dienas laikā 24 stundu</strong> periodā.</p>
+          
+          <div style="background: #e8f5e8; padding: 15px; border-radius: 6px; margin: 20px 0;">
+            <h3 style="margin: 0 0 10px 0; color: #2D5A27;">Mūsu pakalpojumi:</h3>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+              <li>♻️ Tauku un eļļas atkritumu savākšana</li>
+              <li>🔬 Mehāniskā attīrīšana (centrifugēšana)</li>
+              <li>⚡ Biogāzes un biometāna ražošana</li>
+              <li>💼 Investīciju iespējas CH₄ Future projektā</li>
+            </ul>
+          </div>
+
+          <p><strong>Steidzīgos gadījumos:</strong></p>
+          <p>📧 E-pasts: <a href="mailto:tsv@metan.lv">tsv@metan.lv</a><br>
+          📞 Tālrunis: <a href="tel:+37127727724">+371 27727724</a></p>
+          
+          <p>Sekojiet mums sociālajos tīklos, lai uzzinātu jaunākās ziņas par zaļo enerģiju Latvijā!</p>
+        </div>
+        <div class="footer">
+          <p>Ar cieņu,<br><strong>SIA "Ainavas Nams" komanda</strong></p>
+          <p>🌍 <a href="https://metan.lv">metan.lv</a> | No organiskajiem atkritumiem līdz tīrai enerģijai</p>
+          <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+          <p style="font-size: 12px; color: #999;">
+            SIA "Ainavas Nams" | Rūpniecības iela 2D, Bēne, Dobeles nov., LV-3711<br>
+            Reģ. Nr. 40203328328
+          </p>
+        </div>
+      </body>
+      </html>
+    `,
+  },
+  precise_offer: {
+    subject: () => 'METAN.LV - Precīzs piedāvājums tiek sagatavots',
+    html: (name: string, offerData: any) => `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>METAN.LV - Precīzs piedāvājums</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background: linear-gradient(135deg, #2D5A27 0%, #4A7C59 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
+          .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
+          .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
+          .logo { font-size: 24px; font-weight: bold; }
+          .calc-summary { background: #e8f5e8; padding: 15px; border-radius: 6px; margin: 20px 0; }
+          .contact-info { background: #f0f8ff; padding: 15px; border-radius: 6px; margin: 20px 0; }
+          .highlight { color: #2D5A27; font-weight: bold; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="logo">🌱 METAN.LV</div>
+          <p>Precīzs pakalpojumu piedāvājums</p>
+        </div>
+        <div class="content">
+          <h2>Paldies par pieprasījumu, ${name}!</h2>
+          <p>Mēs esam saņēmuši jūsu pieprasījumu precīzam piedāvājumam un to izskatīsim <strong>24 stundu laikā</strong>.</p>
+          
+          <div class="calc-summary">
+            <h3 style="margin: 0 0 15px 0; color: #2D5A27;">📊 Jūsu aprēķina kopsavilkums:</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd;"><strong>Pakalpojums:</strong></td>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd; text-align: right;">${offerData.serviceName || 'Nav norādīts'}</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd;"><strong>Biežums:</strong></td>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd; text-align: right;">${offerData.frequency || 'Nav norādīts'}</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd;"><strong>Attālums:</strong></td>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd; text-align: right;">${offerData.distance || '15'} km</td>
+              </tr>
+              ${offerData.customerAddress && offerData.customerAddress !== 'Nav norādīta' ? `
+              <tr>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd;"><strong>Objekta adrese:</strong></td>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd; text-align: right;">${offerData.customerAddress}</td>
+              </tr>
+              ` : ''}
+              <tr>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd;"><strong>Orientējošā cena:</strong></td>
+                <td style="padding: 5px 0; border-bottom: 1px solid #ddd; text-align: right; color: #2D5A27; font-weight: bold;">${offerData.monthlyPrice || 'Nav aprēķināta'}€/mēn</td>
+              </tr>
+              ${offerData.yearlyContract ? `
+              <tr>
+                <td style="padding: 5px 0; color: #0066cc;"><strong>Gada līgums:</strong></td>
+                <td style="padding: 5px 0; text-align: right; color: #0066cc; font-weight: bold;">✅ Ar 20% atlaidi</td>
+              </tr>
+              ` : ''}
+            </table>
+          </div>
+
+          <div class="contact-info">
+            <h3 style="margin: 0 0 15px 0; color: #0066cc;">👤 Kontaktinformācija:</h3>
+            <p style="margin: 5px 0;"><strong>Vārds:</strong> ${offerData.name}</p>
+            <p style="margin: 5px 0;"><strong>E-pasts:</strong> ${offerData.email}</p>
+            <p style="margin: 5px 0;"><strong>Telefons:</strong> ${offerData.phone}</p>
+            ${offerData.company ? `<p style="margin: 5px 0;"><strong>Uzņēmums:</strong> ${offerData.company}</p>` : ''}
+            ${offerData.preferredContactTime ? `<p style="margin: 5px 0;"><strong>Vēlamais zvana laiks:</strong> ${offerData.preferredContactTime}</p>` : ''}
+            ${offerData.details ? `<p style="margin: 5px 0;"><strong>Papildu informācija:</strong><br>${offerData.details}</p>` : ''}
+          </div>
+
+          <h3>Nākamie soļi:</h3>
+          <ol>
+            <li>Mūsu tehniskais servisa vadītājs pārskatīs jūsu pieprasījumu</li>
+            <li>Ja nepieciešams, sazināsimies ar precizējošiem jautājumiem</li>
+            <li>Sagatavosim personalizētu piedāvājumu ar precīzām cenām</li>
+            <li>Nosūtīsim piedāvājumu uz jūsu e-pastu</li>
+          </ol>
+
+          <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 6px; margin: 20px 0;">
+            <p style="margin: 0;"><strong>⚡ Steidzīgs jautājums?</strong><br>
+            Zvaniet tieši tehniskajam servisa vadītājam: <a href="tel:+37127727724" class="highlight">+371 27727724</a></p>
+          </div>
+
+          <p><strong>Kontaktinformācija:</strong></p>
+          <p>📧 E-pasts: <a href="mailto:tsv@metan.lv">tsv@metan.lv</a><br>
+          📞 Tālrunis: <a href="tel:+37127727724">+371 27727724</a><br>
+          🌐 Mājaslapa: <a href="https://metan.lv">metan.lv</a></p>
+        </div>
+        <div class="footer">
+          <p>Ar cieņu,<br><strong>SIA "Ainavas Nams" komanda</strong></p>
+          <p>🌍 <a href="https://metan.lv">metan.lv</a> | Precīzi pakalpojumi zaļajai enerģijai</p>
+          <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+          <p style="font-size: 12px; color: #999;">
+            Pieprasījums nosūtīts: ${new Date().toLocaleString('lv-LV')}<br>
+            SIA "Ainavas Nams" | Rūpniecības iela 2D, Bēne, Dobeles nov., LV-3711
+          </p>
+        </div>
+      </body>
+      </html>
+    `,
+  },
+  investor_verified: {
+    subject: (name?: string) => `[НОВЫЙ ИНВЕСТОР ВЕРИФИЦИРОВАН] ${name} - Доступ к документам получен`,
+    html: (name: string, data: any) => `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>ВЕРИФИЦИРОВАННЫЙ ИНВЕСТОР</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background: #28a745; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
+          .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
+          .data-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+          .data-table td { padding: 8px; border-bottom: 1px solid #ddd; }
+          .data-table .label { font-weight: bold; background: #f5f5f5; width: 40%; }
+          .highlight { background: #d4edda; border: 1px solid #c3e6cb; padding: 15px; border-radius: 6px; margin: 15px 0; }
+          .from-info { background: #e3f2fd; padding: 15px; border-radius: 6px; margin: 15px 0; border-left: 4px solid #2196f3; }
+          .verified-badge { background: #28a745; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1 style="margin: 0;">✅ ВЕРИФИЦИРОВАННЫЙ ИНВЕСТОР</h1>
+          <p>Получен доступ к документам: ${new Date().toLocaleString('lv-LV')}</p>
+        </div>
+        <div class="content">
+          <div class="from-info">
+            <h2 style="margin: 0 0 10px 0; color: #1976d2;">👤 Инвестор: ${name}</h2>
+            <p style="margin: 5px 0;"><strong>📧 Email:</strong> <a href="mailto:${data.email}" style="color: #1976d2; font-weight: bold;">${data.email}</a> <span class="verified-badge">VERIFIED</span></p>
+            <p style="margin: 5px 0;"><strong>📞 Телефон:</strong> ${data.phone || 'Не указан'}</p>
+            ${data.company ? `<p style="margin: 5px 0;"><strong>🏢 Компания:</strong> ${data.company}</p>` : ''}
+          </div>
+
+          <div class="highlight">
+            <h3 style="margin: 0 0 10px 0; color: #155724;">🎯 ВАЖНО - ДЕЙСТВИЕ ТРЕБУЕТСЯ!</h3>
+            <p style="margin: 0;">
+              <strong>Инвестор получил мгновенный доступ к документам после верификации email.</strong><br>
+              Рекомендуется связаться в течение 24 часов для персональной консультации.
+            </p>
+          </div>
+
+          <h2>Детали запроса:</h2>
+          <table class="data-table">
+            <tr>
+              <td class="label">Запрошенный документ:</td>
+              <td><strong>${data.documentRequested || 'Не указан'}</strong></td>
+            </tr>
+            <tr>
+              <td class="label">Цель запроса:</td>
+              <td>${data.purpose || 'Не указана'}</td>
+            </tr>
+            <tr>
+              <td class="label">Время верификации:</td>
+              <td>${data.verified_at ? new Date(data.verified_at).toLocaleString('lv-LV') : 'Не указано'}</td>
+            </tr>
+            <tr>
+              <td class="label">Метод верификации:</td>
+              <td>${data.verification_method === 'email_code' ? '📧 Email код' : data.verification_method || 'Не указан'}</td>
+            </tr>
+          </table>
+
+          ${data.message ? `
+          <h3>💬 Комментарий инвестора:</h3>
+          <div class="highlight">
+            <p style="margin: 0;">${data.message}</p>
+          </div>
+          ` : ''}
+
+          <h3>🎬 Следующие шаги:</h3>
+          <ol style="color: #666;">
+            <li>Связаться с инвестором в течение 24 часов</li>
+            <li>Провести персональную презентацию проекта</li>
+            <li>Обсудить инвестиционные возможности</li>
+            <li>Предложить встречу или видеоконференцию</li>
+          </ol>
+
+          <div class="highlight">
+            <p style="margin: 0;"><strong>📞 КОНТАКТЫ ДЛЯ СВЯЗИ:</strong><br>
+            Email: <a href="mailto:${data.email}">${data.email}</a><br>
+            ${data.phone ? `Телефон: <a href="tel:${data.phone}">${data.phone}</a><br>` : ''}
+            Лучшее время для связи: Рабочие дни 9:00-18:00</p>
+          </div>
+
+          <p><strong>Источник:</strong> Страница инвесторов metan.lv<br>
+          <strong>ID запроса:</strong> INV-${Date.now()}<br>
+          <strong>Уровень приоритета:</strong> <span style="color: #dc3545; font-weight: bold;">ВЫСОКИЙ</span></p>
+        </div>
+      </body>
+      </html>
+    `
+  },
+};
+
+// Функция для получения PDF документа
+async function getPDFDocument(documentName: string): Promise<{ buffer: Buffer; filename: string } | null> {
+  console.log('📄 Fetching PDF for document:', documentName);
+  
+  // Маппинг документов на локальные файлы
+  const documentFiles: { [key: string]: string } = {
+    'CH₄ Future — Plan (EN)': 'CH4_Future_Plan_EN.pdf',
+    'Biznesa plāns CH₄ Future': 'Biznesa_plans_CH4_Future.pdf',
+    'Finanšu modelis': 'Finansu_modelis.pdf',
+    'Budžeta piedāvājums': 'Budzeta_piedavajums.pdf',
+    'Biokona piedāvājums': 'Biokona_piedavajums.pdf',
+    'Licences un atļaujas': 'Licences_un_atļaujas.pdf'
+  };
+  
+  const fileName = documentFiles[documentName];
+  if (!fileName) {
+    console.log('❌ Document not found in database:', documentName);
+    return null;
+  }
+  
+  try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
+    const fs = require('fs');
+    const path = require('path');
+    
+    // Путь к локальному PDF файлу
+    const filePath = path.join(process.cwd(), 'public', 'documents', fileName);
+    console.log('📁 Looking for file at:', filePath);
+    
+    // Проверяем существование файла
+    if (!fs.existsSync(filePath)) {
+      console.log('❌ PDF file not found locally:', filePath);
+      
+      // Попробуем скачать из Google Docs как fallback
+      console.log('🔄 Attempting fallback download from Google Docs...');
+      return await downloadFromGoogleDocs(documentName);
+    }
+    
+    // Читаем локальный файл
+    const buffer = fs.readFileSync(filePath);
+    console.log(`✅ Local PDF loaded: ${fileName}, size: ${(buffer.length / 1024).toFixed(1)} KB`);
+    
+    // Генерируем имя файла для отправки
+    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const filename = `METAN_${fileName.replace('.pdf', '')}_${timestamp}.pdf`;
+    
+    return { buffer, filename };
+    
+  } catch (error) {
+    console.error('❌ Error reading local PDF:', error);
+    
+    // Пытаемся скачать как fallback
+    console.log('🔄 Attempting fallback download from Google Docs...');
+    return await downloadFromGoogleDocs(documentName);
+  }
+}
+
+// Fallback функция для скачивания из Google Docs (как было раньше)
+async function downloadFromGoogleDocs(documentName: string): Promise<{ buffer: Buffer; filename: string } | null> {
+  console.log('📄 Fallback: trying to download from Google Docs:', documentName);
+  
+  // Тестовый PDF - создаем простой PDF документ
+  console.log('🔧 Creating test PDF document...');
+  
+  try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
+    // Создаем простой PDF буфер (базовая структура PDF)
+    const pdfContent = `%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+/Resources <<
+/Font <<
+/F1 5 0 R
+>>
+>>
+>>
+endobj
+
+4 0 obj
+<<
+/Length 56
+>>
+stream
+BT
+/F1 12 Tf
+100 700 Td
+(${documentName}) Tj
+ET
+endstream
+endobj
+
+5 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+endobj
+
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000274 00000 n 
+0000000379 00000 n 
+trailer
+<<
+/Size 6
+/Root 1 0 R
+>>
+startxref
+456
+%%EOF`;
+
+    const buffer = Buffer.from(pdfContent);
+    const safeFileName = documentName
+      .replace(/[^a-zA-Z0-9\s\-_()]/g, '')
+      .replace(/\s+/g, '_')
+      .substring(0, 50);
+    
+    const timestamp = Date.now().toString().slice(-6);
+    const filename = `METAN_${safeFileName}_${timestamp}.pdf`;
+    
+    console.log(`✅ Test PDF created: ${filename}, size: ${(buffer.length / 1024).toFixed(1)} KB`);
+    
+    return { buffer, filename };
+    
+  } catch (error) {
+    console.error('❌ Error creating test PDF:', error);
+    return null;
+  }
+}
+
+function getDownloadLink(documentName?: string): string {
+  const downloadLinks: { [key: string]: string } = {
+    'CH₄ Future — Plan (EN)': 'https://docs.google.com/document/d/14MXXMj_ovYobuHf10LbPm7Fvm4gfma5a/edit?usp=sharing',
+    'Biznesa plāns CH₄ Future': 'https://docs.google.com/document/d/14MXXMj_ovYobuHf10LbPm7Fvm4gfma5a/edit?usp=sharing',
+    'Finanšu modelis': 'https://docs.google.com/spreadsheets/d/1X10pC83J1xMUrekyjNhRlw9uhSs9rzZj/edit?usp=sharing',
+    'Budžeta piedāvājums': 'https://docs.google.com/document/d/14MXXMj_ovYobuHf10LbPm7Fvm4gfma5a/edit?usp=sharing',
+    'Biokona piedāvājums': 'https://drive.google.com/file/d/1WHWnBMy4gIN0Sii_1-TE3vnnM5brqqoZ/view?usp=sharing',
+    'Licences un atļaujas': 'https://drive.google.com/file/d/1JA-64lJtSLbZJEK0NmMoyaHLmBQk9Piy/view?usp=sharing'
+  };
+  
+  const link = downloadLinks[documentName || ''];
+  if (link) {
+    return `<a href="${link}" class="download-button" target="_blank">📄 Lejupielādēt "${documentName}"</a>`;
+  }
+  
+  return `<p style="color: #dc3545;">❌ Dokuments nav atrasts</p>`;
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
+    // Rate limiting
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const rateCheck = checkRateLimit(ip);
+    
+    if (!rateCheck.allowed) {
+      console.log('⚠️ Rate limit exceeded for IP:', ip);
+      return NextResponse.json(
+        { 
+          error: 'Too many requests. Please wait before sending another email.',
+          retryAfter: rateCheck.resetTime 
+        },
+        { status: 429 }
+      );
+    }
+
+    const requestData = await request.json();
+    
+    console.log('Email API called:', { ...requestData, data: '[sanitized]' });
+
+    // Handle different request types
+    if (requestData.type === 'precise_offer') {
+      const { type, data } = requestData;
+      
+      // Validate input data
+      const validation = validateOfferData(data);
+      if (!validation.isValid) {
+        return NextResponse.json(
+          { error: 'Invalid input data', details: validation.errors },
+          { status: 400 }
+        );
+      }
+      
+      // Sanitize inputs
+      const sanitizedData = {
+        ...data,
+        name: sanitizeInput(data.name),
+        email: sanitizeInput(data.email),
+        phone: sanitizeInput(data.phone),
+        company: data.company ? sanitizeInput(data.company) : '',
+        details: data.details ? sanitizeInput(data.details) : ''
+      };
+
+      // Generate email content for precise offer
+      const template = EMAIL_TEMPLATES['precise_offer'];
+      const subject = template.subject();
+      const html = template.html(sanitizedData.name, sanitizedData);
+
+      // Send email to customer
+      const emailResult = await simulateEmailSending(
+        'precise_offer',
+        sanitizedData.email, 
+        sanitizedData.name,
+        sanitizedData
+      );
+
+      // Send DETAILED notification to company about the precise offer request
+      const companySubject = `🚨 [PRECĪZA PIEDĀVĀJUMA PIEPRASĪJUMS] ${sanitizedData.name} - ${sanitizedData.serviceName}`;
+      const companyHtml = generateCompanyNotificationHtml(sanitizedData);
+      
+      const companyEmailResult = await simulateCompanyNotification(
+        'tsv@metan.lv',
+        companySubject,
+        companyHtml,
+        sanitizedData
+      );
+      
+      console.log('📧 Company notification sent:', companyEmailResult ? 'SUCCESS' : 'FAILED');
+
+      if (emailResult) {
+        console.log('✅ Precise offer emails sent successfully to:', sanitizedData.email);
+        
+        return NextResponse.json({ 
+          success: true, 
+          message: 'Precise offer request sent successfully',
+          conversion_data: {
+            type: 'precise_offer',
+            timestamp: new Date().toISOString(),
+            should_track: true
+          }
+        });
+      } else {
+        throw new Error('Email sending failed');
+      }
+    } else {
+      // Handle legacy request format with validation
+      const { to, name, type, data } = requestData;
+      
+      if (!name || !type) {
+        return NextResponse.json(
+          { error: 'Missing required fields: name, type' },
+          { status: 400 }
+        );
+      }
+      
+      // For investor verified emails, always send to company email
+      const actualEmailTo = (type === 'investor_verified') ? 'tsv@metan.lv' : (to || (data && data.email) || 'tsv@metan.lv');
+      
+      // Validate email only if it's provided
+      if (actualEmailTo !== 'tsv@metan.lv' && !validateEmail(actualEmailTo)) {
+        return NextResponse.json(
+          { error: 'Invalid email format' },
+          { status: 400 }
+        );
+      }
+      
+      // Sanitize inputs
+      const sanitizedTo = sanitizeInput(to);
+      const sanitizedName = sanitizeInput(name);
+
+      // Get email template
+      const template = EMAIL_TEMPLATES[type];
+      if (!template) {
+        return NextResponse.json(
+          { error: 'Invalid email type' },
+          { status: 400 }
+        );
+      }
+
+      // Generate email content
+      const documentName = type === 'document_request' && data.documentRequested 
+        ? sanitizeInput(data.documentRequested)
+        : 'Dokumenta pieprasījums';
+      
+      const subject = type === 'document_request' 
+        ? template.subject(documentName)
+        : type === 'investor_verified'
+        ? (template as any).subject(sanitizedName)
+        : (template as any).subject();
+      
+      const html = type === 'document_request'
+        ? template.html(sanitizedName, documentName)
+        : type === 'investor_verified'
+        ? (template as any).html(sanitizedName, data)
+        : (template as any).html(sanitizedName);
+
+      const emailResult = await simulateEmailSending(
+        type as 'document_request' | 'contact_submission' | 'precise_offer' | 'investor_verified',
+        actualEmailTo, 
+        sanitizedName,
+        { 
+          documentName: documentName,
+          documentRequested: documentName,
+          senderEmail: (data && data.email) || to,
+          ...data
+        }
+      );
+
+      // Send company notifications for specific types
+      if (type === 'contact_submission') {
+        const companySubject = `[JAUNS KONTAKTS] ${sanitizedName} - ${data.service || 'Vispārīgs jautājums'}`;
+        const companyHtml = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>JAUNS KONTAKTS NO MĀJASLAPAS</title>
+            <style>
+              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+              .header { background: #dc3545; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
+              .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
+              .data-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+              .data-table td { padding: 8px; border-bottom: 1px solid #ddd; }
+              .data-table .label { font-weight: bold; background: #f5f5f5; width: 40%; }
+              .highlight { background: #fff3cd; padding: 15px; border-radius: 6px; margin: 15px 0; }
+              .from-info { background: #e3f2fd; padding: 15px; border-radius: 6px; margin: 15px 0; border-left: 4px solid #2196f3; }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <h1 style="margin: 0;">📧 JAUNS KONTAKTS NO MĀJASLAPAS</h1>
+              <p>Saņemts: ${new Date().toLocaleString('lv-LV')}</p>
+            </div>
+            <div class="content">
+              <div class="from-info">
+                <h3 style="margin: 0 0 10px 0; color: #1976d2;">✉️ No: ${sanitizedName}</h3>
+                <p style="margin: 0;"><strong>E-pasts:</strong> ${data.email || 'Nav norādīts'}</p>
+                <p style="margin: 0;"><strong>Telefons:</strong> ${data.phone || 'Nav norādīts'}</p>
+              </div>
+              
+              <h2>Kontakta informācija:</h2>
+              <table class="data-table">
+                <tr>
+                  <td class="label">Pakalpojums:</td>
+                  <td><strong>${data.service || 'Nav norādīts'}</strong></td>
+                </tr>
+                <tr>
+                  <td class="label">Ziņojums:</td>
+                  <td>${data.message || 'Nav norādīts'}</td>
+                </tr>
+                <tr>
+                  <td class="label">Kontakta laiks:</td>
+                  <td>${new Date().toLocaleString('lv-LV')}</td>
+                </tr>
+              </table>
+
+              <div class="highlight">
+                <p style="margin: 0;"><strong>📞 DARBĪBA:</strong><br>
+                Atbilde uz <a href="mailto:${data.email}">${data.email}</a> vai zvaniet uz ${data.phone || 'norādīto tālruņa numuru'}</p>
+              </div>
+
+              <p><strong>Avots:</strong> Kontakta forma metan.lv<br>
+              <strong>Pieprasījuma ID:</strong> CF-${Date.now()}</p>
+            </div>
+          </body>
+          </html>
+        `;
+        await simulateEmailSending(
+          'contact_submission',
+          'tsv@metan.lv', 
+          sanitizedName,
+          {
+            email: data.email,
+            phone: data.phone,
+            service: data.service,
+            message: data.message,
+            senderEmail: data.email
+          }
+        );
+      } else if (type === 'document_request') {
+        // Notification for document requests
+        const companySubject = `[DOKUMENTS PIEPRASĪTS] ${documentName} - ${sanitizedName}`;
+        const companyHtml = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <title>DOKUMENTS PIEPRASĪTS</title>
+            <style>
+              body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+              .header { background: #ff9800; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
+              .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
+              .from-info { background: #e3f2fd; padding: 15px; border-radius: 6px; margin: 15px 0; border-left: 4px solid #2196f3; }
+              .doc-info { background: #fff3e0; padding: 15px; border-radius: 6px; margin: 15px 0; border-left: 4px solid #ff9800; }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <h1 style="margin: 0;">📄 DOKUMENTS PIEPRASĪTS</h1>
+              <p>Saņemts: ${new Date().toLocaleString('lv-LV')}</p>
+            </div>
+            <div class="content">
+              <div class="from-info">
+                <h3 style="margin: 0 0 10px 0; color: #1976d2;">👤 Pieprasitājs: ${sanitizedName}</h3>
+                <p style="margin: 0;"><strong>Atbilde uz:</strong> ${actualEmailTo}</p>
+              </div>
+              
+              <div class="doc-info">
+                <h3 style="margin: 0 0 10px 0; color: #f57c00;">📄 Pieprasītais dokuments:</h3>
+                <p style="margin: 0; font-size: 18px; font-weight: bold;">${documentName}</p>
+              </div>
+
+              <p><strong>Avots:</strong> Dokumentu lapa metan.lv<br>
+              <strong>Pieprasījuma ID:</strong> DOC-${Date.now()}<br>
+              <strong>Laiks:</strong> ${new Date().toLocaleString('lv-LV')}</p>
+            </div>
+          </body>
+          </html>
+        `;
+        await simulateEmailSending(
+          'document_request',
+          'tsv@metan.lv',
+          sanitizedName,
+          {
+            documentName: documentName,
+            documentRequested: documentName,
+            senderEmail: actualEmailTo === 'tsv@metan.lv' ? undefined : actualEmailTo
+          }
+        );
+      }
+
+      if (emailResult) {
+        console.log('✅ Email sent successfully to:', sanitizedTo);
+        
+        return NextResponse.json({ 
+          success: true, 
+          message: 'Email sent successfully',
+          conversion_data: {
+            type: type,
+            timestamp: new Date().toISOString(),
+            should_track: true
+          }
+        });
+      } else {
+        throw new Error('Email sending failed');
+      }
+    }
+
+  } catch (error) {
+    console.error('Email API error:', error);
+    return NextResponse.json(
+      { 
+        error: 'Failed to send email',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// Симуляция отправки email с SMTP
+async function simulateEmailSending(
+  type: EmailType, 
+  recipientEmail: string, 
+  name: string, 
+  data?: any
+): Promise<boolean> {
+  console.log(`📧 Preparing ${type} email for: ${recipientEmail}`);
+  
+  const transporter = createTransporter();
+  if (!transporter) {
+    console.log('⚠️ No SMTP configuration, will log email instead');
+    logEmailToConsole(type, recipientEmail, name, data);
+    return true;
+  }
+
+  try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
+    const template = EMAIL_TEMPLATES[type];
+    let subject = '';
+    let htmlContent = '';
+    let attachments: any[] = [];
+
+    // Подготовка контента в зависимости от типа email
+    if (type === 'contact_submission') {
+      subject = template.subject(data?.subject);
+      htmlContent = template.html(
+        name, 
+        data?.email, 
+        data?.phone, 
+        data?.message, 
+        data?.subject
+      );
+    } else if (type === 'investor_notification') {
+      subject = template.subject();
+      htmlContent = template.html(name, data);
+    } else if (type === 'document_request') {
+      // 📄 ПОПЫТКА ПОЛУЧИТЬ PDF ДОКУМЕНТ
+      console.log('📎 Attempting to attach PDF for:', data?.documentName);
+      const pdfData = await getPDFDocument(data?.documentName || '');
+      
+      let hasAttachment = false;
+      if (pdfData) {
+        attachments.push({
+          filename: pdfData.filename,
+          content: pdfData.buffer,
+          contentType: 'application/pdf',
+          encoding: 'base64'
+        });
+        hasAttachment = true;
+        console.log(`✅ PDF attachment prepared: ${pdfData.filename}, size: ${(pdfData.buffer.length / 1024).toFixed(1)} KB`);
+      } else {
+        console.log('⚠️ Could not fetch PDF, will include download link instead');
+      }
+      
+      subject = template.subject(data?.documentName);
+      htmlContent = template.html(name, data?.documentName, hasAttachment);
+    } else {
+      // Fallback для других типов
+      subject = template.subject?.() || 'METAN.LV Paziņojums';
+      htmlContent = template.html?.(name, data) || '<p>Paziņojums no METAN.LV</p>';
+    }
+
+    // Настройка email
+    const mailOptions = {
+      from: `"METAN.LV" <${process.env.SMTP_USER}>`,
+      to: recipientEmail,
+      subject: subject,
+      html: htmlContent,
+      replyTo: data?.senderEmail || data?.email || 'tsv@metan.lv',
+      attachments: attachments.length > 0 ? attachments : undefined,
+      contentType: "text/html; charset=UTF-8",
+      // Улучшенные заголовки против спама
+      headers: {
+        'X-Mailer': 'METAN.LV System',
+        'List-Unsubscribe': '<mailto:tsv@metan.lv?subject=unsubscribe>',
+        'X-Auto-Response-Suppress': 'OOF, DR, NDR, RN, NRN',
+        'Authentication-Results': 'gmail.com; spf=pass',
+        'X-Spam-Score': '0',
+        ...(type === 'precise_offer' ? { 
+          'X-Business-Priority': 'customer-confirmation',
+          'X-Message-Category': 'transactional'
+        } : {}),
+        ...(type === 'document_request' ? { 
+          'X-Business-Priority': 'document-delivery',
+          'X-Message-Category': 'transactional'
+        } : {}),
+        ...(type === 'contact_submission' ? { 
+          'X-Business-Priority': 'customer-thank-you',
+          'X-Message-Category': 'transactional'
+        } : {})
+      }
+    };
+
+    console.log(`📨 Sending email: ${subject}`);
+    if (attachments.length > 0) {
+      console.log(`📎 With ${attachments.length} attachment(s):`, attachments.map(a => a.filename));
+    }
+    
+process.stdout.write("MAILDEBUG_MAIN " + JSON.stringify({ to: recipientEmail, replyTo: mailOptions.replyTo, from: mailOptions.from, kind: "company_notification" }) + "\n");
+  const info = await transporter.sendMail(mailOptions);
+    
+    console.log('✅ Email sent successfully:', {
+      messageId: info.messageId,
+      to: recipientEmail,
+      subject: subject,
+      hasAttachments: attachments.length > 0,
+      attachmentCount: attachments.length
+    });
+    
+    return true;
+  } catch (error) {
+    console.error('❌ Email sending failed:', error);
+    console.log('📧 Fallback: logging email to console');
+    logEmailToConsole(type, recipientEmail, name, data);
+    return false;
+  }
+}
+
+// Функция для отправки уведомлений компании
+async function simulateCompanyNotification(
+  recipientEmail: string,
+  subject: string,
+  htmlContent: string,
+  data: any
+): Promise<boolean> {
+  console.log(`📧 Sending company notification to: ${recipientEmail}`);
+  // Формируем человекочитаемый Subject/HTML для контактных лидов
+
+  { const s = (v:any)=> String(v ?? "");
+
+    const n = s(data?.name || data?.fullName || data?.clientName);
+
+    const phone = s(data?.phone || data?.tel);
+
+    const em = s(data?.email || data?.senderEmail);
+
+    if (em || phone) {
+
+      subject = `[CONTACT] ${n || "Без имени"} — ${phone || "нет телефона"} — ${em || "-"}`;
+
+      htmlContent = `
+
+        <div style="font-family:Arial,sans-serif;line-height:1.6;color:#222;">
+
+          <h2>Новое обращение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${n || "-"}<br>
+
+          <strong>Email:</strong> ${em || "-"}<br>
+
+          <strong>Телефон:</strong> ${phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${s(data?.service) || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${s(data?.message) || "-"}</p>
+
+          <hr><p style="font-size:12px;color:#777;">Автоматическое уведомление сайта METAN.LV</p>
+
+        </div>`;
+
+    }
+
+  }
+  
+  const transporter = createTransporter();
+  if (!transporter) {
+    console.log('⚠️ No SMTP configuration, logging company notification to console');
+    console.log('📧 COMPANY NOTIFICATION LOG:');
+    console.log('To:', recipientEmail);
+    console.log('Subject:', subject);
+    console.log('Data:', data);
+    console.log('HTML length:', htmlContent.length);
+    console.log('---');
+    return true;
+  }
+
+  try {
+    // Генерация содержимого для контактной формы
+
+    if (data?.service && data?.email) {
+
+
+      htmlContent = `
+
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">
+
+          <h2>📩 Новое сообщение с METAN.LV</h2>
+
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>
+
+          <strong>Email:</strong> ${data?.email || "-"}<br>
+
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>
+
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>
+
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>
+
+          <hr>
+
+          <p style="font-size:12px;color:#777;">Отправлено автоматически с сайта METAN.LV</p>
+
+        </div>`;
+
+    }
+    const mailOptions = {
+      from: `"METAN.LV Sistēma" <${process.env.SMTP_USER}>`,
+      to: recipientEmail,
+      subject: subject,
+      html: htmlContent,
+      replyTo: data.email || 'noreply@metan.lv',
+      contentType: "text/html; charset=UTF-8",
+      // Улучшенные заголовки против спама
+      priority: 'high' as const,
+      headers: {
+        'X-Priority': '1',
+        'X-MSMail-Priority': 'High',
+        'Importance': 'high',
+        'X-Mailer': 'METAN.LV Business System',
+        'List-Unsubscribe': '<mailto:tsv@metan.lv?subject=unsubscribe>',
+        'X-Auto-Response-Suppress': 'OOF, DR, NDR, RN, NRN',
+        'Authentication-Results': 'gmail.com; spf=pass',
+        'X-Spam-Score': '0',
+        'X-Business-Priority': 'critical-lead',
+      }
+    };
+
+    console.log(`📨 Sending company notification: ${subject}`);
+process.stdout.write("MAILDEBUG_MAIN " + JSON.stringify({ to: recipientEmail, replyTo: mailOptions.replyTo, from: mailOptions.from, kind: "company_notification" }) + "\n");
+process.stdout.write("MAILDEBUG_COMPANY " + JSON.stringify({ to: recipientEmail, replyTo: mailOptions.replyTo, from: mailOptions.from, subject: mailOptions.subject }) + "\n");
+    const info = await transporter.sendMail(mailOptions);
+    
+    console.log('✅ Company notification sent successfully:', {
+      messageId: info.messageId,
+      to: recipientEmail,
+      subject: subject,
+      priority: 'high',
+      headers: 'anti-spam enabled'
+    });
+    
+    return true;
+  } catch (error) {
+    console.error('❌ Company notification failed:', error);
+    console.log('📧 Fallback: logging company notification to console');
+    console.log('📧 COMPANY NOTIFICATION LOG:');
+    console.log('To:', recipientEmail);
+    console.log('Subject:', subject);
+    console.log('Data:', data);
+    console.log('---');
+    return false;
+  }
+}
+
+// Generate company notification HTML
+function generateCompanyNotificationHtml(data: any): string {
+  const currentTime = new Date().toLocaleString('lv-LV', { timeZone: 'Europe/Riga' });
+  const timestamp = Date.now();
+  
+  return `<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="utf-8">
+  <title>METAN.LV - Jauns pieprasījums</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 700px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; padding: 25px; border-radius: 8px 8px 0 0; text-align: center; }
+    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px; }
+    .data-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    .data-table td { padding: 12px 8px; border-bottom: 1px solid #ddd; }
+    .data-table .label { font-weight: bold; background: #f5f5f5; width: 40%; }
+    .highlight { background: #fff3cd; border: 2px solid #ffc107; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .from-info { background: #e3f2fd; padding: 20px; border-radius: 8px; margin: 15px 0; border-left: 6px solid #2196f3; }
+    .urgent { background: #f8d7da; border: 2px solid #dc3545; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .calc-summary { background: #d4edda; border: 2px solid #28a745; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .contact-actions { background: #fff; border: 3px solid #007bff; padding: 25px; border-radius: 8px; margin: 20px 0; text-align: center; }
+    .price-highlight { font-size: 24px; color: #28a745; font-weight: bold; }
+    .action-button { display: inline-block; background: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1 style="margin: 0; font-size: 28px;">🚨 JAUNS PRECĪZA PIEDĀVĀJUMA PIEPRASĪJUMS</h1>
+    <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Saņemts: ${currentTime}</p>
+    <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 6px; margin-top: 15px;">
+      <strong style="font-size: 18px;">⏰ ATBILDE NEPIECIEŠAMA 24 STUNDU LAIKĀ!</strong>
+    </div>
+  </div>
+  <div class="content">
+    <div class="from-info">
+      <h2 style="margin: 0 0 15px 0; color: #1976d2; font-size: 22px;">👤 JAUNS KLIENTS: ${data.name}</h2>
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <p style="margin: 5px 0;"><strong>📧 E-pasts:</strong></p>
+          <a href="mailto:${data.email}" style="color: #1976d2; font-weight: bold; font-size: 16px;">${data.email}</a>
+        </div>
+        <div>
+          <p style="margin: 5px 0;"><strong>📞 Telefons:</strong></p>
+          <a href="tel:${data.phone}" style="color: #1976d2; font-weight: bold; font-size: 16px;">${data.phone}</a>
+        </div>
+      </div>
+      ${data.company ? `<p style="margin: 10px 0 0 0;"><strong>🏢 Uzņēmums:</strong> <span style="font-weight: bold; color: #2c5530;">${data.company}</span></p>` : ''}
+    </div>
+
+    <div class="calc-summary">
+      <h3 style="margin: 0 0 15px 0; color: #155724; font-size: 20px;">💰 APRĒĶINĀTAIS PIEDĀVĀJUMS</h3>
+      <table class="data-table" style="background: white; border-radius: 6px;">
+        <tr>
+          <td class="label">Pakalpojums:</td>
+          <td><strong style="color: #2c5530; font-size: 16px;">${data.serviceName || 'Nav norādīts'}</strong></td>
+        </tr>
+        <tr>
+          <td class="label">Biežums:</td>
+          <td><strong>${data.frequency || 'Nav norādīts'}</strong></td>
+        </tr>
+        <tr>
+          <td class="label">Attālums:</td>
+          <td><strong>${data.distance || '15'} km</strong></td>
+        </tr>
+        ${data.customerAddress && data.customerAddress !== 'Nav norādīta' ? `
+        <tr>
+          <td class="label">Objekta adrese:</td>
+          <td><strong style="color: #2c5530;">${data.customerAddress}</strong></td>
+        </tr>
+        ` : ''}
+        <tr style="border-top: 2px solid #28a745;">
+          <td class="label" style="background: #d4edda;">ORIENTĒJOŠĀ CENA:</td>
+          <td style="background: #d4edda;"><span class="price-highlight">${data.monthlyPrice || 'Nav aprēķināta'}€/mēn</span></td>
+        </tr>
+        ${data.yearlyContract ? `
+        <tr>
+          <td class="label">Gada līgums:</td>
+          <td><strong style="color: #007bff; font-size: 16px;">✅ AR 20% ATLAIDI</strong></td>
+        </tr>
+        ` : ''}
+        ${data.preferredContactTime ? `
+        <tr>
+          <td class="label">Vēlamais zvana laiks:</td>
+          <td><strong style="color: #6f42c1;">${data.preferredContactTime}</strong></td>
+        </tr>
+        ` : ''}
+      </table>
+    </div>
+
+    ${data.details ? `
+    <div class="highlight">
+      <h3 style="margin: 0 0 10px 0; color: #856404;">💬 KLIENTA KOMENTĀRS:</h3>
+      <p style="margin: 0; font-style: italic; color: #6c757d; font-size: 16px; line-height: 1.6;">"${data.details}"</p>
+    </div>
+    ` : ''}
+
+    <div class="urgent">
+      <h3 style="margin: 0 0 15px 0; color: #721c24; font-size: 20px;">⚠️ STEIDZĪGA RĪCĪBA NEPIECIEŠAMA!</h3>
+      <ul style="margin: 10px 0; padding-left: 20px; color: #721c24;">
+        <li><strong>Klientam ir apsolīta atbilde 24 stundu laikā</strong></li>
+        <li>Viņš ir aizpildījis detalizētu kalkulatoru</li>
+        <li>Redzējis precīzu cenu un ir gatavs lēmumam</li>
+        <li>Augsta konversijas iespēja! 🎯</li>
+      </ul>
+    </div>
+
+    <div class="contact-actions">
+      <h3 style="margin: 0 0 20px 0; color: #007bff; font-size: 22px;">📞 DARBĪBAS PLĀNS</h3>
+      <div style="margin: 20px 0;">
+        <a href="tel:${data.phone}" class="action-button" style="background: #28a745;">📞 ZVANĪT TŪLĪT: ${data.phone}</a>
+        <a href="mailto:${data.email}" class="action-button" style="background: #007bff;">📧 RAKSTĪT: ${data.email}</a>
+      </div>
+      <p style="margin: 15px 0; color: #495057; font-size: 14px;">
+        <strong>Ieteicamā secība:</strong><br>
+        1️⃣ Zvanīt pirmās 2 stundās<br>
+        2️⃣ Ja neatbild - nosūtīt detalizētu e-pastu<br>
+        3️⃣ Atkārtot zvanu pēc 4 stundām
+      </p>
+    </div>
+
+    <div style="background: #e9ecef; padding: 15px; border-radius: 6px; margin: 20px 0;">
+      <p style="margin: 0; font-size: 14px; color: #495057;">
+        <strong>📍 Pieprasījuma detaļas:</strong><br>
+        • Avots: Kalkulators metan.lv<br>
+        • ID: PO-${timestamp}<br>
+        • Laiks: ${new Date().toISOString()}<br>
+        • IP: ${data.customerIP || 'Nav zināms'}<br>
+        • Prioritāte: <span style="color: #dc3545; font-weight: bold;">AUGSTA</span>
+      </p>
+    </div>
+  </div>
+</body>
+</html>`;
+}
