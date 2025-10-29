@@ -1,41 +1,53 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ===============================
+# metan.lv / core repository
+# ===============================
 
-# dependencies
-/node_modules
-/.pnp
+# --- SECURITY: secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Node / Next.js ---
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+.pnp/
 .pnp.js
 
-# testing
-/coverage
+# --- Next / Vercel ---
+.vercel
 
-# next.js
-/.next/
-/out/
+# --- Backups / archives ---
+_backup_*/
+*.bak
+*.backup.*
+*.broken.*
+*.ORIGINAL_*
+*.tar.gz
+*.zip
 
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# --- Logs ---
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# local env files
-.env*.local
+# --- Certificates / keys ---
+*.pem
+*.key
+*.p12
+*.pfx
 
-# vercel
-.vercel
-
-# typescript
+# --- TypeScript ---
 *.tsbuildinfo
 next-env.d.ts
 
-# local secrets and experimental backups
-.env.production
-*.bak
-*.backup
-app/api/send-email/route.ts.*
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

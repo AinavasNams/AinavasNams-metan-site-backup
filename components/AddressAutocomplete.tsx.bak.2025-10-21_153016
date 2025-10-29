@@ -1,0 +1,104 @@
+// components/AddressAutocomplete.tsx
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Input } from '@/components/ui/input';
+import { Loader2 } from 'lucide-react';
+
+interface Suggestion {
+  label: string;
+  value: string;
+}
+
+export default function AddressAutocomplete({
+  onSelect,
+  placeholder = 'Ievadiet adresi...',
+}: {
+  onSelect: (value: string) => void;
+  placeholder?: string;
+}) {
+  const [value, setValue] = useState('');
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState(false);
+  const [useFallback, setUseFallback] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      if (value.length < 2) return;
+
+      setLoading(true);
+      setApiError(false);
+      fetch(`/api/autocomplete?query=${encodeURIComponent(value)}`, {
+        signal: controller.signal,
+      })
+        .then(async (res) => {
+          const data = await res.json();
+          if (res.ok && data?.status === 'OK') {
+            setSuggestions(data.results);
+            setUseFallback(false);
+          } else {
+            console.warn('🔁 Falling back to local search', data);
+            fallbackSearch();
+          }
+        })
+        .catch((err) => {
+          console.error('❌ Autocomplete API error:', err);
+          fallbackSearch();
+        })
+        .finally(() => setLoading(false));
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [value]);
+
+  function fallbackSearch() {
+    setUseFallback(true);
+    setApiError(true);
+    // Dummy fallback list — replace with better list
+    const fallbackCities = ['Rīga', 'Jelgava', 'Daugavpils', 'Liepāja'];
+    const filtered = fallbackCities
+      .filter((city) => city.toLowerCase().startsWith(value.toLowerCase()))
+      .map((city) => ({ label: city, value: city }));
+    setSuggestions(filtered);
+  }
+
+  return (
+    <div className="w-full relative">
+      <Input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={placeholder}
+        className={useFallback ? 'bg-yellow-50' : ''}
+      />
+      {loading && (
+        <div className="absolute top-2 right-3">
+          <Loader2 className="animate-spin w-4 h-4 text-gray-500" />
+        </div>
+      )}
+      {suggestions.length > 0 && (
+        <ul className="absolute z-50 bg-white border w-full shadow rounded max-h-48 overflow-auto mt-1">
+          {suggestions.map((sug, i) => (
+            <li
+              key={i}
+              onMouseDown={(e)=>{e.preventDefault();}} onClick={() => {
+                onSelect(sug.value);
+                setValue(sug.label);
+                setSuggestions([]);
+              }}
+              className="p-2 hover:bg-gray-100 cursor-pointer"
+            >
+              {sug.label}
+            </li>
+          ))}
+        </ul>
+      )}
+      {apiError && (
+        <p className="text-xs text-red-500 mt-1">
+          Neizdevās iegūt ieteikumus no API — tiek izmantots lokālais režīms.
+        </p>
+      )}
+    </div>
+  );
+}
