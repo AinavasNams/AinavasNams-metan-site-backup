@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
               Privātuma politika
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
-              SIA "Ainavas Nams" apņemas aizsargāt jūsu privātumu un personas datus 
+              SIA &quot;Ainavas Nams&quot; apņemas aizsargāt jūsu privātumu un personas datus
               saskaņā ar GDPR un Latvijas normatīvajiem aktiem.
             </p>
           </motion.div>
@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="bg-metan-light/30 p-4 rounded-lg">
-                    <p className="font-semibold text-metan-gray">SIA "Ainavas Nams"</p>
+                    <p className="font-semibold text-metan-gray">SIA &quot;Ainavas Nams&quot;</p>
                     <p className="text-gray-600">Reģ. Nr.: 40203328328</p>
                     <p className="text-gray-600">Adrese: Rūpniecības iela 2D, Bēne, Zemgales novads, LV-3017</p>
                     <p className="text-gray-600">E-pasts: tsv@metan.lv</p>

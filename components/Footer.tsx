@@ -28,7 +28,7 @@ export function Footer() {
               METAN.LV
             </Link>
             <p className="text-gray-300 mb-6 max-w-md">
-              SIA "Ainavas Nams" – uzticams partneris atkritumu apsaimniekošanā un biometāna ražošanā Latvijā.
+              SIA &quot;Ainavas Nams&quot; – uzticams partneris atkritumu apsaimniekošanā un biometāna ražošanā Latvijā.
             </p>
             <div className="flex gap-4">
               <a 
@@ -108,7 +108,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-600 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-gray-400 text-sm">
-            © 2025 SIA "Ainavas Nams". Visas tiesības aizsargātas.
+            © 2025 SIA &quot;Ainavas Nams&quot;. Visas tiesības aizsargātas.
           </div>
           <div className="flex gap-6 text-sm">
             <Link href="/privatuma-politika" className="text-gray-400 hover:text-white transition-colors">

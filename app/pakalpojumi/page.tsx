@@ -142,7 +142,7 @@ export default function ServicesPage() {
               Mūsu pakalpojumi
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              SIA "Ainavas Nams" nodrošina pilnu organisko atkritumu apsaimniekošanas ciklu. 
+              SIA &quot;Ainavas Nams&quot; nodrošina pilnu organisko atkritumu apsaimniekošanas ciklu.
               Uzņēmuma piedāvātie pakalpojumi ir sertificēti, legāli un piemēroti pārtikas ražotājiem, 
               HoReCa klientiem un rūpnieciskiem objektiem.
             </p>

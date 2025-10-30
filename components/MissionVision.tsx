@@ -32,7 +32,7 @@ export function MissionVision() {
                   Mēs veidojam tīru enerģiju no tā, ko agrāk sauca par atkritumiem.
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  SIA "Ainavas Nams" pārveido taukus, pārtikas un lauksaimniecības atkritumus ilgtspējīgā enerģijā, 
+                  SIA &quot;Ainavas Nams&quot; pārveido taukus, pārtikas un lauksaimniecības atkritumus ilgtspējīgā enerģijā, 
                   videi draudzīgos materiālos un tehnoloģiskajā CO₂.
                 </p>
                 <p className="text-gray-600 leading-relaxed">
@@ -116,11 +116,11 @@ export function MissionVision() {
                 No biogāzes stacijas 2014. gadā — līdz biometāna ekosistēmai 2025. gadā
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                SIA "Ainavas Nams" stāsts sākas vēl pirms uzņēmuma juridiskās reģistrācijas. Tā pamatā ir komanda, 
-                pieredze un infrastruktūra no SIA "Zemgales Enerģijas Parks", kas kopš 2014. gada darbojas biogāzes jomā Zemgales reģionā.
+                SIA &quot;Ainavas Nams&quot; stāsts sākas vēl pirms uzņēmuma juridiskās reģistrācijas. Tā pamatā ir komanda, 
+                pieredze un infrastruktūra no SIA &quot;Zemgales Enerģijas Parks&quot;, kas kopš 2014. gada darbojas biogāzes jomā Zemgales reģionā.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Kopš 2021. gada zem "Zemgales Enerģijas Parks" zīmola darbojas rūpnieciska biogāzes stacija, 
+                Kopš 2021. gada zem &quot;Zemgales Enerģijas Parks&quot; zīmola darbojas rūpnieciska biogāzes stacija, 
                 kas ietver fermentācijas reaktorus, izejvielu pieņemšanas sistēmu, gāzes attīrīšanas līniju 
                 un elektroenerģijas ražošanas licenci.
               </p>
@@ -134,7 +134,7 @@ export function MissionVision() {
                     2014
                   </div>
                   <div className="text-sm text-gray-600">
-                    SIA "Zemgales Enerģijas Parks" dibināšana, stacijas uzsākšana
+                    SIA &quot;Zemgales Enerģijas Parks&quot; dibināšana, stacijas uzsākšana
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -150,7 +150,7 @@ export function MissionVision() {
                     2023
                   </div>
                   <div className="text-sm text-gray-600">
-                    SIA "Ainavas Nams" reģistrācija, biometāna projektēšana
+                    SIA &quot;Ainavas Nams&quot; reģistrācija, biometāna projektēšana
                   </div>
                 </div>
                 <div className="flex items-center gap-4">

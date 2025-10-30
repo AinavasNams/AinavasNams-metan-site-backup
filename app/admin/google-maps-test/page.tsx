@@ -123,7 +123,7 @@ export default function GoogleMapsTestPage() {
                   <ul className="text-sm text-gray-700 space-y-1 ml-4">
                     <li>• Перейдите в Google Cloud Console → Credentials</li>
                     <li>• Найдите ваш API ключ</li>
-                    <li>• В разделе "Application restrictions" добавьте:</li>
+                    <li>• В разделе &quot;Application restrictions&quot; добавьте:</li>
                     <li className="ml-4 font-mono text-xs bg-gray-100 p-1 rounded">metan.lv/*</li>
                     <li className="ml-4 font-mono text-xs bg-gray-100 p-1 rounded">*.metan.lv/*</li>
                     <li>• Убедитесь что включены API: Maps JavaScript API, Places API, Geocoding API</li>

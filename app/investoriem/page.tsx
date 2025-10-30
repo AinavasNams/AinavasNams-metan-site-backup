@@ -631,7 +631,7 @@ export default function InvestorsPage() {
               Investēt CH₄ Future projektā
             </h1>
             <p className="text-xl leading-relaxed mb-8 text-white/90">
-              SIA "Ainavas Nams" aicina stratēģiskos investorus piedalīties mūsdienīgas biometāna 
+              SIA &quot;Ainavas Nams&quot; aicina stratēģiskos investorus piedalīties mūsdienīgas biometāna
               ražošanas stacijas izveidē. Ilgtspējīgas investīcijas ar augstu atdevi un pārbaudītu infrastruktūru.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -1333,7 +1333,7 @@ export default function InvestorsPage() {
               <div>
                 <h3 className="text-lg font-semibold text-green-800 mb-2">E-pasts apstiprināts! 🎉</h3>
                 <p className="text-gray-600">
-                  Tagad varat piekļūt dokumentam "<strong>{selectedDocument?.title}</strong>"
+                  Tagad varat piekļūt dokumentam &quot;<strong>{selectedDocument?.title}</strong>&quot;
                 </p>
               </div>
               

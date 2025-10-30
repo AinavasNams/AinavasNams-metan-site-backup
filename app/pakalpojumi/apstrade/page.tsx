@@ -123,7 +123,7 @@ export default function MechanicalProcessingPage() {
               Mehāniskā apstrāde
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              SIA "Ainavas Nams" attīsta inovatīvus risinājumus organisko atkritumu mehāniskai apstrādei, 
+              SIA &quot;Ainavas Nams&quot; attīsta inovatīvus risinājumus organisko atkritumu mehāniskai apstrādei,
               ietverot centrifugēšanu, biopolimēru izstrādi un augstspiediena tīrīšanas pakalpojumus.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -305,7 +305,7 @@ export default function MechanicalProcessingPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-gray-600 text-lg">
-                  Industriāla centrifūga ar jaudu līdz 3,5 t/h. Nodrošina: SIA "Biomotorai Latvia". 
+                  Industriāla centrifūga ar jaudu līdz 3,5 t/h. Nodrošina: SIA &quot;Biomotorai Latvia&quot;.
                   Pašlaik — uzstādīšanas un dokumentālās saskaņošanas procesā.
                 </p>
                 
