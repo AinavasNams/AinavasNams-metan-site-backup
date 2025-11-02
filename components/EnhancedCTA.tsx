@@ -1,10 +1,13 @@
+"use client";
+"use client";
 'use client';
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Phone, Mail, Calculator, FileText, Clock, Shield } from 'lucide-react';
-import { trackCTA, trackPhoneConversion, trackContactMethod } from '@/components/Analytics';
+import { trackCTA, trackPhoneConversion } from '@/components/Analytics';
+import { trackContactMethod } from '@/lib/analytics';
 import { useRouter } from 'next/navigation';
 
 interface EnhancedCTAProps {

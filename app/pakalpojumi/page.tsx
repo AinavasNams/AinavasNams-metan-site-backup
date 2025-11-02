@@ -1,3 +1,5 @@
+"use client";
+"use client";
 'use client';
 
 import { useEffect } from 'react';
@@ -17,9 +19,9 @@ import {
   trackUserJourney, 
   trackServiceInterest,
   trackCTA,
-  trackContactMethod,
   trackPhoneConversion 
 } from '@/components/Analytics';
+import { trackContactMethod } from '@/lib/analytics';
 import { CustomerTestimonials } from '@/components/CustomerTestimonials';
 import { EnhancedCTA } from '@/components/EnhancedCTA';
 import { SimpleContactForm } from '@/components/SimpleContactForm';

@@ -1,5 +1,7 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
+import React from "react";
 import { Inter } from "next/font/google";
 
 import { TranslationProvider } from "@/components/TranslationProvider";
@@ -17,6 +19,14 @@ const inter = Inter({
   preload: true,
   fallback: ["system-ui", "arial", "sans-serif"],
 });
+
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+
+if (!GTM_ID) {
+  throw new Error(
+    "NEXT_PUBLIC_GTM_ID is not defined. Проверь .env.production и .env.production.example"
+  );
+}
 
 export const metadata: Metadata = {
   title: "METAN.LV - No organiskajiem atkritumiem līdz tīrai enerģijai",
@@ -53,14 +63,27 @@ export default function RootLayout({
         {/* Performance hints for analytics */}
         <link
           rel="preload"
-          href="https://www.googletagmanager.com/gtm.js?id=GTM-5QTWHWF6"
+          href={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
           as="script"
         />
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
 
+        {/* Инициализируем dataLayer до загрузки GTM */}
+        <Script id="init-datalayer" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'page_init',
+              timestamp: Date.now()
+            });
+          `}
+        </Script>
+
         {/* Google Tag Manager (direct, no Cloudflare gateway, no Zaraz) */}
-        <script
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){
@@ -75,7 +98,7 @@ export default function RootLayout({
                 j.async=true;
                 j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
                 f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-5QTWHWF6');
+              })(window,document,'script','dataLayer','${GTM_ID}');
             `,
           }}
         />
@@ -92,7 +115,7 @@ export default function RootLayout({
         {/* GTM noscript fallback: required for tag compliance */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5QTWHWF6"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
@@ -110,9 +133,8 @@ export default function RootLayout({
           <Toaster />
 
           {/* Cookie consent banner.
-             Если он продолжает инициировать свой Consent Mode, и это ломает консоль,
-             то временно закомментировать:
-             {/* <CookieConsent /> */}
+             Если он продолжает инициировать свой Consent Mode и ломает консоль,
+             временно убери компонент из дерева на время отладки.
           */}
           <CookieConsent />
 

@@ -1,3 +1,5 @@
+"use client";
+"use client";
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,10 +29,10 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { 
   trackPageView, 
   trackUserJourney, 
-  trackCalculatorUsage,
   trackROICalculation,
   trackCTA 
 } from '@/components/Analytics';
+import { trackCalculatorUsage } from '@/lib/analytics';
 import { EnhancedCTA } from '@/components/EnhancedCTA';
 
 interface CalculationInputs {

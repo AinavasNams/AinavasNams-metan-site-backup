@@ -1,3 +1,5 @@
+"use client";
+"use client";
 'use client';
 
 import { useState } from 'react';
@@ -9,7 +11,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Phone, Mail, Send, CheckCircle } from 'lucide-react';
-import { trackCTA, trackContactMethod } from '@/components/Analytics';
+import { trackCTA } from '@/components/Analytics';
+import { trackContactMethod } from '@/lib/analytics';
 import { trackContact, trackFormSubmission } from '@/lib/ga4-events';
 import { sendEmailNotification } from '@/lib/email-automation';
 

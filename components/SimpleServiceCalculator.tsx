@@ -193,12 +193,17 @@ export default function SimpleServiceCalculator() {
       const companyLat = parseFloat(process.env.NEXT_PUBLIC_COMPANY_LAT || '56.48078918457031');
       const companyLng = parseFloat(process.env.NEXT_PUBLIC_COMPANY_LNG || '23.057313919067383');
 
-      const res = await fetch(
-        `/api/calculate-distance?origin=${companyLat},${companyLng}&destination=${coords.lat},${coords.lng}`
-      );
+      const res = await fetch('/api/calculate-distance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          origin: `${companyLat},${companyLng}`,
+          destination: `${coords.lat},${coords.lng}`
+        }),
+      });
 
       const data = await res.json();
-      console.log('📊 Distance API response:', data);
+      console.log('📊 Distance API (POST) response:', data);
 
       if (data.status === 'OK' && typeof data.distance === 'number') {
         setDistance(data.distance);
