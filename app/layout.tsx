@@ -149,6 +149,25 @@ export default function RootLayout({
           <Analytics />
           */}
         </TranslationProvider>
+
+{/* GTM ready check */}
+<Script id="gtm-ready-check" strategy="afterInteractive">{`
+  function waitForGTM(maxWait = 5000) {
+    const start = Date.now();
+    const check = () => {
+      if (window.google_tag_manager) {
+        console.log("✅ GTM container loaded:", Object.keys(window.google_tag_manager));
+        window.dataLayer.push({ event: "gtm_ready" });
+      } else if (Date.now() - start < maxWait) {
+        setTimeout(check, 500);
+      } else {
+        console.warn("⚠️ GTM container still not found after 5s");
+      }
+    };
+    check();
+  }
+  window.addEventListener("load", () => setTimeout(waitForGTM, 1000));
+`}</Script>
       </body>
     </html>
   );

@@ -1,0 +1,131 @@
+import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
+
+// ✅ KONFIGURĀCIJA: BĀZE BĒNE
+const BASE_COORDS = { lat: 56.4815, lon: 23.0618 }; // Bēne, Dobeles novads
+
+// ✅ ZONU LOĢIKA (Cenas ar atlaidi -15%)
+function getZoneData(km: number) {
+  // Zona 1: 0-50 km
+  if (km <= 50) return { 
+    id: 'zone_1',
+    title: "Zona 1 (0-50 km)", 
+    price: 365, // Cena ar atlaidi
+    basePrice: 430 
+  };
+  
+  // Zona 2: 50-100 km
+  if (km <= 100) return { 
+    id: 'zone_2',
+    title: "Zona 2 (50-100 km)", 
+    price: 400, 
+    basePrice: 480 
+  };
+  
+  // Zona 3: 100-150 km
+  if (km <= 150) return { 
+    id: 'zone_3',
+    title: "Zona 3 (100-150 km)", 
+    price: 460, 
+    basePrice: 540 
+  };
+  
+  // Zona 4: 150-200 km
+  if (km <= 200) return { 
+    id: 'zone_4',
+    title: "Zona 4 (150-200 km)", 
+    price: 500, 
+    basePrice: 590 
+  };
+
+  // > 200 km (Individuāli)
+  return { 
+    id: 'individual',
+    title: "Ārpus 200 km zonas", 
+    price: null, 
+    basePrice: null 
+  };
+}
+
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371; 
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+
+    // 1. RĒĶINĀT
+    if (body.action === 'calculate') {
+      const { lat, lng } = body;
+      if (!lat || !lng) return NextResponse.json({ error: 'Coordinates required' }, { status: 400 });
+
+      const distance = calculateDistance(BASE_COORDS.lat, BASE_COORDS.lon, lat, lng);
+      const zoneData = getZoneData(distance);
+
+      return NextResponse.json({
+        distance: Math.round(distance),
+        zone: zoneData.title,
+        price: zoneData.price,
+        basePrice: zoneData.basePrice,
+        isIndividual: zoneData.price === null // Флаг для фронтенда
+      });
+    }
+
+    // 2. SŪTĪT PIETEIKUMU
+    if (body.action === 'submit_lead') {
+      const { phone, email, address, zone, price, distance, isIndividual } = body.data;
+
+     const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp.zoho.eu',
+  port: Number(process.env.SMTP_PORT) || 465,
+  secure: process.env.SMTP_SECURE === 'true' || true,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS || process.env.SMTP_PASSWORD,
+  },
+});
+
+      // Формируем тему письма
+      const subject = isIndividual 
+        ? `⚠️ INDIVIDUĀLS PIEPRASĪJUMS (>200km): ${phone}`
+        : `✅ Jauns Līguma Klients (Zona ${zone}): ${phone}`;
+
+      const mailOptions = {
+        from: `"Metan Kalkulators" <${process.env.SMTP_USER}>`, 
+        to: process.env.SMTP_USER,
+        replyTo: email || undefined,
+        subject: subject,
+        text: `
+          PIETEIKUMS NO PARTNERU LAPAS
+          
+          KLIENTS:
+          Telefons: ${phone}
+          E-pasts: ${email || '-'}
+          Adrese: ${address}
+          
+          APRĒĶINS (Bāze: Bēne):
+          Attālums: ~${distance} km
+          Zona: ${zone}
+          Cena (ar atlaidi): ${price ? price + ' EUR' : 'INDIVIDUĀLI'}
+          
+          Tips: Gada līgums (-15%)
+        `
+      };
+
+      await transporter.sendMail(mailOptions);
+      return NextResponse.json({ success: true });
+    }
+
+    return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
+
+  } catch (error) {
+    console.error('API Error:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
