@@ -1,0 +1,50 @@
+#!/bin/sed -f
+# === FUNCTION ISOLATION FIX ===
+
+# Remove stray braces near 1083–1084
+1083,1084d
+
+# Remove stray brace near 1367
+1367d
+
+# Normalize getPDFDocument by isolating its data/htmlContent usage
+458,480c\
+  // Safely handle data logging inside PDF generator\
+  let htmlContent = "";\
+  try {\
+    if (typeof data !== "undefined" && data?.service && data?.email) {\
+      htmlContent = `\
+        <div style="font-family: Arial, sans-serif; line-height:1.6; color:#222;">\
+          <h2>📩 Новое сообщение с METAN.LV</h2>\
+          <p><strong>Имя:</strong> ${data?.name || "-"}<br>\
+          <strong>Email:</strong> ${data?.email || "-"}<br>\
+          <strong>Телефон:</strong> ${data?.phone || "-"}<br>\
+          <strong>Услуга:</strong> ${data?.service || "-"}<br>\
+          <strong>Сообщение:</strong><br>${data?.message || "-"}</p>\
+          <hr>\
+        </div>`;\
+    }\
+  } catch (err) {\
+    console.error("⚠️ Error generating htmlContent in getPDFDocument:", err);\
+  }
+
+# Merge duplicate declarations in main POST handler (remove duplicates)
+760,812c\
+      const template = EMAIL_TEMPLATES["precise_offer"];\
+      const subject = template.subject();\
+      const html = template.html(sanitizedData.name, sanitizedData);\
+\
+      const emailResult = await simulateEmailSending(\
+        "precise_offer",\
+        sanitizedData.email,\
+        sanitizedData.name,\
+        sanitizedData\
+      );\
+\
+      const companySubject = `🚨 [PRECĪZA PIEDĀVĀJUMA PIEPRASĪJУМS] ${sanitizedData.name} - ${sanitizedData.serviceName || "N/A"}`;\
+      const companyHtml = generateCompanyNotificationHtml(sanitizedData);\
+      await simulateCompanyNotification("tsv@metan.lv", companySubject, companyHtml, sanitizedData);
+
+# Remove redundant closing brace
+1367d
+

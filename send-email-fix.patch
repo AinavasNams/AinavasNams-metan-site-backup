@@ -1,0 +1,47 @@
+716,760c
+if (data.type === "precise_offer") {
+  const requestData = data;
+
+  // Validate input data
+  const validation = validateOfferData(requestData);
+  if (!validation.isValid) {
+    return NextResponse.json(
+      { error: "Invalid input data", details: validation.errors },
+      { status: 400 }
+    );
+  }
+
+  // Sanitize inputs
+  const sanitizedData = {
+    ...requestData,
+    name: sanitizeInput(requestData.name),
+    email: sanitizeInput(requestData.email),
+    phone: sanitizeInput(requestData.phone),
+    company: requestData.company ? sanitizeInput(requestData.company) : "",
+    details: requestData.details ? sanitizeInput(requestData.details) : ""
+  };
+
+  // Generate email content for precise offer
+  const template = EMAIL_TEMPLATES["precise_offer"];
+  const subject = template.subject();
+  const html = template.html(sanitizedData.name, sanitizedData);
+
+  // Send email to customer
+  const emailResult = await simulateEmailSending(
+    "precise_offer",
+    sanitizedData.email,
+    sanitizedData.name,
+    sanitizedData
+  );
+
+  // Send DETAILED notification to company about the precise offer request
+  const companySubject = `🚨 [PRECĪZA PIEDĀVĀJUMA PIEPRASĪJУМS] ${sanitizedData.name} - ${sanitizedData.serviceName || "N/A"}`;
+  const companyHtml = generateCompanyNotificationHtml(sanitizedData);
+
+  const companyEmailResult = await simulateCompanyNotification(
+    "tsv@metan.lv",
+    companySubject,
+    companyHtml,
+    sanitizedData
+  );
+}
