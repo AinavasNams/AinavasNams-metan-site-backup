@@ -103,7 +103,7 @@ export function HeroSection() {
               Mēs radām tīru enerģiju no organiskajiem atkritumiem
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed">
-              SIA "Ainavas Nams" ir Latvijas aprites ekonomikas projekts, kas pārvērš taukus, pārtikas un lauksaimniecības atkritumus par biogāzi, biometānu, biopolimēriem un tehnoloģisko CO₂. Mēs apvienojam modernas tehnoloģijas, loģistiku un investīcijas, lai radītu reālu vērtību no atkritumiem.
+              SIA &quot;Ainavas Nams&quot; ir Latvijas aprites ekonomikas projekts, kas pārvērš taukus, pārtikas un lauksaimniecības atkritumus par biogāzi, biometānu, biopolimēriem un tehnoloģisko CO₂. Mēs apvienojam modernas tehnoloģijas, loģistiku un investīcijas, lai radītu reālu vērtību no atkritumiem.
             </p>
           </motion.div>
 

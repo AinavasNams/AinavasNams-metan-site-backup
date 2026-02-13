@@ -63,7 +63,7 @@ export default function CookiePolicyPage() {
               Sīkdatņu politika
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Informācija par to, kā SIA "Ainavas Nams" mājaslapā tiek izmantotas sīkdatnes 
+              Informācija par to, kā SIA &quot;Ainavas Nams&quot; mājaslapā tiek izmantotas sīkdatnes
               un līdzīgas tehnoloģijas.
             </p>
           </motion.div>

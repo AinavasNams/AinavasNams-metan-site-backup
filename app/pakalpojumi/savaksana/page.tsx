@@ -134,8 +134,8 @@ export default function WasteCollectionPage() {
               Tauku un eļļas atkritumu savākšana
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              Mēs atrisinām tauku atkritumu jautājumu jūsu vietā — legāli, droši un pārskatāmi. 
-              SIA "Ainavas Nams" nodrošina pilnu pakalpojumu klāstu FOG (tauki, eļļas, smērvielas) 
+              Mēs atrisinām tauku atkritumu jautājumu jūsu vietā — legāli, droši un pārskatāmi.
+              SIA &quot;Ainavas Nams&quot; nodrošina pilnu pakalpojumu klāstu FOG (tauki, eļļas, smērvielas)
               atkritumu savākšanā un tauku atdalītāju tīrīšanā.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">

@@ -92,12 +92,12 @@ export default function AboutPage() {
                 <strong>No biogāzes stacijas 2014. gadā — līdz biometāna ekosistēmai 2025. gadā</strong>
               </p>
               <p>
-                <strong>SIA "Ainavas Nams"</strong> stāsts sākas vēl pirms uzņēmuma juridiskās reģistrācijas. 
-                Tā pamatā ir komanda, pieredze un infrastruktūra no <strong>SIA "Zemgales Enerģijas Parks"</strong>, 
+                <strong>SIA &quot;Ainavas Nams&quot;</strong> stāsts sākas vēl pirms uzņēmuma juridiskās reģistrācijas.
+                Tā pamatā ir komanda, pieredze un infrastruktūra no <strong>SIA &quot;Zemgales Enerģijas Parks&quot;</strong>,
                 kas kopš 2014. gada darbojas biogāzes jomā Zemgales reģionā.
               </p>
               <p>
-                Kopš 2021. gada zem <strong>SIA "Ainavas Nams"</strong> zīmola darbojas <strong>rūpnieciska biogāzes stacija</strong>, 
+                Kopš 2021. gada zem <strong>SIA &quot;Ainavas Nams&quot;</strong> zīmola darbojas <strong>rūpnieciska biogāzes stacija</strong>,
                 kas ietver fermentācijas reaktorus, izejvielu pieņemšanas sistēmu, gāzes attīrīšanas līniju un 
                 elektroenerģijas ražošanas licenci.
               </p>

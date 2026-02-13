@@ -97,7 +97,7 @@ export function CustomerTestimonials() {
 
                   {/* Testimonial Text */}
                   <p className="text-gray-700 mb-6 leading-relaxed italic">
-                    "{testimonial.text}"
+                    &ldquo;{testimonial.text}&rdquo;
                   </p>
 
                   {/* Customer Info */}

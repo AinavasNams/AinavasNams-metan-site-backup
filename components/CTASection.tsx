@@ -168,11 +168,11 @@ export function CTASection() {
           className="mt-16 text-center"
         >
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Par SIA "Ainavas Nams"</h3>
+            <h3 className="text-2xl font-bold mb-4">Par SIA &quot;Ainavas Nams&quot;</h3>
             <p className="text-white/90 leading-relaxed">
-              SIA "Ainavas Nams" ir Latvijas uzņēmums, kas dibināts 2020. gadā ar mērķi attīstīt aprites enerģētiku 
-              un veikt pāreju no elektroenerģijas ražošanas uz biometāna un CO₂ ieguvi. Projekts tiek īstenots uz 
-              jau esošās fermentācijas stacijas pamata, kuru pārvalda SIA "Zemgales Enerģijas Parks", nodibināts 2014. gadā.
+              SIA &quot;Ainavas Nams&quot; ir Latvijas uzņēmums, kas dibināts 2020. gadā ar mērķi attīstīt aprites enerģētiku
+              un veikt pāreju no elektroenerģijas ražošanas uz biometāna un CO₂ ieguvi. Projekts tiek īstenots uz
+              jau esošās fermentācijas stacijas pamata, kuru pārvalda SIA &quot;Zemgales Enerģijas Parks&quot;, nodibināts 2014. gadā.
             </p>
           </div>
         </motion.div>
