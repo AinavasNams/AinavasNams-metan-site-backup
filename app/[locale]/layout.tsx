@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     authors: [{ name: "SIA Ainavas Nams" }],
     robots: "index, follow, max-image-preview:large",
     alternates: {
-      canonical: `https://metan.lv/${lang}`,
+      // canonical removed — set by each page via generatePageMetadata
       languages: languageAlternates,
     },
     openGraph: {

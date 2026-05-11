@@ -1,39 +1,16 @@
-'use client';
+import type { Metadata } from 'next';
+import { generatePageMetadata } from '@/lib/page-metadata';
+import { locales, type Locale } from '@/lib/i18n';
+import Content from './Content';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Calculator } from 'lucide-react';
-import { motion } from 'framer-motion';
+type Props = { params: Promise<{ locale: string }> };
 
-export default function ServiceCalculatorRedirect() {
-  const router = useRouter();
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const lang = (locales.includes(locale as Locale) ? locale : 'lv') as Locale;
+  return generatePageMetadata(lang, '/pakalpojumi/kalkulators');
+}
 
-  useEffect(() => {
-    // Автоматическое перенаправление на главную страницу с калькулятором
-    const timer = setTimeout(() => {
-      router.replace('/#calculator');
-    }, 100); // Короткая задержка для плавности
-
-    return () => clearTimeout(timer);
-  }, [router]);
-
-  // Показываем короткое сообщение о перенаправлении
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-        className="text-center"
-      >
-        <Calculator className="h-12 w-12 text-blue-600 mx-auto mb-4 animate-pulse" />
-        <h2 className="text-xl font-semibold text-gray-900 mb-2">
-          Atveram kalkulatoru...
-        </h2>
-        <p className="text-gray-600">
-          Pārvirzām uz galveno lapu ar kalkulatoru
-        </p>
-      </motion.div>
-    </div>
-  );
+export default function Page() {
+  return <Content />;
 }
