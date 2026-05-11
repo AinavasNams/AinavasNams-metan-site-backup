@@ -3,9 +3,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Eye, Lightbulb } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function MissionVision() {
-  console.log('MissionVision component rendered');
+  const { t } = useTranslation();
 
   return (
     <section className="py-20 bg-white">
@@ -24,21 +25,18 @@ export function MissionVision() {
                   <Target className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-2xl text-metan-gray">
-                  Mūsu misija
+                  {t('mission.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-gray-600 text-lg font-medium">
-                  Mēs veidojam tīru enerģiju no tā, ko agrāk sauca par atkritumiem.
+                  {t('missionVision.mission.text1')}
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  SIA "Ainavas Nams" pārveido taukus, pārtikas un lauksaimniecības atkritumus ilgtspējīgā enerģijā, 
-                  videi draudzīgos materiālos un tehnoloģiskajā CO₂.
+                  {t('missionVision.mission.text2')}
                 </p>
                 <p className="text-gray-600 leading-relaxed">
-                  Mūsu misija ir padarīt atkritumu pārstrādi nevis par pienākumu, bet par attīstības dzinējspēku. 
-                  Mēs ticam, ka katrs litrs tauku un katrs kilograms organisko vielu var kļūt par vērtību: 
-                  enerģiju, degvielu, materiāliem un klimata ieguvumu.
+                  {t('missionVision.mission.text3')}
                 </p>
               </CardContent>
             </Card>
@@ -57,34 +55,33 @@ export function MissionVision() {
                   <Eye className="h-6 w-6 text-white" />
                 </div>
                 <CardTitle className="text-2xl text-metan-gray">
-                  Mūsu vīzija līdz 2030. gadam
+                  {t('missionVision.vision.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-metan-text text-lg font-medium">
-                  Kļūt par Baltijas līderi biometāna ražošanā un aprites ekonomikas inovācijās
+                  {t('missionVision.vision.text1')}
                 </p>
                 <div className="space-y-3">
                   <p className="text-metan-text leading-relaxed">
-                    Mūsu ilgtermiņa mērķis ir izveidot Latvijā mērogojamu, efektīvu un ilgtspējīgu infrastruktūru, 
-                    kas pārvērš organiskos atkritumus enerģijā, resursos un klimatiskajā vērtībā.
+                    {t('missionVision.vision.text2')}
                   </p>
                   <div className="space-y-2 text-sm text-metan-text">
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-metan-accent rounded-full"></div>
-                      <span>Modernizēt un attīstīt 5 biometāna stacijas dažādos reģionos</span>
+                      <span>{t('missionVision.vision.bullet1')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-metan-accent rounded-full"></div>
-                      <span>Pārstrādāt vairāk nekā 50 000 tonnas atkritumu gadā</span>
+                      <span>{t('missionVision.vision.bullet2')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-metan-accent rounded-full"></div>
-                      <span>Eksportēt biometānu un CO₂ uz Lietuvu, Igauniju un Skandināviju</span>
+                      <span>{t('missionVision.vision.bullet3')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-metan-accent rounded-full"></div>
-                      <span>Attīstīt biopolimēru ražošanu no otrreizējiem taukiem</span>
+                      <span>{t('missionVision.vision.bullet4')}</span>
                     </div>
                   </div>
                 </div>
@@ -106,35 +103,31 @@ export function MissionVision() {
               <Lightbulb className="h-6 w-6 text-white" />
             </div>
             <h2 className="text-3xl font-bold text-metan-gray">
-              Mūsu stāsts
+              {t('missionVision.story.title')}
             </h2>
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-metan-gray">
-                No biogāzes stacijas 2014. gadā — līdz biometāna ekosistēmai 2025. gadā
+                {t('missionVision.story.subtitle')}
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                SIA "Ainavas Nams" stāsts sākas vēl pirms uzņēmuma juridiskās reģistrācijas. Tā pamatā ir komanda, 
-                pieredze un infrastruktūra no SIA "Zemgales Enerģijas Parks", kas kopš 2014. gada darbojas biogāzes jomā Zemgales reģionā.
+                {t('missionVision.story.text1')}
               </p>
               <p className="text-gray-600 leading-relaxed">
-                Kopš 2021. gada zem "Zemgales Enerģijas Parks" zīmola darbojas rūpnieciska biogāzes stacija, 
-                kas ietver fermentācijas reaktorus, izejvielu pieņemšanas sistēmu, gāzes attīrīšanas līniju 
-                un elektroenerģijas ražošanas licenci.
+                {t('missionVision.story.text2')}
               </p>
             </div>
             
             <div className="space-y-4">
-              {/* Timeline */}
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-metan-primary rounded-full flex items-center justify-center text-white font-bold">
                     2014
                   </div>
                   <div className="text-sm text-gray-600">
-                    SIA "Zemgales Enerģijas Parks" dibināšana, stacijas uzsākšana
+                    {t('missionVision.story.y2014')}
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -142,7 +135,7 @@ export function MissionVision() {
                     2021
                   </div>
                   <div className="text-sm text-gray-600">
-                    Fermentācijas palaišana, siltumenerģijas līgumi
+                    {t('missionVision.story.y2021')}
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -150,7 +143,7 @@ export function MissionVision() {
                     2023
                   </div>
                   <div className="text-sm text-gray-600">
-                    SIA "Ainavas Nams" reģistrācija, biometāna projektēšana
+                    {t('missionVision.story.y2023')}
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
@@ -158,7 +151,7 @@ export function MissionVision() {
                     2025
                   </div>
                   <div className="text-sm text-gray-600">
-                    METAN.LV palaišana: tauki → polimēri → biogāze → biometāns → CO₂
+                    {t('missionVision.story.y2025')}
                   </div>
                 </div>
               </div>

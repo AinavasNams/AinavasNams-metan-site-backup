@@ -41,7 +41,7 @@ export default function OptimizedLayout({
         {/* Критичные мета-теги для LCP */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="googlebot" content="index, follow" />
-        <link rel="canonical" href="https://www.metan.lv" />
+        <link rel="canonical" href="https://metan.lv" />
         
         {/* Preconnect для улучшения загрузки */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
@@ -96,8 +96,8 @@ export default function OptimizedLayout({
               "@type": "Organization",
               "name": "SIA Ainavas Nams",
               "alternateName": "METAN.LV",
-              "url": "https://www.metan.lv",
-              "logo": "https://www.metan.lv/logo.png",
+              "url": "https://metan.lv",
+              "logo": "https://metan.lv/logo.png",
               "description": "Sertificēti risinājumi organisko atkritumu savākšanai un pārstrādei uz biometānu",
               "foundingDate": "2021",
               "contactPoint": {

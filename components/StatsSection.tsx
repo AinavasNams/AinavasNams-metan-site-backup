@@ -54,13 +54,11 @@ export function StatsSection() {
 
   return (
     <section ref={ref} className="py-20 bg-gradient-to-br from-metan-primary via-metan-primary to-metan-accent text-white relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full" 
              style={{backgroundImage: 'url(https://images.pexels.com/photos/31403876/pexels-photo-31403876.jpeg?auto=compress&cs=tinysrgb&h=650&w=940)'}}></div>
       </div>
       
-      {/* Floating elements */}
       <div className="absolute top-10 right-10 w-24 h-24 bg-white/10 rounded-full blur-xl animate-pulse"></div>
       <div className="absolute bottom-10 left-10 w-16 h-16 bg-metan-accent/30 rounded-full blur-lg animate-bounce"></div>
       
@@ -73,10 +71,10 @@ export function StatsSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-            Mūsu sasniegumi skaitļos
+            {t('stats.title')}
           </h2>
           <p className="text-white/80 text-lg max-w-2xl mx-auto">
-            Pierādīts veikums biometāna ražošanā un atkritumu apsaimniekošanā
+            {t('stats.subtitle')}
           </p>
         </motion.div>
         

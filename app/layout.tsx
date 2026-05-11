@@ -1,16 +1,10 @@
 import "./globals.css";
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import Script from "next/script";
 import React from "react";
 import { Inter } from "next/font/google";
-
-import { TranslationProvider } from "@/components/TranslationProvider";
-import { Navigation } from "@/components/Navigation";
-import { Footer } from "@/components/Footer";
-import { Toaster } from "@/components/ui/toaster";
-// import Analytics from "@/components/Analytics"; // временно выключено, чтобы не дублировать трекинг
-import CookieConsent from "@/components/CookieConsent";
-import ClientComponents from "@/components/ClientComponents";
+import { headers } from "next/headers";
+import { type Locale, defaultLocale, locales } from "@/lib/i18n";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,27 +18,9 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 if (!GTM_ID) {
   throw new Error(
-    "NEXT_PUBLIC_GTM_ID is not defined. Проверь .env.production и .env.production.example"
+    "NEXT_PUBLIC_GTM_ID is not defined. Check .env.production"
   );
 }
-
-export const metadata: Metadata = {
-  title: "METAN.LV - No organiskajiem atkritumiem līdz tīrai enerģijai",
-  description:
-    "SIA Ainavas Nams piedāvā sertificētus risinājumus tauku, eļļas un pārtikas atkritumu savākšanai un pārstrādei uz biometānu. Biometāna ražošana Latvijā.",
-  keywords:
-    "biometāns, atkritumu savākšana, tauku utilizācija, eļļas savākšana, organisko atkritumu pārstrāde, videi draudzīga enerģija, Latvija",
-  authors: [{ name: "SIA Ainavas Nams" }],
-  robots: "index, follow",
-  openGraph: {
-    title: "METAN.LV - Biometāna ražošana Latvijā",
-    description:
-      "Sertificēti risinājumi organisko atkritumu savākšanai un pārstrādei uz biometānu.",
-    type: "website",
-    locale: "lv_LV",
-    alternateLocale: ["ru_RU", "en_US"],
-  },
-};
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -52,24 +28,21 @@ export const viewport: Viewport = {
   themeColor: "#16a34a",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const locale = (headersList.get("x-locale") || defaultLocale) as Locale;
+  const lang = locales.includes(locale) ? locale : defaultLocale;
+
   return (
-    <html lang="lv" className={inter.variable}>
+    <html lang={lang} className={inter.variable}>
       <head>
-        {/* Performance hints for analytics */}
-        <link
-          rel="preload"
-          href={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
-          as="script"
-        />
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
 
-        {/* Инициализируем dataLayer до загрузки GTM */}
         <Script id="init-datalayer" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -80,7 +53,6 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Google Tag Manager (direct, no Cloudflare gateway, no Zaraz) */}
         <Script
           id="gtm-script"
           strategy="afterInteractive"
@@ -102,17 +74,9 @@ export default function RootLayout({
             `,
           }}
         />
-
-        {/* Robots / SEO */}
-        <meta
-          name="robots"
-          content="index, follow, max-image-preview:large"
-        />
-        {/* viewport / themeColor handled by Next viewport export */}
       </head>
 
       <body className="font-sans antialiased">
-        {/* GTM noscript fallback: required for tag compliance */}
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
@@ -122,52 +86,7 @@ export default function RootLayout({
           />
         </noscript>
 
-        <TranslationProvider>
-          <Navigation />
-
-          <main>{children}</main>
-
-          <Footer />
-
-          {/* Toast notifications (form success etc.) */}
-          <Toaster />
-
-          {/* Cookie consent banner.
-             Если он продолжает инициировать свой Consent Mode и ломает консоль,
-             временно убери компонент из дерева на время отладки.
-          */}
-          <CookieConsent />
-
-          {/* Client-side helpers (click-to-call tracking, smooth UI, etc.)
-             ДОЛЖЕН БЫТЬ РОВНО ОДИН РАЗ.
-             Внутри этого компонента мы будем дергать trackEvent(...)
-             для calc_complete и lead_submit.
-          */}
-          <ClientComponents />
-
-          {/*
-          <Analytics />
-          */}
-        </TranslationProvider>
-
-{/* GTM ready check */}
-<Script id="gtm-ready-check" strategy="afterInteractive">{`
-  function waitForGTM(maxWait = 5000) {
-    const start = Date.now();
-    const check = () => {
-      if (window.google_tag_manager) {
-        console.log("✅ GTM container loaded:", Object.keys(window.google_tag_manager));
-        window.dataLayer.push({ event: "gtm_ready" });
-      } else if (Date.now() - start < maxWait) {
-        setTimeout(check, 500);
-      } else {
-        console.warn("⚠️ GTM container still not found after 5s");
-      }
-    };
-    check();
-  }
-  window.addEventListener("load", () => setTimeout(waitForGTM, 1000));
-`}</Script>
+        {children}
       </body>
     </html>
   );

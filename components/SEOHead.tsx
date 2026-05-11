@@ -24,7 +24,7 @@ export default function SEOHead({
     console.log('SEOHead setting up for path:', pathname);
     
     // Set canonical URL
-    const canonicalUrl = `https://www.metan.lv${pathname}`;
+    const canonicalUrl = `https://metan.lv${pathname}`;
     
     // Remove existing canonical if exists
     const existingCanonical = document.querySelector('link[rel="canonical"]');

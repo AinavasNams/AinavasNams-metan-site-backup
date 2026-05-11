@@ -7,47 +7,39 @@ import { Badge } from '@/components/ui/badge';
 import { trackCTA, trackServiceInterest, trackInvestorAction } from '@/components/Analytics';
 import { sendGoogleAdsConversion } from '@/lib/ga4-events';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function HeroSection() {
-  console.log('HeroSection rendered');
   const router = useRouter();
+  const { t } = useTranslation();
 
-  const handleServiceClick = () => {
-    // Track service interest
+  const handleServiceClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     trackServiceInterest('atkritumu_savaksana', 'hero_section', {
       button_type: 'primary_cta',
       hero_position: 'main_cta'
     });
-    
-    // Track CTA click
-    trackCTA('service_request', 'hero_section', '/pakalpojumi/savaksana');
-    
-    // Send Google Ads conversion
+    trackCTA('service_request', 'hero_section', '/#calculator');
     sendGoogleAdsConversion('quick_order', 70);
-    
-    console.log('🎯 Service CTA clicked from hero section');
-    
-    // Navigate using Next.js router
-    router.push('/pakalpojumi/savaksana');
+    const el = document.getElementById('calculator');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: document.body.scrollHeight * 0.6, behavior: 'smooth' });
+      setTimeout(() => {
+        document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
   };
 
   const handleInvestorClick = () => {
-    // Track investor action
     trackInvestorAction('project_interest', 'biometans', {
       button_type: 'secondary_cta',
       hero_position: 'investment_cta'
     });
-    
-    // Track CTA click
     trackCTA('investor_interest', 'hero_section', '/projekti/biometans');
-    
-    // Send Google Ads conversion
     sendGoogleAdsConversion('investor_interest', 250);
-    
-    console.log('🎯 Investment CTA clicked from hero section');
-    
-    // Navigate using Next.js router
-    router.push('/projekti/biometans');
   };
 
   return (
@@ -71,17 +63,17 @@ export function HeroSection() {
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
             <Truck className="h-8 w-8 text-metan-primary animate-pulse" />
-            <span className="text-xs font-medium text-metan-primary">Savākšana</span>
+            <span className="text-xs font-medium text-metan-primary">{t('hero.process.collection')}</span>
           </div>
           <ArrowRight className="h-6 w-6 text-metan-accent rotate-90 animate-bounce" />
           <div className="flex items-center gap-2">
             <Factory className="h-8 w-8 text-metan-accent animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <span className="text-xs font-medium text-metan-accent">Pārstrāde</span>
+            <span className="text-xs font-medium text-metan-accent">{t('hero.process.processing')}</span>
           </div>
           <ArrowRight className="h-6 w-6 text-metan-accent rotate-90 animate-bounce" style={{ animationDelay: '0.5s' }} />
           <div className="flex items-center gap-2">
             <Zap className="h-8 w-8 text-green-500 animate-pulse" style={{ animationDelay: '1s' }} />
-            <span className="text-xs font-medium text-green-500">Biometāns</span>
+            <span className="text-xs font-medium text-green-500">{t('hero.process.biomethane')}</span>
           </div>
         </div>
       </div>
@@ -96,14 +88,14 @@ export function HeroSection() {
             {/* Slogan Badge */}
             <Badge variant="outline" className="mb-6 px-4 py-2 text-base bg-white/80 backdrop-blur-sm border-metan-primary text-metan-primary">
               <Recycle className="mr-2 h-4 w-4" />
-              Biomasa → Biometāns
+              {t('hero.slogan')}
             </Badge>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-metan-gray mb-6 leading-tight">
-              Mēs radām tīru enerģiju no organiskajiem atkritumiem
+              {t('hero.title')}
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl leading-relaxed">
-              SIA "Ainavas Nams" ir Latvijas aprites ekonomikas projekts, kas pārvērš taukus, pārtikas un lauksaimniecības atkritumus par biogāzi, biometānu, biopolimēriem un tehnoloģisko CO₂. Mēs apvienojam modernas tehnoloģijas, loģistiku un investīcijas, lai radītu reālu vērtību no atkritumiem.
+              {t('hero.subtitle')}
             </p>
           </motion.div>
 
@@ -116,23 +108,27 @@ export function HeroSection() {
             <Button 
               className="metan-button-primary text-lg px-8 py-4 h-auto group bg-metan-primary hover:bg-metan-primary/90 text-white"
               data-macaly="hero-cta-primary"
-              onClick={handleServiceClick}
+              asChild
             >
-              <Recycle className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
-              Pieteikt atkritumu savākšanu
+              <Link href="#calculator" onClick={handleServiceClick}>
+                <Recycle className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform" />
+                {t('hero.cta.collection')}
+              </Link>
             </Button>
             <Button 
               variant="outline" 
               className="text-lg px-8 py-4 h-auto border-metan-primary text-metan-primary hover:bg-metan-primary hover:text-white bg-white group"
-              onClick={handleInvestorClick}
+              asChild
             >
-              <TrendingUp className="mr-2 h-5 w-5" />
-              Uzzināt par investīciju iespējām
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <Link href="/projekti/biometans" onClick={handleInvestorClick}>
+                <TrendingUp className="mr-2 h-5 w-5" />
+                {t('hero.cta.investment')}
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </motion.div>
 
-          {/* Dynamic metrics placeholders */}
+          {/* Dynamic metrics */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -141,30 +137,21 @@ export function HeroSection() {
           >
             <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-gray-100">
               <div className="text-2xl font-bold text-metan-primary">12,000+</div>
-              <div className="text-sm text-gray-600">Tonnas savākto atkritumu</div>
+              <div className="text-sm text-gray-600">{t('hero.metrics.collected')}</div>
             </div>
             <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-gray-100">
               <div className="text-2xl font-bold text-metan-accent">200+</div>
-              <div className="text-sm text-gray-600">Aktīvie partneri</div>
+              <div className="text-sm text-gray-600">{t('hero.metrics.partners')}</div>
             </div>
             <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-gray-100">
               <div className="text-2xl font-bold text-metan-primary">26,951</div>
-              <div className="text-sm text-gray-600">MWh biometāna gadā</div>
+              <div className="text-sm text-gray-600">{t('hero.metrics.energy')}</div>
             </div>
             <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-gray-100">
               <div className="text-2xl font-bold text-green-600">3,880t</div>
-              <div className="text-sm text-gray-600">CO₂ samazinājums</div>
+              <div className="text-sm text-gray-600">{t('hero.metrics.co2')}</div>
             </div>
           </motion.div>
-
-          {/* Hidden SEO phrases */}
-          <div className="hidden">
-            videi draudzīga atkritumu savākšana, likumīga tauku savākšana, biometāna ražošana Latvijā, 
-            organisko atkritumu pārstrāde, tauku atdalītāju tīrīšana, eļļas utilizācija, 
-            sertificēti atkritumu apsaimniekošanas pakalpojumi, METAN.LV, CH4 Future, 
-            Ainavas Nams, biopolimēri, aprites ekonomika, ESG investīcijas, RED II, ISCC sertifikācija,
-            HoReCa atkritumi, vakuuma mašīnas, Zemgales Enerģijas Parks, biogāzes stacija Bēnē
-          </div>
         </div>
       </div>
     </section>

@@ -17,6 +17,51 @@ function normalizeQuery(q: string) {
     .trim();
 }
 
+function deepClean(q: string): string {
+  return q
+    // Remove company types (LT/LV/EN/RU)
+    .replace(/\b(UAB|AB|MB|I[IĮ]|V[SŠ][IĮ]|SIA|AS|IK|ZS|VSIA|O[UÜ]|Ltd|LLC|GmbH|s\.r\.o\.|[ОO][ОO][ОO]|[ОO][АA][ОO])\b\.?/gi, '')
+    // Remove quoted company names
+    .replace(/[„"«»""'\u201C\u201D\u201E\u201F]/g, '')
+    // Remove common words that confuse geocoding
+    .replace(/\b(firma|company|uznemums|bendrov[eė])\b/gi, '')
+    // Remove district/region abbreviations
+    .replace(/\b(raj\.|r\.|nov\.|pag\.|sav\.|sen\.|apsr\.|aps\.)\s*/gi, ' ')
+    // Remove postal codes
+    .replace(/\b(LT|LV)-?\s?\d{4,6}\b/gi, '')
+    // Remove special chars
+    .replace(/[\/|()#№]/g, ' ')
+    // Collapse commas with no content
+    .replace(/,\s*,/g, ',')
+    // Collapse spaces
+    .replace(/\s+/g, ' ')
+    // Clean leading/trailing commas
+    .replace(/^[\s,]+|[\s,]+$/g, '')
+    .trim();
+}
+
+function extractStreetCity(q: string): string[] {
+  const cleaned = deepClean(q);
+  const parts = cleaned.split(',').map(p => p.trim()).filter(p => p.length > 1);
+  const candidates: string[] = [];
+
+  if (parts.length >= 2) {
+    // Last 2 parts (usually city + street)
+    candidates.push(parts.slice(-2).join(', '));
+    // Last 3 parts
+    if (parts.length >= 3) {
+      candidates.push(parts.slice(-3).join(', '));
+    }
+  }
+
+  // Also try just the cleaned version
+  if (cleaned !== q && cleaned.length > 3) {
+    candidates.push(cleaned);
+  }
+
+  return candidates;
+}
+
 function detectHint(q: string): 'lv' | 'lt' | '' {
   const s = q.toLowerCase();
   if (/(latv|latvia|latvija|lv\b)/i.test(s)) return 'lv';
@@ -106,13 +151,13 @@ export async function GET(req: Request) {
   let results = await nominatimSearch(q1);
   let best = results ? pickBest(results, prefer) : null;
 
-  // Try 2: normalized
+  // Try 2: basic normalized
   if (!best) {
     results = await nominatimSearch(q2);
     best = results ? pickBest(results, prefer) : null;
   }
 
-  // Try 3: country-tailored retries (default prefer LV)
+  // Try 3: country-tailored retries
   if (!best) {
     const tries =
       prefer === 'lt'
@@ -122,6 +167,52 @@ export async function GET(req: Request) {
     for (const t of tries) {
       results = await nominatimSearch(t);
       best = results ? pickBest(results, prefer || (t.includes('Latv') ? 'lv' : 'lt')) : null;
+      if (best) break;
+    }
+  }
+
+  // Try 4: deep clean (remove company names, abbreviations)
+  if (!best) {
+    const q3 = deepClean(q1);
+    if (q3 !== q2 && q3.length > 2) {
+      results = await nominatimSearch(q3);
+      best = results ? pickBest(results, prefer) : null;
+
+      // Try 4b: deep clean + country
+      if (!best) {
+        const tries =
+          prefer === 'lt'
+            ? [`${q3}, Lietuva`, `${q3}, Latvija`]
+            : [`${q3}, Latvija`, `${q3}, Lietuva`];
+
+        for (const t of tries) {
+          results = await nominatimSearch(t);
+          best = results ? pickBest(results, prefer || (t.includes('Latv') ? 'lv' : 'lt')) : null;
+          if (best) break;
+        }
+      }
+    }
+  }
+
+  // Try 5: extract street + city only
+  if (!best) {
+    const candidates = extractStreetCity(q1);
+    for (const c of candidates) {
+      results = await nominatimSearch(c);
+      best = results ? pickBest(results, prefer) : null;
+      if (best) break;
+
+      // Also try with country suffix
+      const countryTries =
+        prefer === 'lt'
+          ? [`${c}, Lietuva`, `${c}, Latvija`]
+          : [`${c}, Latvija`, `${c}, Lietuva`];
+
+      for (const t of countryTries) {
+        results = await nominatimSearch(t);
+        best = results ? pickBest(results, prefer || (t.includes('Latv') ? 'lv' : 'lt')) : null;
+        if (best) break;
+      }
       if (best) break;
     }
   }
@@ -144,4 +235,87 @@ export async function GET(req: Request) {
 
   CACHE.set(cacheKey, { ts: Date.now(), value: out });
   return NextResponse.json(out);
+}
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json().catch(() => ({} as any));
+
+    // 1) Reverse geocode по координатам (lat/lng)
+    const lat = Number(body?.lat);
+    const lng = Number(body?.lng);
+
+    if (Number.isFinite(lat) && Number.isFinite(lng)) {
+      const cacheKey = `rev:${lat.toFixed(5)},${lng.toFixed(5)}`;
+      const cached = CACHE.get(cacheKey);
+      if (cached && Date.now() - cached.ts < TTL_MS) {
+        return NextResponse.json(cached.value);
+      }
+
+      const url =
+        `https://nominatim.openstreetmap.org/reverse` +
+        `?format=json&addressdetails=1` +
+        `&zoom=18` +
+        `&lat=${encodeURIComponent(String(lat))}` +
+        `&lon=${encodeURIComponent(String(lng))}`;
+
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), UPSTREAM_TIMEOUT_MS);
+
+      try {
+        const res = await fetch(url, {
+          headers: {
+            Accept: 'application/json',
+            'Accept-Language': 'lv,en;q=0.8,ru;q=0.5',
+            'User-Agent': 'metan.lv zone map (contact: info@metan.lv)',
+            Referer: 'https://metan.lv/',
+          },
+          cache: 'no-store',
+          signal: controller.signal,
+        });
+
+        if (!res.ok) {
+          const out = { ok: false, error: 'reverse geocode upstream failed' };
+          return NextResponse.json(out, { status: 502 });
+        }
+
+        const data: any = await res.json();
+        const cc = String(data?.address?.country_code || '').toLowerCase();
+
+        if (cc !== 'lv' && cc !== 'lt') {
+          const out = { ok: false, error: 'outside lv/lt' };
+          CACHE.set(cacheKey, { ts: Date.now(), value: out });
+          return NextResponse.json(out, { status: 400 });
+        }
+
+        const out = {
+          ok: true,
+          lat,
+          lng,
+          display_name: String(data?.display_name || ''),
+          country_code: cc,
+        };
+
+        CACHE.set(cacheKey, { ts: Date.now(), value: out });
+        return NextResponse.json(out);
+      } catch {
+        const out = { ok: false, error: 'reverse geocode timeout' };
+        return NextResponse.json(out, { status: 504 });
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    // 2) Forward geocode по строке q
+    const q = String(body?.q || '').trim();
+    if (q) {
+      const url = new URL(req.url);
+      url.searchParams.set('q', q);
+      return GET(new Request(url.toString(), { method: 'GET' }));
+    }
+
+    return NextResponse.json({ ok: false, error: 'q or lat/lng required' }, { status: 400 });
+  } catch {
+    return NextResponse.json({ ok: false, error: 'bad request' }, { status: 400 });
+  }
 }

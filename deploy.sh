@@ -1,57 +1,22 @@
 #!/bin/bash
-# deploy.sh — Безопасный деплой METAN.LV (Final v3)
-
-echo "🛑 Stopping service..."
-systemctl stop metan-lv.service
-
-echo "🔨 Building project..."
-cd /root/metan-site
-git pull
-rm -rf .next
-export NODE_ENV=production
-npm run build
-
-echo "💉 VACCINE: Neutralizing RCE vulnerabilities..."
-
-# Путь внутри сборки
-OVERLAY_PATH=".next/standalone/node_modules/next/dist/client/components/react-dev-overlay"
-
-# 1. Удаляем вирус
-rm -rf "$OVERLAY_PATH"
-
-# 2. Воссоздаем структуру
-mkdir -p "$OVERLAY_PATH/server"
-mkdir -p "$OVERLAY_PATH/utils"
-
-# 3. Создаем ПРАВИЛЬНЫЕ ЗАГЛУШКИ (Mock functions)
-
-# launch-editor.js: ЗАЩИТА ОТ ВЗЛОМА
-echo "module.exports = { launchEditor: function() { return false; } };" > "$OVERLAY_PATH/utils/launch-editor.js"
-
-# middleware-webpack.js: Имитация функционала
-echo "module.exports = { 
-  parseStack: function() { return []; }, 
-  middleware: function() { return { handler: (req, res, next) => next() }; } 
-};" > "$OVERLAY_PATH/server/middleware-webpack.js"
-
-# shared.js: Пустой объект
-echo "module.exports = {};" > "$OVERLAY_PATH/server/shared.js"
-
-echo "✅ Vulnerabilities replaced with placebos."
-
-echo "📦 Deploying to Production..."
-# Удаляем старую папку целиком
-rm -rf /var/www/metan-site/.next
-
-# Копируем новую папку .next ЦЕЛИКОМ
-cp -r .next /var/www/metan-site/
-# Копируем public
-cp -r public /var/www/metan-site/
-
-echo "👤 Fixing permissions..."
-chown -R www-data:www-data /var/www/metan-site
-
-echo "🚀 Starting service..."
-systemctl start metan-lv.service
-sleep 5
-systemctl status metan-lv.service --no-pager
+set -e
+echo 'Checking protections...'
+lsattr -d /var/www/metan-site/.next/standalone || true
+echo 'Removing protections...'
+chattr -R -i /var/www/metan-site/.next/standalone || true
+echo 'Building...'
+cd /root/metan-site && npm run build
+echo 'Copying files...'
+# Properly clean the target standalone folder first
+rm -rf /var/www/metan-site/.next/standalone/* /var/www/metan-site/.next/standalone/.* 2>/dev/null || true
+# Use cp -a to include hidden files (like .next and .env)
+cp -a .next/standalone/. /var/www/metan-site/.next/standalone/
+cp -a .next/static/. /var/www/metan-site/.next/static/
+echo 'Restoring permissions...'
+chown -R www-data:www-data /var/www/metan-site/.next/standalone
+chattr -R +i /var/www/metan-site/.next/standalone
+echo 'Restarting service...'
+systemctl restart metan-lv.service
+echo 'Verifying response...'
+curl -s -I http://localhost:3000 | head -n 1
+echo 'Done!'

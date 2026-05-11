@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Phone, Mail, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { trackQuickOrder, trackPhoneCall } from '@/lib/gtm-events';
+import { trackQuickOrder, trackPhoneCall, pushFormSubmit, pushPhoneClick } from '@/lib/gtm-events';
 import { trackContact, trackOrderStart, trackFormSubmission } from '@/lib/ga4-events';
 import { sendEmailNotification } from '@/lib/email-automation';
 
@@ -52,9 +52,9 @@ export default function QuickOrderForm() {
         trackQuickOrder(formData.service, 'quick_order_form');
         trackOrderStart(formData.service, 70, 'quick_order_form');
         trackFormSubmission('quick_order', 'quick_order_form', 85);
+        pushFormSubmit('quick_order', 'quick_order_form', 85);
         
         // Don't send email notification since there's no user email in quick order
-        console.log('📊 Quick order conversion tracked');
         
         // Use router.push instead of window.location.href to prevent React conflicts
         router.push('/paldies/atzkazs');
@@ -71,9 +71,8 @@ export default function QuickOrderForm() {
     // Используем новые системы отслеживания
     trackPhoneCall('quick_form', '+371 27727724');
     trackContact('phone', 'quick_form', 90);
+    pushPhoneClick('quick_form', '+37127727724');
     
-    console.log('📞 Quick form phone call tracked');
-    window.location.href = 'tel:+37127727724';
   };
 
   const handlePhoneChange = (value: string) => {
@@ -127,6 +126,8 @@ export default function QuickOrderForm() {
               type="text"
               placeholder="Jūsu vārds *"
               required
+              id="quick-name"
+              name="name"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
               className="h-12 bg-white border-gray-300 focus:border-metan-primary"
@@ -138,6 +139,8 @@ export default function QuickOrderForm() {
               type="tel"
               placeholder="+371 20000000"
               required
+              id="quick-phone"
+              name="phone"
               value={formData.phone}
               onChange={(e) => handlePhoneChange(e.target.value)}
               onFocus={handlePhoneFocus}
@@ -149,7 +152,7 @@ export default function QuickOrderForm() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Select value={formData.service} onValueChange={(value) => setFormData({...formData, service: value})}>
-            <SelectTrigger className="h-12 bg-white border-gray-300 focus:border-metan-primary" style={{ backgroundColor: 'white' }}>
+            <SelectTrigger id="quick-service" name="service" className="h-12 bg-white border-gray-300 focus:border-metan-primary" style={{ backgroundColor: 'white' }}>
               <SelectValue placeholder="Izvēlieties pakalpojumu *" />
             </SelectTrigger>
             <SelectContent>
@@ -164,6 +167,8 @@ export default function QuickOrderForm() {
           <Input
             type="text"
             placeholder="Uzņēmuma nosaukums (nav obligāts)"
+            id="quick-company"
+            name="company"
             value={formData.company}
             onChange={(e) => setFormData({...formData, company: e.target.value})}
             className="h-12 bg-white border-gray-300 focus:border-metan-primary"
@@ -181,15 +186,16 @@ export default function QuickOrderForm() {
             {isSubmitting ? 'Sūta...' : 'Pieprasīt pakalpojumu'}
           </Button>
           
-          <Button
-            type="button"
-            onClick={handleCall}
-            variant="outline"
-            className="h-12 border-metan-primary text-metan-primary hover:bg-metan-primary/10"
-          >
-            <Phone className="mr-2 h-4 w-4" />
-            Zvanīt: +371 27727724
-          </Button>
+          <a href="tel:+37127727724" onClick={handleCall}>
+            <Button
+              type="button"
+              variant="outline"
+              className="h-12 border-metan-primary text-metan-primary hover:bg-metan-primary/10"
+            >
+              <Phone className="mr-2 h-4 w-4" />
+              Zvanīt: +371 27727724
+            </Button>
+          </a>
         </div>
       </form>
 

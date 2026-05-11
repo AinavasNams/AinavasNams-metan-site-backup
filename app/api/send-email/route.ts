@@ -152,7 +152,43 @@ function buildInternalHtml(data: any) {
 }
 
 // ========================================
-// 6. MAIN HANDLER
+// 6. N8N WEBHOOK FORWARDER (CRM / Notion)
+// ========================================
+
+const N8N_WEBHOOK_URL =
+  process.env.N8N_WEBHOOK_URL || 'https://n8n.bioflow.lv/webhook/quiz-lead';
+
+function detectSegment(sourceUrl: string | undefined, data: any): string {
+  const haystack = `${sourceUrl || ''} ${data?.service || ''} ${data?.serviceType || ''}`.toLowerCase();
+  if (haystack.includes('horeca')) return 'horeca';
+  if (haystack.includes('industrial')) return 'industrial';
+  if (haystack.includes('municipal')) return 'municipal';
+  if (haystack.includes('social')) return 'social';
+  if (haystack.includes('logistic')) return 'logistics';
+  return 'general';
+}
+
+async function forwardToN8n(payload: Record<string, any>): Promise<void> {
+  try {
+    const ac = new AbortController();
+    const timer = setTimeout(() => ac.abort(), 4000);
+    const res = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: ac.signal,
+    });
+    clearTimeout(timer);
+    if (!res.ok) {
+      console.warn('[n8n] webhook non-2xx', res.status, await res.text().catch(() => ''));
+    }
+  } catch (err) {
+    console.warn('[n8n] webhook forward failed:', err);
+  }
+}
+
+// ========================================
+// 7. MAIN HANDLER
 // ========================================
 
 export async function POST(request: NextRequest) {
@@ -207,6 +243,26 @@ export async function POST(request: NextRequest) {
         html: tpl.html(enrichedData)
       });
     }
+
+    // 3) FORWARD TO n8n / CRM (fire-and-forget — must not block email success)
+    const sourceUrl: string = enrichedData.sourceUrl || enrichedData.page || '';
+    const segment = detectSegment(sourceUrl, enrichedData);
+    const n8nPayload = {
+      name: sanitize(enrichedData.name),
+      phone: sanitize(enrichedData.phone),
+      email: clientEmail,
+      company: sanitize(enrichedData.company),
+      message: sanitize(enrichedData.message),
+      service: sanitize(enrichedData.service || enrichedData.serviceType || enrichedData.serviceName),
+      source: 'metan.lv contact form',
+      page: sourceUrl,
+      segment,
+      template: sanitize(template),
+      timestamp: new Date().toISOString(),
+      raw: enrichedData,
+    };
+    // Intentionally not awaited — do not fail the user-facing response if CRM is down.
+    forwardToN8n(n8nPayload);
 
     return NextResponse.json({ success: true });
 

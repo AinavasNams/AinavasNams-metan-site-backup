@@ -5,6 +5,7 @@ import { Phone, Mail, Globe, CheckCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { trackPhoneConversion } from '@/components/Analytics';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface PriorityContactsProps {
   variant?: 'full' | 'short';
@@ -12,7 +13,7 @@ interface PriorityContactsProps {
 }
 
 export default function PriorityContacts({ variant = 'full', className = '' }: PriorityContactsProps) {
-  console.log('PriorityContacts rendered with variant:', variant);
+  const { t } = useTranslation();
 
   if (variant === 'short') {
     return (
@@ -27,7 +28,7 @@ export default function PriorityContacts({ variant = 'full', className = '' }: P
           <div className="flex items-center gap-2">
             <Phone className="h-4 w-4 text-teal-600" />
             <span className="text-sm font-medium text-teal-900">
-              Tehniskais servisa vadītājs – 
+              {t('priorityContacts.shortLabel')} – 
               <a 
                 href="tel:+37127727724" 
                 className="hover:text-teal-700 transition-colors ml-1"
@@ -60,7 +61,7 @@ export default function PriorityContacts({ variant = 'full', className = '' }: P
         <CardContent className="p-0">
           <div className="text-center mb-6">
             <h3 className="text-2xl font-bold text-teal-900 mb-2">
-              Sazinies ar mūsu tehnisko servisa vadītāju:
+              {t('priorityContacts.title')}
             </h3>
           </div>
           
@@ -95,7 +96,7 @@ export default function PriorityContacts({ variant = 'full', className = '' }: P
                 <Globe className="h-5 w-5 text-white" />
               </div>
               <a 
-                href="https://www.metan.lv"
+                href="https://metan.lv"
                 className="text-xl font-semibold text-teal-900 hover:text-teal-700 transition-colors"
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -108,7 +109,7 @@ export default function PriorityContacts({ variant = 'full', className = '' }: P
           <div className="flex items-center justify-center gap-2 p-4 bg-teal-100 rounded-lg">
             <CheckCircle className="h-5 w-5 text-teal-600" />
             <span className="text-teal-900 font-medium">
-              Licencēts partneris ar pieredzi HoReCa sektorā visā Latvijā
+              {t('priorityContacts.trustBadge')}
             </span>
           </div>
         </CardContent>

@@ -5,8 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Calculator, TrendingUp, ArrowRight, DollarSign, BarChart3, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export function CalculatorBlocks() {
+  const { localePath } = useTranslation();
   console.log('CalculatorBlocks component rendered');
 
   // Show only the services calculator on homepage for better conversion
@@ -86,7 +88,7 @@ export function CalculatorBlocks() {
                   </ul>
                 </div>
 
-                <Link href={calculator.href} className="block">
+                <Link href={localePath(calculator.href)} className="block">
                   <Button className={`w-full text-white bg-gradient-to-r ${calculator.gradient} hover:opacity-90 transition-all duration-300 group-hover:scale-105 py-6 text-lg`}>
                     <Calculator className="mr-2 h-6 w-6" />
                     Sākt aprēķinu

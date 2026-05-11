@@ -484,6 +484,7 @@ export default function SimpleServiceCalculator() {
                     <div className="relative">
                       <Input
                         type="number"
+                        id="calc-distance" name="distance"
                         min="1"
                         max="300"
                         className="bg-white border-gray-300 pr-12"
@@ -523,7 +524,7 @@ export default function SimpleServiceCalculator() {
                     Izvēlieties pakalpojumu *
                   </Label>
                   <Select value={selectedService} onValueChange={setSelectedService}>
-                    <SelectTrigger className="bg-white text-gray-900 border-gray-300">
+                    <SelectTrigger id="calc-service" name="service" className="bg-white text-gray-900 border-gray-300">
                       <SelectValue placeholder="Kāds pakalpojums jums nepieciešams?" />
                     </SelectTrigger>
                     <SelectContent className="bg-white">
@@ -547,7 +548,7 @@ export default function SimpleServiceCalculator() {
                       Pakalpojuma biežums *
                     </Label>
                     <Select value={selectedFrequency} onValueChange={setSelectedFrequency}>
-                      <SelectTrigger className="bg-white text-gray-900 border-gray-300">
+                      <SelectTrigger id="calc-frequency" name="frequency" className="bg-white text-gray-900 border-gray-300">
                         <SelectValue placeholder="Cik bieži nepieciešams?" />
                       </SelectTrigger>
                       <SelectContent className="bg-white">
@@ -870,7 +871,7 @@ export default function SimpleServiceCalculator() {
                     Vārds *
                   </Label>
                   <Input
-                    id="name"
+                    id="name" name="name"
                     value={formData.name}
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
@@ -885,7 +886,7 @@ export default function SimpleServiceCalculator() {
                     Telefons *
                   </Label>
                   <Input
-                    id="phone"
+                    id="phone" name="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handlePhoneChange(e.target.value)}
@@ -902,7 +903,7 @@ export default function SimpleServiceCalculator() {
                   E-pasts *
                 </Label>
                 <Input
-                  id="email"
+                  id="email" name="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) =>
@@ -919,7 +920,7 @@ export default function SimpleServiceCalculator() {
                   Uzņēmums
                 </Label>
                 <Input
-                  id="company"
+                  id="company" name="company"
                   value={formData.company}
                   onChange={(e) =>
                     setFormData({ ...formData, company: e.target.value })
@@ -942,7 +943,7 @@ export default function SimpleServiceCalculator() {
                     setFormData({ ...formData, preferredContactTime: value })
                   }
                 >
-                  <SelectTrigger className="border-gray-300 bg-white text-gray-900 focus:border-green-500">
+                  <SelectTrigger id="calc-preferred-time" name="preferred-time" className="border-gray-300 bg-white text-gray-900 focus:border-green-500">
                     <SelectValue placeholder="Kad jums ērtāk?" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
@@ -988,7 +989,7 @@ export default function SimpleServiceCalculator() {
                   Papildu informācija
                 </Label>
                 <Textarea
-                  id="details"
+                  id="details" name="details"
                   value={formData.details}
                   onChange={(e) =>
                     setFormData({ ...formData, details: e.target.value })

@@ -1,169 +1,1185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  
-  <!-- Главная страница -->
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Главная / Home -->
   <url>
-    <loc>https://metan.lv</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>daily</changefreq>
+    <loc>https://metan.lv/lv</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://metan.lv/lv" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Основные страницы -->
   <url>
-    <loc>https://metan.lv/pakalpojumi</loc>
-    <lastmod>2025-01-07</lastmod>
+    <loc>https://metan.lv/ru</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://metan.lv/lv" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>1.0</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/investoriem</loc>
-    <lastmod>2025-01-07</lastmod>
+    <loc>https://metan.lv/en</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://metan.lv/lv" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>1.0</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/par-mums</loc>
-    <lastmod>2025-01-07</lastmod>
+    <loc>https://metan.lv/lt</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://metan.lv/lv" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Pakalpojumi / Services -->
+  <url>
+    <loc>https://metan.lv/lv/pakalpojumi</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/kontakti</loc>
-    <lastmod>2025-01-07</lastmod>
+    <loc>https://metan.lv/ru/pakalpojumi</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- Подстраницы услуг -->
   <url>
-    <loc>https://metan.lv/pakalpojumi/savaksana</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://metan.lv/en/pakalpojumi</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/pakalpojumi/apstrade</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://metan.lv/lt/pakalpojumi</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+
+  <!-- Pakalpojumi/Savaksana -->
   <url>
-    <loc>https://metan.lv/pakalpojumi/kalkulators</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Проекты -->
-  <url>
-    <loc>https://metan.lv/projekti</loc>
-    <lastmod>2025-01-07</lastmod>
+    <loc>https://metan.lv/lv/pakalpojumi/savaksana</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/savaksana" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/projekti/biometans</loc>
-    <lastmod>2025-01-07</lastmod>
+    <loc>https://metan.lv/ru/pakalpojumi/savaksana</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/savaksana" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/projekti/biopolimeri</loc>
-    <lastmod>2025-01-08</lastmod>
+    <loc>https://metan.lv/en/pakalpojumi/savaksana</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/savaksana" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/projekti/co2</loc>
-    <lastmod>2025-01-08</lastmod>
+    <loc>https://metan.lv/lt/pakalpojumi/savaksana</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/savaksana" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/savaksana" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
-  
-  <!-- Калькуляторы -->
+
+  <!-- Pakalpojumi/Apstrade -->
   <url>
-    <loc>https://metan.lv/roi_kalkulators</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://metan.lv/lv/pakalpojumi/apstrade</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/apstrade" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
-  
-  <!-- Документы -->
   <url>
-    <loc>https://metan.lv/dokumenti</loc>
-    <lastmod>2025-01-07</lastmod>
+    <loc>https://metan.lv/ru/pakalpojumi/apstrade</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/apstrade" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/pakalpojumi/apstrade</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/apstrade" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/pakalpojumi/apstrade</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/apstrade" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/apstrade" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Pakalpojumi/Kalkulators -->
+  <url>
+    <loc>https://metan.lv/lv/pakalpojumi/kalkulators</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/kalkulators" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-  
-  <!-- Страницы благодарности -->
   <url>
-    <loc>https://metan.lv/paldies</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://metan.lv/ru/pakalpojumi/kalkulators</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/kalkulators" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.6</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/paldies/atzkazs</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://metan.lv/en/pakalpojumi/kalkulators</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/kalkulators" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.6</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/paldies/konsultacija</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://metan.lv/lt/pakalpojumi/kalkulators</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/kalkulators" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/kalkulators" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.6</priority>
   </url>
-  
+
+  <!-- Pakalpojumi/Horeca -->
   <url>
-    <loc>https://metan.lv/paldies/investors</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://metan.lv/lv/pakalpojumi/horeca</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/horeca" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.8</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv/paldies/precizu-piedavajums</loc>
-    <lastmod>2025-01-19</lastmod>
+    <loc>https://metan.lv/ru/pakalpojumi/horeca</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/horeca" />
+    <lastmod>2026-04-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.8</priority>
   </url>
-  
-  <!-- Языковые версии -->
   <url>
-    <loc>https://metan.lv?lang=lv</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <loc>https://metan.lv/en/pakalpojumi/horeca</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/horeca" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
-  
   <url>
-    <loc>https://metan.lv?lang=ru</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <loc>https://metan.lv/lt/pakalpojumi/horeca</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/horeca" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/horeca" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
-  
+
+  <!-- Pakalpojumi/Industrial -->
   <url>
-    <loc>https://metan.lv?lang=en</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <loc>https://metan.lv/lv/pakalpojumi/industrial</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/industrial" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
-  
+  <url>
+    <loc>https://metan.lv/ru/pakalpojumi/industrial</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/industrial" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/pakalpojumi/industrial</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/industrial" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/pakalpojumi/industrial</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/industrial" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/industrial" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Pakalpojumi/Municipal -->
+  <url>
+    <loc>https://metan.lv/lv/pakalpojumi/municipal</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/municipal" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/pakalpojumi/municipal</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/municipal" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/pakalpojumi/municipal</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/municipal" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/pakalpojumi/municipal</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/municipal" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/municipal" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Pakalpojumi/Social -->
+  <url>
+    <loc>https://metan.lv/lv/pakalpojumi/social</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/social" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/pakalpojumi/social</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/social" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/pakalpojumi/social</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/social" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/pakalpojumi/social</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/social" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/social" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Pakalpojumi/Logistics -->
+  <url>
+    <loc>https://metan.lv/lv/pakalpojumi/logistics</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/logistics" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/pakalpojumi/logistics</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/logistics" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/pakalpojumi/logistics</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/logistics" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/pakalpojumi/logistics</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/pakalpojumi/logistics" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/pakalpojumi/logistics" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Kontakti -->
+  <url>
+    <loc>https://metan.lv/lv/kontakti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/kontakti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/kontakti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/kontakti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/kontakti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/kontakti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/kontakti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/kontakti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/kontakti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/kontakti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/kontakti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/kontakti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/kontakti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/kontakti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/kontakti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/kontakti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/kontakti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/kontakti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/kontakti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/kontakti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Par mums -->
+  <url>
+    <loc>https://metan.lv/lv/par-mums</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/par-mums" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/par-mums" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/par-mums" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/par-mums" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/par-mums</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/par-mums" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/par-mums" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/par-mums" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/par-mums" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/par-mums</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/par-mums" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/par-mums" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/par-mums" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/par-mums" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/par-mums</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/par-mums" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/par-mums" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/par-mums" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/par-mums" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Investoriem -->
+  <url>
+    <loc>https://metan.lv/lv/investoriem</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/investoriem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/investoriem" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/investoriem" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/investoriem" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/investoriem</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/investoriem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/investoriem" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/investoriem" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/investoriem" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/investoriem</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/investoriem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/investoriem" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/investoriem" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/investoriem" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/investoriem</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/investoriem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/investoriem" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/investoriem" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/investoriem" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Partneriem -->
+  <url>
+    <loc>https://metan.lv/lv/partneriem</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/partneriem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/partneriem" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/partneriem" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/partneriem" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/partneriem</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/partneriem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/partneriem" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/partneriem" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/partneriem" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/partneriem</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/partneriem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/partneriem" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/partneriem" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/partneriem" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/partneriem</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/partneriem" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/partneriem" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/partneriem" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/partneriem" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Biopolymers -->
+  <url>
+    <loc>https://metan.lv/lv/biopolymers</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/biopolymers" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/biopolymers</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/biopolymers" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/biopolymers</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/biopolymers" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/biopolymers</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/biopolymers" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/biopolymers" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Horeca (landing) -->
+  <url>
+    <loc>https://metan.lv/lv/horeca</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/horeca" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/horeca" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/horeca" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/horeca" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/horeca</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/horeca" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/horeca" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/horeca" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/horeca" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/horeca</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/horeca" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/horeca" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/horeca" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/horeca" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/horeca</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/horeca" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/horeca" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/horeca" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/horeca" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Industrial (landing) -->
+  <url>
+    <loc>https://metan.lv/lv/industrial</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/industrial" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/industrial" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/industrial" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/industrial" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/industrial</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/industrial" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/industrial" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/industrial" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/industrial" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/industrial</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/industrial" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/industrial" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/industrial" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/industrial" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/industrial</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/industrial" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/industrial" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/industrial" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/industrial" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Municipal (landing) -->
+  <url>
+    <loc>https://metan.lv/lv/municipal</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/municipal" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/municipal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/municipal" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/municipal" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/municipal</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/municipal" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/municipal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/municipal" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/municipal" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/municipal</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/municipal" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/municipal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/municipal" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/municipal" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/municipal</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/municipal" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/municipal" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/municipal" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/municipal" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Social (landing) -->
+  <url>
+    <loc>https://metan.lv/lv/social</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/social" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/social" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/social" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/social" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/social</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/social" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/social" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/social" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/social" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/social</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/social" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/social" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/social" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/social" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/social</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/social" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/social" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/social" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/social" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Logistics (landing) -->
+  <url>
+    <loc>https://metan.lv/lv/logistics</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/logistics" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/logistics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/logistics" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/logistics" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/logistics</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/logistics" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/logistics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/logistics" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/logistics" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/logistics</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/logistics" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/logistics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/logistics" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/logistics" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/logistics</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/logistics" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/logistics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/logistics" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/logistics" />
+    <lastmod>2026-04-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Projekti -->
+  <url>
+    <loc>https://metan.lv/lv/projekti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/projekti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/projekti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/projekti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Projekti/Biometans -->
+  <url>
+    <loc>https://metan.lv/lv/projekti/biometans</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/biometans" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/projekti/biometans</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/biometans" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/projekti/biometans</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/biometans" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/projekti/biometans</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/biometans" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/biometans" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Projekti/Biopolimeri -->
+  <url>
+    <loc>https://metan.lv/lv/projekti/biopolimeri</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/biopolimeri" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/projekti/biopolimeri</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/biopolimeri" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/projekti/biopolimeri</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/biopolimeri" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/projekti/biopolimeri</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/biopolimeri" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/biopolimeri" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Projekti/CO2 -->
+  <url>
+    <loc>https://metan.lv/lv/projekti/co2</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/co2" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/projekti/co2</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/co2" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/projekti/co2</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/co2" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/projekti/co2</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/projekti/co2" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/projekti/co2" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ROI Kalkulators -->
+  <url>
+    <loc>https://metan.lv/lv/roi_kalkulators</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/roi_kalkulators" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/roi_kalkulators</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/roi_kalkulators" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/roi_kalkulators</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/roi_kalkulators" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/roi_kalkulators</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/roi_kalkulators" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/roi_kalkulators" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Dokumenti -->
+  <url>
+    <loc>https://metan.lv/lv/dokumenti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/dokumenti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/dokumenti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/dokumenti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/dokumenti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/dokumenti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/dokumenti</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/dokumenti" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/dokumenti" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Privatuma politika -->
+  <url>
+    <loc>https://metan.lv/lv/privatuma-politika</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/privatuma-politika" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/privatuma-politika</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/privatuma-politika" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/privatuma-politika</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/privatuma-politika" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/privatuma-politika</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/privatuma-politika" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/privatuma-politika" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Sikdatnu politika -->
+  <url>
+    <loc>https://metan.lv/lv/sikdatnu-politika</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/sikdatnu-politika" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/ru/sikdatnu-politika</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/sikdatnu-politika" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/en/sikdatnu-politika</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/sikdatnu-politika" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://metan.lv/lt/sikdatnu-politika</loc>
+    <xhtml:link rel="alternate" hreflang="lv" href="https://metan.lv/lv/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://metan.lv/ru/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://metan.lv/en/sikdatnu-politika" />
+    <xhtml:link rel="alternate" hreflang="lt" href="https://metan.lv/lt/sikdatnu-politika" />
+    <lastmod>2026-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>

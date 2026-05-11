@@ -7,47 +7,29 @@ import { motion } from 'framer-motion';
 import { trackCTA, trackServiceInterest, trackInvestorAction } from '@/components/Analytics';
 import { sendGoogleAdsConversion } from '@/lib/ga4-events';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/hooks/useTranslation';
+import Link from 'next/link';
 
 export function CTASection() {
-  console.log('CTASection component rendered');
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleServiceCTAClick = () => {
-    // Track service interest from CTA section
     trackServiceInterest('atkritumu_savaksana', 'cta_section', {
       button_type: 'service_cta',
       cta_position: 'bottom_section'
     });
-    
-    // Track CTA click
     trackCTA('service_waste_collection', 'cta_section', '/pakalpojumi/savaksana');
-    
-    // Send Google Ads conversion
     sendGoogleAdsConversion('quick_order', 70);
-    
-    console.log('🎯 Service CTA clicked from CTA section');
-    
-    // Navigate using Next.js router
-    router.push('/pakalpojumi/savaksana');
   };
 
   const handleInvestorCTAClick = () => {
-    // Track investor action from CTA section  
     trackInvestorAction('project_interest', 'biometans', {
       button_type: 'investor_cta',
       cta_position: 'bottom_section'
     });
-    
-    // Track CTA click
     trackCTA('investor_project_interest', 'cta_section', '/projekti/biometans');
-    
-    // Send Google Ads conversion
     sendGoogleAdsConversion('investor_interest', 250);
-    
-    console.log('🎯 Investor CTA clicked from CTA section');
-    
-    // Navigate using Next.js router
-    router.push('/projekti/biometans');
   };
 
   return (
@@ -61,11 +43,10 @@ export function CTASection() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Pievienojies aprites ekonomikai
+            {t('cta.title')}
           </h2>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Mēs veidojam nākamās paaudzes enerģijas un vides ekosistēmu. 
-            Piedalies tajā — kā pakalpojuma saņēmējs, sadarbības partneris vai investors.
+            {t('cta.subtitle')}
           </p>
         </motion.div>
 
@@ -83,32 +64,34 @@ export function CTASection() {
                   <Recycle className="h-8 w-8 text-white" />
                 </div>
                 <CardTitle className="text-2xl text-center text-white">
-                  Klientiem (pakalpojumi)
+                  {t('cta.clients.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center space-y-6">
                 <p className="text-white/90">
-                  Darbojamies ar HoReCa, ražotājiem un pārstrādes sektoru
+                  {t('cta.clients.desc')}
                 </p>
                 <div className="space-y-3 text-sm text-white/80">
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
-                    <span>Tauku un eļļas savākšana</span>
+                    <span>{t('cta.clients.item1')}</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
-                    <span>Tauku atdalītāju tīrīšana</span>
+                    <span>{t('cta.clients.item2')}</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
-                    <span>Pilna dokumentācija un atbilstība</span>
+                    <span>{t('cta.clients.item3')}</span>
                   </div>
                 </div>
                 <Button 
                   className="w-full bg-white text-metan-primary hover:bg-gray-100"
-                  onClick={handleServiceCTAClick}
+                  asChild
                 >
-                  Pieteikt atkritumu savākšanu
+                  <Link href="/pakalpojumi/savaksana" onClick={handleServiceCTAClick}>
+                    {t('cta.clients.button')}
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
@@ -127,32 +110,34 @@ export function CTASection() {
                   <TrendingUp className="h-8 w-8 text-white" />
                 </div>
                 <CardTitle className="text-2xl text-center text-white">
-                  Investoriem
+                  {t('cta.investors.title')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center space-y-6">
                 <p className="text-white/90">
-                  Biometāns — pirmais solis jūsu ESG stratēģijā
+                  {t('cta.investors.desc')}
                 </p>
                 <div className="space-y-3 text-sm text-white/80">
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
-                    <span>Rentabilitāte līdz 38,6%</span>
+                    <span>{t('cta.investors.item1')}</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
-                    <span>RED II un ISCC sertifikācija</span>
+                    <span>{t('cta.investors.item2')}</span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
-                    <span>Eksporta potenciāls uz Baltiju</span>
+                    <span>{t('cta.investors.item3')}</span>
                   </div>
                 </div>
                 <Button 
                   className="w-full bg-white text-metan-primary hover:bg-gray-100"
-                  onClick={handleInvestorCTAClick}
+                  asChild
                 >
-                  Uzzināt par investīciju iespējām
+                  <Link href="/projekti/biometans" onClick={handleInvestorCTAClick}>
+                    {t('cta.investors.button')}
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
@@ -168,11 +153,9 @@ export function CTASection() {
           className="mt-16 text-center"
         >
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 max-w-4xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">Par SIA "Ainavas Nams"</h3>
+            <h3 className="text-2xl font-bold mb-4">{t('cta.about.title')}</h3>
             <p className="text-white/90 leading-relaxed">
-              SIA "Ainavas Nams" ir Latvijas uzņēmums, kas dibināts 2020. gadā ar mērķi attīstīt aprites enerģētiku 
-              un veikt pāreju no elektroenerģijas ražošanas uz biometāna un CO₂ ieguvi. Projekts tiek īstenots uz 
-              jau esošās fermentācijas stacijas pamata, kuru pārvalda SIA "Zemgales Enerģijas Parks", nodibināts 2014. gadā.
+              {t('cta.about.text')}
             </p>
           </div>
         </motion.div>

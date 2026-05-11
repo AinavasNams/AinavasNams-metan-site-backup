@@ -2,34 +2,13 @@
 
 import { motion } from 'framer-motion';
 import { Building2, Truck, Factory, Handshake } from 'lucide-react';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function TrustedPartners() {
-  const partners = [
-    {
-      name: 'AS "Virši–A"',
-      type: 'Stratēģiskais partneris', 
-      logo: Building2,
-      description: 'Galvenais elektroenerģijas tirdzniecības partneris'
-    },
-    {
-      name: 'Horeca Solution',
-      type: 'Tehnoloģiju partneris',
-      logo: Factory,
-      description: 'Profesionāli risinājumi HoReCa sektoram'
-    },
-    {
-      name: 'Horeca sprendimai',
-      type: 'Biznesa partneris',
-      logo: Handshake,
-      description: 'Atkritumu apsaimniekošanas risinājumi'
-    },
-    {
-      name: 'Bio-Venta',
-      type: 'Ekoloģiskais partneris',
-      logo: Truck,
-      description: 'Bioloģisko atkritumu pārstrādes sadarbība'
-    }
-  ];
+  const { t } = useTranslation();
+
+  const partnerIcons = [Building2, Factory, Handshake, Truck];
+  const partnerKeys = ['p1', 'p2', 'p3', 'p4'];
 
   const clientLogos = [
     'SIA "NS ESTATE"',
@@ -56,52 +35,55 @@ export default function TrustedPartners() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold text-metan-gray mb-4">
-            Mūsu partneri un klienti
+            {t('trustedPartners.title')}
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Sadarbojamies ar vadošajiem uzņēmumiem Latvijā un Baltijas reģionā
+            {t('trustedPartners.subtitle')}
           </p>
         </motion.div>
 
         {/* Tehnoloģiskie partneri */}
         <div className="mb-16">
           <h3 className="text-xl font-semibold text-center text-gray-900 mb-8">
-            Tehnoloģiskie partneri
+            {t('trustedPartners.techTitle')}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {partners.map((partner, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-gray-50 rounded-xl p-6 text-center border border-gray-200 hover:shadow-md transition-shadow"
-              >
-                <div className="w-16 h-16 bg-metan-light rounded-full flex items-center justify-center mx-auto mb-4">
-                  <partner.logo className="h-8 w-8 text-metan-primary" />
-                </div>
-                
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">
-                  {partner.name}
-                </h4>
-                
-                <p className="text-sm text-metan-primary font-medium mb-2">
-                  {partner.type}
-                </p>
-                
-                <p className="text-xs text-gray-600">
-                  {partner.description}
-                </p>
-              </motion.div>
-            ))}
+            {partnerKeys.map((key, index) => {
+              const Icon = partnerIcons[index];
+              return (
+                <motion.div
+                  key={key}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-gray-50 rounded-xl p-6 text-center border border-gray-200 hover:shadow-md transition-shadow"
+                >
+                  <div className="w-16 h-16 bg-metan-light rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon className="h-8 w-8 text-metan-primary" />
+                  </div>
+                  
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                    {t(`trustedPartners.partners.${key}.name`)}
+                  </h4>
+                  
+                  <p className="text-sm text-metan-primary font-medium mb-2">
+                    {t(`trustedPartners.partners.${key}.type`)}
+                  </p>
+                  
+                  <p className="text-xs text-gray-600">
+                    {t(`trustedPartners.partners.${key}.desc`)}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
         {/* Klienti */}
         <div>
           <h3 className="text-xl font-semibold text-center text-gray-900 mb-8">
-            Uzticas mūsu pakalpojumiem
+            {t('trustedPartners.clientsTitle')}
           </h3>
           
           <motion.div
@@ -138,7 +120,7 @@ export default function TrustedPartners() {
           <div className="inline-flex items-center gap-2 bg-metan-primary/10 rounded-full px-6 py-3">
             <Handshake className="h-5 w-5 text-metan-primary" />
             <span className="text-metan-primary font-semibold">
-              200+ aktīvie klienti visā Latvijā
+              {t('trustedPartners.activeClients')}
             </span>
           </div>
         </motion.div>

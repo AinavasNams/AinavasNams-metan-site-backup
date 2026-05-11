@@ -1,0 +1,2843 @@
+export const locales = ['lv', 'ru', 'lt', 'en'] as const;
+export type Locale = (typeof locales)[number];
+// Backward compatibility alias used by useTranslation hook
+export type Language = Locale;
+
+export const defaultLocale: Locale = 'lv';
+
+export const translations: Record<Locale, Record<string, any>> = {
+  // ============================================================
+  // 🇱🇻 LATVIEŠU (default)
+  // ============================================================
+  lv: {
+    nav: {
+      home: 'Sākums',
+      about: 'Par mums',
+      services: 'Pakalpojumi',
+      projects: 'Projekti',
+      partners: 'Partneriem',
+      investors: 'Investoriem',
+      documents: 'Dokumenti',
+      contacts: 'Kontakti',
+      calculator: 'ROI kalkulators',
+    },
+
+    hero: {
+      slogan: 'Biomasa → Biometāns',
+      title: 'Mēs radām tīru enerģiju no organiskajiem atkritumiem',
+      subtitle:
+        'SIA "Ainavas Nams" ir Latvijas aprites ekonomikas projekts, kas pārvērš taukus, pārtikas un lauksaimniecības atkritumus par biogāzi, biometānu, biopolimēriem un tehnoloģisko CO₂. Mēs apvienojam modernas tehnoloģijas, loģistiku un investīcijas, lai radītu reālu vērtību no atkritumiem.',
+      cta: {
+        collection: 'Pieteikt atkritumu savākšanu',
+        investment: 'Uzzināt par investīciju iespējām',
+        contact: 'Sazināties',
+        order: 'Pasūtīt pakalpojumu',
+        projects: 'Skatīt projektus',
+      },
+      metrics: {
+        collected: 'Tonnas savākto atkritumu',
+        partners: 'Aktīvie partneri',
+        energy: 'MWh biometāna gadā',
+        co2: 'CO₂ samazinājums',
+      },
+      process: {
+        collection: 'Savākšana',
+        processing: 'Pārstrāde',
+        biomethane: 'Biometāns',
+      },
+    },
+
+    how: {
+      title: 'Kā tas strādā',
+      subtitle: 'Īss kopsavilkums par mūsu darba procesu — no atkritumu savākšanas līdz biometāna ražošanai',
+      step1: 'Zvans vai pieteikums vietnē',
+      step2: 'Savākšana ar vakuuma mašīnu',
+      step3: 'Dokumentācija un sertificēta nodošana',
+      step4: 'Mehāniskā attīrīšana un sadalīšana',
+      step5: 'Pārstrāde biometānā un CO₂ atdalīšana',
+    },
+
+    mission: {
+      title: 'Mūsu misija',
+      text: 'Radīt slēgtu un ilgtspējīgu aprites ciklu, kurā organiskie atkritumi kļūst par vērtīgu resursu.',
+    },
+
+    vision: {
+      title: 'Redzējums līdz 2030. gadam',
+      text: 'Kļūt par vadošo neatkarīgo biometāna ražotāju Baltijā.',
+    },
+
+    services: {
+      title: 'Mūsu pakalpojumi',
+      grease: {
+        title: 'Tauku un eļļas savākšana',
+        desc: 'Savācam lietotas eļļas, taukus un pārtikas atliekas ar vakuuma mašīnām.',
+      },
+      biomethane: {
+        title: 'Biometāna stacija Bēnē',
+        desc: 'Moderna biometāna ražošanas stacija ar pilnu ciklu.',
+      },
+      cleaning: {
+        title: 'Augstspiediena tīrīšana',
+        desc: 'Industriāla cauruļvadu tīrīšana ar augstspiediena iekārtām.',
+      },
+      legal: {
+        title: 'Legāla utilizācija',
+        desc: 'Dokumentēta, izsekojama un legāla tauku nodošana.',
+      },
+    },
+
+    stats: {
+      title: 'Mūsu sasniegumi skaitļos',
+      subtitle: 'Pierādīts veikums biometāna ražošanā un atkritumu apsaimniekošanā',
+      investment: 'investīciju piesaistīts',
+      roi: 'vidējais ROI investoriem',
+      processed: 'tonnas pārstrādātas izejvielas gadā',
+      energy: 'MWh biometāna gadā',
+    },
+
+    servicesGrid: {
+      grease: {
+        desc: 'Savācam lietotas eļļas, taukus un pārtikas atliekas ar vakuuma mašīnām. Atkritumi tiek nodoti mehāniskai attīrīšanai un pēc tam pārstrādāti biometānā.',
+        stats: '12,000+ tonnas gadā',
+      },
+      biomethane: {
+        desc: 'Moderna biometāna ražošanas stacija ar pilnu ciklu. CH₄ Future projekts ar membrānu attīrīšanas tehnoloģiju un CO₂ uztveršanu.',
+        stats: '26,951 MWh gadā',
+      },
+      cleaning: {
+        desc: 'Piedāvājam industriālu cauruļvadu tīrīšanu ar augstspiediena iekārtām. Iespējama kombinēta tīrīšana ar vakuuma nosūcējiem.',
+        stats: '24/7 ekstrenais dienests',
+      },
+      legal: {
+        desc: 'Nodrošinām dokumentētu, izsekojamu un legālu tauku nodošanu. Pilna atbilstība VVD, PVD, VID un APUS prasībām.',
+        stats: '200+ licencēti partneri',
+      },
+      learnMore: 'Uzzināt vairāk',
+    },
+
+    missionVision: {
+      mission: {
+        text1: 'Mēs veidojam tīru enerģiju no tā, ko agrāk sauca par atkritumiem.',
+        text2: 'SIA "Ainavas Nams" pārveido taukus, pārtikas un lauksaimniecības atkritumus ilgtspējīgā enerģijā, videi draudzīgos materiālos un tehnoloģiskajā CO₂.',
+        text3: 'Mūsu misija ir padarīt atkritumu pārstrādi nevis par pienākumu, bet par attīstības dzinējspēku. Mēs ticam, ka katrs litrs tauku un katrs kilograms organisko vielu var kļūt par vērtību: enerģiju, degvielu, materiāliem un klimata ieguvumu.',
+      },
+      vision: {
+        title: 'Mūsu vīzija līdz 2030. gadam',
+        text1: 'Kļūt par Baltijas līderi biometāna ražošanā un aprites ekonomikas inovācijās',
+        text2: 'Mūsu ilgtermiņa mērķis ir izveidot Latvijā mērogojamu, efektīvu un ilgtspējīgu infrastruktūru, kas pārvērš organiskos atkritumus enerģijā, resursos un klimatiskajā vērtībā.',
+        bullet1: 'Modernizēt un attīstīt 5 biometāna stacijas dažādos reģionos',
+        bullet2: 'Pārstrādāt vairāk nekā 50 000 tonnas atkritumu gadā',
+        bullet3: 'Eksportēt biometānu un CO₂ uz Lietuvu, Igauniju un Skandināviju',
+        bullet4: 'Attīstīt biopolimēru ražošanu no otrreizējiem taukiem',
+      },
+      story: {
+        title: 'Mūsu stāsts',
+        subtitle: 'No biogāzes stacijas 2014. gadā — līdz biometāna ekosistēmai 2025. gadā',
+        text1: 'SIA "Ainavas Nams" stāsts sākas vēl pirms uzņēmuma juridiskās reģistrācijas. Tā pamatā ir komanda, pieredze un infrastruktūra no SIA "Zemgales Enerģijas Parks", kas kopš 2014. gada darbojas biogāzes jomā Zemgales reģionā.',
+        text2: 'Kopš 2021. gada zem "Zemgales Enerģijas Parks" zīmola darbojas rūpnieciska biogāzes stacija, kas ietver fermentācijas reaktorus, izejvielu pieņemšanas sistēmu, gāzes attīrīšanas līniju un elektroenerģijas ražošanas licenci.',
+        y2014: 'SIA "Zemgales Enerģijas Parks" dibināšana, stacijas uzsākšana',
+        y2021: 'Fermentācijas palaišana, siltumenerģijas līgumi',
+        y2023: 'SIA "Ainavas Nams" reģistrācija, biometāna projektēšana',
+        y2025: 'METAN.LV palaišana: tauki → polimēri → biogāze → biometāns → CO₂',
+      },
+    },
+
+    // ==== NEW: AdvantagesSection ====
+    advantages: {
+      title: 'Kāpēc izvēlas mūs',
+      subtitle: 'Mēs nodrošinām pilnu atbilstību VVD, PVD, VID un APUS prasībām — bez normatīvajiem riskiem jūsu uzņēmumam.',
+      items: {
+        fullCycle: {
+          title: 'Pilns cikls — no atkritumiem līdz tīrai enerģijai',
+          desc: 'Mēs pārvaldām visus posmus: savākšanu, fermentāciju, attīrīšanu, transportēšanu un realizāciju. Tas nodrošina kvalitāti, caurspīdīgumu un kontroli.',
+        },
+        licenses: {
+          title: 'Licences, sertifikācija un starptautiski standarti',
+          desc: 'Ražošana atbilst RED II, ISCC, GoO prasībām. Mums ir visas nepieciešamās atļaujas atkritumu pārstrādei un enerģijas ražošanai.',
+        },
+        logistics: {
+          title: 'Elastīga loģistika ar savu autoparku',
+          desc: 'Mūsu vakuuma mašīnas un sadarbības partneri nodrošina izejvielu savākšanu visā reģionā — katru dienu.',
+        },
+        recycling: {
+          title: 'Otrreizēja tauku un eļļas pārstrāde',
+          desc: 'Izmantojam mehānisko attīrīšanu, centrifugēšanu un pasterizāciju, lai iegūtu vērtīgas frakcijas pat no sarežģītiem atlikumiem.',
+        },
+        economic: {
+          title: 'Pierādīts ekonomiskais efekts',
+          desc: 'Mūsu biometāna pašizmaksa ir viena no zemākajām reģionā. Investori saņem stabilu atdevi ar pārskatāmu modeli.',
+        },
+        esg: {
+          title: 'ESG un klimata ietekmes vadība',
+          desc: 'Katrs mūsu saražotais MWh palīdz samazināt CO₂ emisijas. Mēs neesam tikai neitrāli — mēs radām pozitīvu klimata bilanci.',
+        },
+      },
+      values: {
+        title: 'Mūsu vērtības',
+        sustainability: {
+          title: 'Ilgtspēja',
+          desc: 'Pilnīga sistēma, kurā tauki pārtop enerģijā, bet atlikumi — vērtīgos resursos',
+        },
+        innovation: {
+          title: 'Inovācijas',
+          desc: 'Digitāli risinājumi, integrēti ar APUS sistēmu un uzraudzības iestāžu prasībām',
+        },
+        responsibility: {
+          title: 'Atbildība',
+          desc: 'Pilna normatīvo risku uzņemšanās un atbilstība VVD, PVD, VID prasībām',
+        },
+        partnership: {
+          title: 'Partnerība',
+          desc: 'Caurspīdīga sadarbība ar HoReCa, pārtikas ražotājiem un loģistikas uzņēmumiem',
+        },
+      },
+    },
+
+    // ==== NEW: CTASection ====
+    cta: {
+      title: 'Pievienojies aprites ekonomikai',
+      subtitle: 'Mēs veidojam nākamās paaudzes enerģijas un vides ekosistēmu. Piedalies tajā — kā pakalpojuma saņēmējs, sadarbības partneris vai investors.',
+      clients: {
+        title: 'Klientiem (pakalpojumi)',
+        desc: 'Darbojamies ar HoReCa, ražotājiem un pārstrādes sektoru',
+        item1: 'Tauku un eļļas savākšana',
+        item2: 'Tauku atdalītāju tīrīšana',
+        item3: 'Pilna dokumentācija un atbilstība',
+        button: 'Pieteikt atkritumu savākšanu',
+      },
+      investors: {
+        title: 'Investoriem',
+        desc: 'Biometāns — pirmais solis jūsu ESG stratēģijā',
+        item1: 'Rentabilitāte līdz 38,6%',
+        item2: 'RED II un ISCC sertifikācija',
+        item3: 'Eksporta potenciāls uz Baltiju',
+        button: 'Uzzināt par investīciju iespējām',
+      },
+      about: {
+        title: 'Par SIA "Ainavas Nams"',
+        text: 'SIA "Ainavas Nams" ir Latvijas uzņēmums, kas dibināts 2020. gadā ar mērķi attīstīt aprites enerģētiku un veikt pāreju no elektroenerģijas ražošanas uz biometāna un CO₂ ieguvi. Projekts tiek īstenots uz jau esošās fermentācijas stacijas pamata, kuru pārvalda SIA "Zemgales Enerģijas Parks", nodibināts 2014. gadā.',
+      },
+    },
+
+    // ==== NEW: IndustrySpecialization ====
+    industry: {
+      title: 'Mūsu specializācija',
+      subtitle: 'Profesionāls serviss uzņēmumiem visā Latvijā • Rīgā, Jūrmalā un 300km rādiusā',
+      horeca: {
+        title: 'HoReCa uzņēmumi',
+        subtitle: 'Restorāni • Kafejnīcas • Viesnīcas',
+        desc: 'Specializējamies pārtikas tauku un eļļas savākšanā no restorāniem, kafejnīcām un viesnīcām. Regulāra tauku atdalītāju tīrīšana un apkope.',
+        service1: 'Tauku atdalītāju tīrīšana',
+        service2: 'Fritēšanas eļļas savākšana',
+        service3: 'Regulārs apkalpošanas grafiks',
+        stats: '500+ restorāni',
+      },
+      fish: {
+        title: 'Zivju pārstrādes uzņēmumi',
+        subtitle: 'Rūpnieciski • Augstas kvalitātes',
+        desc: 'Specializēts serviss zivju pārstrādes uzņēmumiem - zivju tauku utilizācija, atkritumu savākšana un cauruļu tīrīšana.',
+        service1: 'Zivju tauku utilizācija',
+        service2: 'Rūpniecisko cauruļu tīrīšana',
+        service3: 'Atkritumu pārstrādes atbilstība',
+        stats: '50+ rūpnīcas',
+      },
+      food: {
+        title: 'Pārtikas ražošanas uzņēmumi',
+        subtitle: 'Ražotnes • Kooperatīvi • Fabrikas',
+        desc: 'Piedāvājam pilnu spektru pakalpojumu pārtikas ražošanas uzņēmumiem - no tauku savākšanas līdz sanitārai tīrīšanai.',
+        service1: 'Pārtikas tauku savākšana',
+        service2: 'Sanitārā kanalizācijas tīrīšana',
+        service3: 'Ražošanas atkritumu utilizācija',
+        stats: '200+ ražotāji',
+      },
+      industrial: {
+        title: 'Rūpnieciskie objekti',
+        subtitle: 'Tehniski • Komerciāli • Loģistikas',
+        desc: 'Nodrošinām rūpniecisko cauruļu tīrīšanu, tauku novadīšanas sistēmu apkopi un taukaino notekūdeņu atsūknēšanu.',
+        service1: 'Cauruļvadu tīrīšana no taukiem',
+        service2: 'Sistēmu apkalpošana',
+        service3: 'Taukaino notekūdeņu novadīšana',
+        stats: '100+ objekti',
+      },
+      footer: 'Licencēti pakalpojumi • Pilna dokumentācijas nodrošināšana • VVD, PVD, VID atbilstība',
+    },
+
+    // ==== NEW: FrequentlyAskedQuestions ====
+    faq: {
+      title: 'Biežāk uzdotie jautājumi',
+      subtitle: 'Atbildes uz svarīgākajiem jautājumiem par tauku utilizāciju un legālu apsaimniekošanu uzņēmumiem',
+      urgent: 'Steidzami',
+      q1: {
+        question: 'Tauku atdalītājs ir aizsērējis - ko darīt?',
+        answer: 'Vispirms jāaptur iekārtas darbs un jāsazinās ar licencētu servisu vai tauku atkritumu apsaimniekotāju. Aizsērējis tauku atdalītājs var radīt noplūdes un nepatīkamas smakas, tāpēc neatliekot veiciet tīrīšanu ar profesionālu palīdzību.\n\nMūsu uzņēmums (SIA "Ainavas Nams") piedāvā sertificētu tauku atdalītāju tīrīšanu – izmantojam specializētu vakuuma tehniku un augstspiediena skalošanu, dokumentējot darbu gaitu. Pēc pakalpojuma sniegšanas izsniedzam apliecinājuma aktu par tauku atkritumu izvešanu, ko var uzrādīt VID vai VVD kā pierādījumu, ka atkritumi savākti un utilizēti atbilstoši normatīvo aktu prasībām.\n\nRegulāra profilaktiska tauku atdalītāja tīrīšana palīdzēs novērst šādas situācijas nākotnē.',
+      },
+      q2: {
+        question: 'Kur nodot fritēšanas taukus uzņēmumiem?',
+        answer: 'Izmantotos fritēšanas (cepamos) taukus un eļļas nedrīkst liet kanalizācijā vai izmest kopējos atkritumos – to nosaka vides aizsardzības prasības. Saskaņā ar MK noteikumiem Nr. 302 lietotie augu eļļas un tauki klasificējami kā atkritumi, kas jānodod licencētam atkritumu apsaimniekotājam.\n\nUzņēmumiem ieteicams uzkrāt atdzesētus taukus speciālā slēgtā konteinerā. Kad konteiners ir pilns (vai pēc saskaņota grafika), atkritumu apsaimniekotājs taukus savāc utilizācijai.\n\nMūsu uzņēmums nodrošina lietoto eļļu un tauku savākšanas pakalpojumu: izsniedzam klientam piemērotas tvertnes tauku uzkrāšanai un vienojamies par izvešanas biežumu. Savāktie tauki tiek pārstrādāti videi draudzīgi – piemēram, biometāna ražošanā, tādējādi tie tiek utilizēti likumīgi un uzņēmums izpilda normatīvo aktu prasības.\n\nLai pieteiktu tauku nodošanu, sazinieties ar SIA "Ainavas Nams" – mēs operatīvi noorganizēsim savākšanu visā Latvijā.',
+      },
+      q3: {
+        question: 'Kā noslēgt līgumu par tauku izvešanu?',
+        answer: 'Līguma noslēgšana ar atkritumu apsaimniekotāju ir obligāts solis, lai uzņēmums legāli utilizētu tauku atkritumus (Atkritumu apsaimniekošanas likums nosaka, ka atkritumu radītājam jābūt līgumam ar apsaimniekotāju).\n\nLai noslēgtu līgumu, sazinieties ar mūsu speciālistiem pa tālruni +371 27727724 vai e-pastu. Mēs precizēsim jūsu uzņēmuma vajadzības (tauku daudzumu, savākšanas biežumu utt.) un sagatavosim līgumu, kurā būs atrunāti visi nosacījumi – konteineru nodrošināšana, izvešanas grafiks, pakalpojuma cena u.c.\n\nLīgumu iespējams noslēgt attālināti (piemēram, parakstot ar drošu e-parakstu) vai klātienē, pēc jūsu izvēles. Pēc līguma noslēgšanas mēs nodrošinām nepieciešamo aprīkojumu (tauku savākšanas tvertnes) un uzsākam regulāru tauku izvešanu atbilstoši grafikam.\n\nJums būs garantija, ka tauku atkritumi tiks apsaimniekoti likumīgi un savlaicīgi, izvairoties no vides pārkāpumiem vai sodām.',
+      },
+      q4: {
+        question: 'Kādi dokumenti nepieciešami utilizācijai?',
+        answer: 'Lai uzņēmums varētu nodot tauku atkritumus utilizācijai, nepieciešami divi pamatdokumenti.\n\nPirmkārt, noslēgts līgums ar licencētu atkritumu apsaimniekotāju (piemēram, ar SIA "Ainavas Nams"), kas apliecina vienošanos par tauku savākšanu un pārstrādi.\n\nOtrkārt, atkritumu nodošanas apliecinājums – pēc katras tauku vai eļļas atkritumu izvešanas reizes pakalpojuma sniedzējs izsniedz pavadzīmi (apliecinājuma aktu), kur fiksēts atkritumu daudzums, veids un nodošanas datums. Šis dokuments apliecina legālu utilizāciju un atbilstību normatīvajām prasībām.\n\nMūsu uzņēmums noformē visu nepieciešamo dokumentāciju – klients saņem līguma eksemplāru un pēc katras izvešanas nodošanas aktu. Uzņēmējam pašam nav jākārto papildu atļaujas, ja sadarbojas ar licencētu apsaimniekotāju.\n\nGlabājiet saņemtos aktus kopā ar uzņēmuma dokumentāciju – nepieciešamības gadījumā tie būs jāuzrāda kontrolējošām iestādēm (piemēram, Valsts vides dienestam vai Valsts ieņēmumu dienestam) kā pierādījums, ka tauku atkritumi ir nodoti un pārstrādāti atbilstoši normatīvajiem aktiem.',
+      },
+      additional: {
+        title: 'Citi populāri jautājumi',
+        q1: 'Cik bieži jātīra tauku atdalītājs horeca uzņēmumiem?',
+        q2: 'Kāda ir regulāras tauku savākšanas priekšrocības?',
+        q3: 'Kas jādara, ja aizsērējis tauku atdalītājs Rīgā steidzami?',
+        q4: 'Kā legāli utilizēt taukus un eļļas pēc zivju pārstrādes?',
+      },
+      contact: {
+        title: 'Nav atbildes uz jūsu jautājumu?',
+        desc: 'Sazinieties ar mūsu ekspertiem - atbildēsim uz jebkuru jautājumu par tauku utilizāciju un dokumentāciju',
+        askQuestion: 'Uzdot jautājumu',
+      },
+    },
+
+    // ==== NEW: LegalDocumentation ====
+    legal: {
+      title: 'Juridiskais nodrošinājums',
+      subtitle: 'Pilna dokumentācija un atbilstība normatīvajiem aktiem • Licencēti pakalpojumi uzņēmumiem visā Latvijā',
+      features: {
+        contracts: {
+          title: 'Līgumi par regulāru apkalpošanu',
+          desc: 'Noslēdzam līgumus par tauku izvešanu, tauku utilizāciju un tauku atdalītāju apkopi ar pilnu juridisko aizsardzību.',
+          item1: 'Līgums par pārtikas tauku izvešanu',
+          item2: 'Līgums par tauku utilizāciju',
+          item3: 'Līgums par tauku atdalītāja apkopi',
+        },
+        licensed: {
+          title: 'Licencēta tauku utilizācija',
+          desc: 'Visi mūsu pakalpojumi ir licencēti un atbilst vides aizsardzības prasībām. Garantējam legālu atkritumu apsaimniekošanu.',
+          item1: 'VVD licences un atļaujas',
+          item2: 'PVD atbilstības sertifikāti',
+          item3: 'APUS reģistrācija',
+        },
+        quality: {
+          title: 'Kvalitātes sertifikācija',
+          desc: 'Mūsu uzņēmums ir sertificēts un atbilst visiem kvalitātes standartiem atkritumu apsaimniekošanas jomā.',
+          item1: 'ISO 14001 vides pārvaldība',
+          item2: 'Kvalitātes kontroles sistēma',
+          item3: 'Regulāri kvalitātes auditi',
+        },
+        compliance: {
+          title: 'Normatīvā atbilstība',
+          desc: 'Nodrošinām pilnu atbilstību Latvijas un ES normatīvajiem aktiem atkritumu apsaimniekošanas jomā.',
+          item1: 'MK noteikumi Nr. 302 par atkritumiem',
+          item2: 'Atkritumu apsaimniekošanas likums',
+          item3: 'ES direktīvas par atkritumiem',
+        },
+      },
+      process: {
+        title: 'Dokumentācijas process',
+        step1: { title: 'Līguma noslēgšana', desc: 'Sazinieties ar mums pa tālruni vai e-pastu, lai noslēgtu līgumu par taiku izvešanu un utilizāciju.' },
+        step2: { title: 'Dokumentu sagatavošana', desc: 'Mēs sagatavosim visus nepieciešamos dokumentus un līgumus atbilstoši jūsu uzņēmuma vajadzībām.' },
+        step3: { title: 'Pakalpojuma sniegšana', desc: 'Pēc katras tauku izvešanas izsniedzam apliecinājuma aktu par legālu utilizāciju.' },
+        step4: { title: 'Dokumentācijas glabāšana', desc: 'Glabājiet saņemtos aktus - tie būs jāuzrāda VVD, PVD vai VID kontrolējošām iestādēm.' },
+      },
+      cta: {
+        title: 'Nepieciešami dokumenti utilizācijai?',
+        desc: 'Sazinieties ar mums, lai noslēgtu līgumu par tauku izvešanu un saņemtu pilnu dokumentāciju par legālu utilizāciju',
+        requestContract: 'Pieprasīt līgumu',
+      },
+    },
+
+    // ==== NEW: CustomerTestimonials ====
+    testimonials: {
+      title: 'Ko saka mūsu klienti',
+      subtitle: 'Uzticēšanos nopelnām ar kvalitatīvu darbu, precīzu dokumentāciju un uzticamu servisu',
+      items: {
+        t1: {
+          name: 'Aija Kalniņa',
+          position: 'Virtuves vadītāja',
+          company: 'Restorāns "Mazā Parīze"',
+          text: 'Strādājam ar Ainavas Nams jau otro gadu. Viņi izdarīja mūsu tauku atdalītāju apkopi ātri un kvalitatīvi. Ļoti svarīgi, ka visi dokumenti tiek nokārtoti kārtībā - nekad nav bijušas problēmas ar VVD pārbaudēm.',
+          location: 'Rīga',
+        },
+        t2: {
+          name: 'Māris Ozoliņš',
+          position: 'Ēdināšanas vadītājs',
+          company: 'SIA "Gardēžu pasaule"',
+          text: 'Mums ir 4 restorāni Rīgā un Daugavpilī. Ainavas Nams atrisināja mūsu problēmu ar eļļas utilizāciju. Tagad viss notiek pēc grafika, bez kavēšanās. Cenas ir saprātīgas un pakalpojums uzticams.',
+          location: 'Daugavpils',
+        },
+        t3: {
+          name: 'Sandra Liepiņa',
+          position: 'Uzņēmuma direktores asistente',
+          company: 'Viesnīca "Jūrmala Resort"',
+          text: 'Ļoti patīk, ka viņi paši sazinās un atgādina par nākamo tīrīšanu. Viss tiek dokumentēts, saņemam detalizētus pārskatus. Mūsu grāmatvedība ir ļoti apmierināta ar dokumentu kvalitāti.',
+          location: 'Jūrmala',
+        },
+        t4: {
+          name: 'Andris Bērziņš',
+          position: 'Tehniskais direktors',
+          company: 'Pārtikas ražotne "Latgales garša"',
+          text: 'Sadarbojamies jau 1,5 gadus. Viņiem ir profesionāla vakuuma tehnika, kas ļauj izvest lielos daudzumus ātri. Nekad nav bijis, ka neierastos vai nokavētu. Rekomendēju citiem ražotājiem.',
+          location: 'Daugavpils',
+        },
+        t5: {
+          name: 'Ilze Sproģe',
+          position: 'Ēdnīcas vadītāja',
+          company: 'Bērnudārzs "Saulīte"',
+          text: 'Svarīgi bija atrast uzņēmumu, kas saprot mūsu specifiku - bērnudārzā ir īpašas prasības tīrībai. Ainavas Nams strādā ātri, klusām un bez smakas. Bērni pat nepamanīja darbu.',
+          location: 'Rīga',
+        },
+        t6: {
+          name: 'Ģirts Vilciņš',
+          position: 'Saimnieks',
+          company: 'Kafejnīca "Pie upes"',
+          text: 'Maža kafejnīca, bet problēmas ar taukiem bija lielas. Tagad mums ir regulāra apkope reizi mēnesī. Vairs nav smaku virtuvē un kanalizācijā. Cena ir pieņemama pat mazam biznesam.',
+          location: 'Jelgava',
+        },
+      },
+      trust: {
+        clients: '200+',
+        clientsLabel: 'Apmierināti klienti',
+        compliance: '100%',
+        complianceLabel: 'Dokumentācijas atbilstība',
+        emergency: '24/7',
+        emergencyLabel: 'Ekstrenais serviss',
+      },
+    },
+
+    // ==== NEW: PartnersLogos ====
+    partnersLogos: {
+      title: 'Mūsu partneri un sertifikācijas',
+      subtitle: 'Strādājam ar uzticamiem partneriem un esam sertificēti visās nepieciešamajās jomās',
+      partners: {
+        p1: { name: 'Latvijas Pašvaldību Savienība', category: 'Pašvaldību partneris', desc: 'Sertificēts pakalpojumu sniedzējs' },
+        p2: { name: 'HoReCa Latvija', category: 'Industrijas asociācija', desc: 'Oficiāls atkritumu apsaimniekotājs' },
+        p3: { name: 'Latvijas Vides Fonds', category: 'Vides organizācija', desc: 'Atbalstīts projekts' },
+        p4: { name: 'ALTUM', category: 'Finanšu partneris', desc: 'Investīciju atbalsts' },
+        p5: { name: 'RED II Sertifikācija', category: 'Starptautiskā sertifikācija', desc: 'Atjaunojamās enerģijas direktīva' },
+        p6: { name: 'ISCC Certification', category: 'Kvalitātes standarts', desc: 'Ilgtspējības sertifikāts' },
+        p7: { name: 'VVD', category: 'Valsts kontrole', desc: 'Licencēts pakalpojumu sniedzējs' },
+        p8: { name: 'Zemgales Enerģijas Parks', category: 'Tehniskais partneris', desc: 'Biogāzes ražošana' },
+      },
+      certTitle: 'Licence un sertifikāti',
+      certSubtitle: 'Visas nepieciešamās atļaujas un kvalitātes apliecinājumi',
+      certs: {
+        c1: { title: 'VVD Licence Nr. LI-1234', desc: 'Atkritumu apsaimniekošana', status: 'Aktīva' },
+        c2: { title: 'PVD Licence Nr. PV-5678', desc: 'Ūdens apsaimniekošana', status: 'Aktīva' },
+        c3: { title: 'ISO 14001:2015', desc: 'Vides pārvaldības sistēma', status: 'Sertificēts' },
+        c4: { title: 'HACCP', desc: 'Pārtikas drošības standarts', status: 'Sertificēts' },
+      },
+      trustStatement: '100% LEGĀLI UN SERTIFICĒTI PAKALPOJUMI',
+      trustDesc: 'Visi mūsu pakalpojumi atbilst VVD, PVD un starptautiskajiem standartiem. Mēs garantējam pilnu dokumentācijas atbilstību un izsekojamību.',
+    },
+
+    // ==== NEW: TrustedPartners ====
+    trustedPartners: {
+      title: 'Mūsu partneri un klienti',
+      subtitle: 'Sadarbojamies ar vadošajiem uzņēmumiem Latvijā un Baltijas reģionā',
+      techTitle: 'Tehnoloģiskie partneri',
+      partners: {
+        p1: { name: 'AS "Virši–A"', type: 'Stratēģiskais partneris', desc: 'Galvenais elektroenerģijas tirdzniecības partneris' },
+        p2: { name: 'Horeca Solution', type: 'Tehnoloģiju partneris', desc: 'Profesionāli risinājumi HoReCa sektoram' },
+        p3: { name: 'Horeca sprendimai', type: 'Biznesa partneris', desc: 'Atkritumu apsaimniekošanas risinājumi' },
+        p4: { name: 'Bio-Venta', type: 'Ekoloģiskais partneris', desc: 'Bioloģisko atkritumu pārstrādes sadarbība' },
+      },
+      clientsTitle: 'Uzticas mūsu pakalpojumiem',
+      activeClients: '200+ aktīvie klienti visā Latvijā',
+    },
+
+    // ==== NEW: PriorityContacts ====
+    priorityContacts: {
+      title: 'Sazinies ar mūsu tehnisko servisa vadītāju:',
+      shortLabel: 'Tehniskais servisa vadītājs',
+      trustBadge: 'Licencēts partneris ar pieredzi HoReCa sektorā visā Latvijā',
+    },
+
+    // ==== NEW: EnhancedCTA ====
+    enhancedCta: {
+      homepage: {
+        title: 'Sāciet ietaupīt jau šodien!',
+        subtitle: 'Mēs palīdzēsim jums izveidot efektīvu atkritumu apsaimniekošanas sistēmu un sākt ietaupīt',
+      },
+      services: {
+        title: 'Nepieciešama konsultācija?',
+        subtitle: 'Sazinieties ar mūsu ekspertiem, lai izvēlētos piemērotāko risinājumu jūsu uzņēmumam',
+      },
+      calculator: {
+        title: 'Gatavs sākt ietaupīt?',
+        subtitle: 'Sazinieties ar mūsu ekspertiem bezmaksas konsultācijai un precīzam piedāvājumam',
+      },
+      phone: {
+        title: 'Tūlītēja konsultācija',
+        desc: 'Zvaniet tehniskajam servisa vadītājam - atbildēsim uz visiem jautājumiem',
+        callNow: 'Zvanīt tagad',
+        hours: 'Pieejams 8:00-18:00',
+      },
+      email: {
+        title: 'Detalizēts piedāvājums',
+        desc: 'Rakstiet e-pastu ar jūsu vajadzībām - sagatavosim individuālu piedāvājumu',
+        writeEmail: 'Rakstīt e-pastu',
+        response: 'Atbilde 24h laikā',
+      },
+      calc: {
+        title: 'Pakalpojumu kalkulators',
+        desc: 'Aprēķiniet precīzas pakalpojumu izmaksas atkarībā no jūsu vajadzībām',
+        calculate: 'Aprēķināt izmaksas',
+        free: 'Bezmaksas rīks',
+      },
+      trust: {
+        licensed: 'Licencēts pakalpojums',
+        licensedDesc: 'VVD un PVD atļaujas',
+        emergency: '24/7 ekstrenais serviss',
+        emergencyDesc: 'Ātrai problēmu risināšanai',
+        docs: 'Pilna dokumentācija',
+        docsDesc: 'Izsekojamība un atbilstība',
+      },
+    },
+
+    investors: {
+      hero: {
+        title: 'Investēt CH₄ Future projektā',
+        subtitle:
+          'SIA "Ainavas Nams" aicina stratēģiskos investorus piedalīties mūsdienīgas biometāna ražošanas stacijas izveidē. Ilgtspējīgas investīcijas ar augstu atdevi un pārbaudītu infrastruktūru.',
+        download: 'Lejupielādēt biznesa plānu',
+        contact: 'Sazināties ar projekta vadītāju',
+      },
+      metrics: {
+        title: 'Galvenie finansiālie rādītāji',
+        subtitle: 'Projekta CH₄ Future ekonomiskā efektivitāte',
+      },
+      advantages: { title: 'Kāpēc ieguldīt šajā projektā?' },
+      timeline: {
+        title: 'Projekta īstenošanas plāns',
+        subtitle: 'Galvenie posmi līdz pilnai ražošanas jaudai',
+      },
+      docs: {
+        title: 'Dokumentācija investoriem',
+        subtitle: 'Detalizēta projekta informācija un aprēķini',
+      },
+      partners: { title: 'Tehnoloģiskie partneri' },
+      cta: {
+        title: 'Gatavs investēt nākotnē?',
+        subtitle:
+          'Pievienojieties CH₄ Future projektam un kļūstiet par daļu no Latvijas zaļās enerģijas revolūcijas. Sazinieties ar mūsu komandu detalizētai konsultācijai.',
+      },
+    },
+
+    breadcrumb: {
+      services: 'Pakalpojumi',
+      projects: 'Projekti',
+      processing: 'Mehāniskā apstrāde',
+      collection: 'Tauku savākšana',
+      biomethane: 'Biometāns',
+      calculator: 'ROI kalkulators',
+    },
+
+    processing: {
+      title: 'Mehāniskā apstrāde',
+      subtitle:
+        'SIA "Ainavas Nams" attīsta inovatīvus risinājumus organisko atkritumu mehāniskai apstrādei, ietverot centrifugēšanu, biopolimēru izstrādi un augstspiediena tīrīšanas pakalpojumus.',
+      contact: 'Sazināties par pakalpojumiem',
+      solutions: { title: 'Mūsu tehnoloģiskie risinājumi' },
+      process: { title: 'Mehāniskās apstrādes process' },
+      benefits: { title: 'Ko jūs iegūstat' },
+      partner: { title: 'Tehnoloģiskais partneris' },
+      cta: { title: 'Nepieciešama mehāniskā apstrāde?' },
+    },
+
+    collection: {
+      title: 'Tauku un eļļas atkritumu savākšana',
+      subtitle:
+        'Mēs atrisinām tauku atkritumu jautājumu jūsu vietā — legāli, droši un pārskatāmi. SIA "Ainavas Nams" nodrošina pilnu pakalpojumu klāstu FOG (tauki, eļļas, smērvielas) atkritumu savākšanā un tauku atdalītāju tīrīšanā.',
+      services: { title: 'Pakalpojumā iekļauts' },
+      process: { title: 'Kā notiek process' },
+      benefits: { title: 'Jūsu ieguvumi' },
+      equipment: { title: 'Izmantotā tehnika' },
+      cta: { title: 'Nepieciešams savākšanas pakalpojums?' },
+    },
+
+    biomethane: {
+      title: 'Biogāze un biometāns',
+      subtitle:
+        'CH₄ Future projekts balstās uz jau esošo staciju Bēnē, kur plānota membrānu attīrīšanas tehnoloģijas ieviešana.',
+      metrics: { title: 'Galvenie rādītāji' },
+      process: { title: 'Kā darbojas CH₄ Future aprites modelis' },
+      invest: { title: 'Kāpēc ieguldīt' },
+      partners: { title: 'Tehnoloģiskie partneri' },
+      cta: { title: 'Gatavs investēt?' },
+    },
+
+    calculator: {
+      title: 'ROI kalkulators',
+      subtitle:
+        'Aprēķiniet sava ieguldījuma atdevi CH₄ Future projektā. Interaktīvs kalkulators ar detalizētiem finanšu rādītājiem un scenāriju analīzi.',
+      parameters: { title: 'Projekta parametri' },
+      results: { title: 'Aprēķina rezultāti' },
+      scenarios: { title: 'Scenāriju analīze' },
+    },
+
+    partneriem: {
+      hero: {
+        ctaPrimary: 'Aprēķināt cenu pēc adreses',
+      },
+      calculator: {
+        locateButton: 'Noteikt objekta koordinātes (GPS)',
+        addressPlaceholder: 'Ievadiet objekta adresi',
+        country: 'Valsts',
+        zone: 'Zona',
+        distance: 'Attālums',
+        price: 'Cena',
+      },
+      form: {
+        phone: 'Telefons',
+        email: 'E-pasts',
+        note: 'Piezīme',
+        submit: 'Saņemt cenu piedāvājumu',
+      },
+    },
+
+    cookies: {
+      title: 'Sīkdatņu iestatījumi',
+      description:
+        'Mēs izmantojam sīkdatnes, lai uzlabotu jūsu pieredzi mūsu tīmekļa vietnē. Izvēlieties sīkdatņu kategorijas, kuras vēlaties atļaut.',
+      acceptAll: 'Pieņemt visas',
+      rejectAll: 'Noraidīt visas',
+      settings: 'Iestatījumi',
+      necessary: 'Nepieciešamās sīkdatnes',
+      necessaryDesc:
+        'Šīs sīkdatnes ir būtiskas vietnes darbībai un tās nevar atspējot.',
+      analytics: 'Analītikas sīkdatnes',
+      analyticsDesc: 'Palīdz mums saprast, kā apmeklētāji izmanto vietni.',
+      marketing: 'Mārketinga sīkdatnes',
+      marketingDesc: 'Tiek izmantotas, lai rādītu atbilstošu reklāmu.',
+      personalization: 'Personalizācija',
+      personalizationDesc:
+        'Ļauj mums atcerēties jūsu preferences.',
+      save: 'Saglabāt iestatījumus',
+      back: 'Atpakaļ',
+    },
+
+    footer: {
+      description:
+        'SIA "Ainavas Nams" – uzticams partneris atkritumu apsaimniekošanā un biometāna ražošanā Latvijā.',
+      privacy: 'Privātuma politika',
+      cookies: 'Sīkdatņu politika',
+    },
+    // ==== NEW: ContactsPage ====
+    contacts: {
+      heroTitle: 'Kontakti',
+      heroSubtitle: 'Sazinieties ar mums, lai saņemtu konsultāciju par mūsu pakalpojumiem vai uzsāktu sadarbību. Mūsu komanda ir gatava atbildēt uz jūsu jautājumiem.',
+      sendMessage: 'Sūtīt ziņu',
+      nameLabel: 'Vārds',
+      namePlaceholder: 'Jūsu vārds',
+      phoneLabel: 'Telefons',
+      phonePlaceholder: '+371 20000000',
+      emailLabel: 'E-pasts',
+      emailPlaceholder: 'your@email.com',
+      topicLabel: 'Tēma',
+      topicPlaceholder: 'Par ko vēlaties runāt?',
+      preferredTimeLabel: 'Vēlamais zvana laiks',
+      preferredTimePlaceholder: 'Kad jums ērtāk?',
+      timeAsap: 'Tūlīt pat',
+      timeMorning: 'Rītos (8:00-12:00)',
+      timeAfternoon: 'Pēcpusdienā (12:00-17:00)',
+      timeEvening: 'Vakarā (17:00-20:00)',
+      timeEmailOnly: 'Tikai e-pastā',
+      messageLabel: 'Ziņa',
+      messagePlaceholder: 'Pastāstiet īsi, kas jums nepieciešams...',
+      consentText: 'Es piekrītu manu datu apstrādei, lai saņemtu komerciālu piedāvājumu un sazinātos par pakalpojumu nosacījumiem.',
+      consentAlert: 'Lūdzu apstipriniet, ka piekrītat datu apstrādei.',
+      submitButton: 'Nosūtīt ziņu',
+      submitting: 'Nosūta...',
+      submitNote: 'Nosūtot formu, jūs piekrītat saziņai par piedāvājumu. Mēs sazināsimies 24h laikā.',
+      successTitle: 'Ziņa nosūtīta!',
+      successDesc: 'Mēs sazināsimies ar jums tuvākajā laikā.',
+      companyInfo: 'Uzņēmuma informācija',
+      legalAddress: 'Juridiskā adrese:',
+      legalAddressValue: 'Bauskas iela 2, Daugavpils, LV-5417',
+      stationAddress: 'Stacijas adrese:',
+      stationAddressValue: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      contactPersons: 'Kontaktpersonas',
+      location: 'Atrašanās vieta',
+      bioStation: 'Biometāna ražošanas stacija:',
+      bioStationAddress: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      coordinates: 'Koordinātes: 56.4808°N, 23.0573°E',
+      techService: 'Tehniskais serviss:',
+      techServiceHours: 'Darba laiks: 24/7 ekstrenais dienests',
+    },
+    // ==== NEW: ContactsPage ====
+    contacts: {
+      heroTitle: 'Kontakti',
+      heroSubtitle: 'Sazinieties ar mums, lai saņemtu konsultāciju par mūsu pakalpojumiem vai uzsāktu sadarbību. Mūsu komanda ir gatava atbildēt uz jūsu jautājumiem.',
+      sendMessage: 'Sūtīt ziņu',
+      nameLabel: 'Vārds',
+      namePlaceholder: 'Jūsu vārds',
+      phoneLabel: 'Telefons',
+      phonePlaceholder: '+371 20000000',
+      emailLabel: 'E-pasts',
+      emailPlaceholder: 'your@email.com',
+      topicLabel: 'Tēma',
+      topicPlaceholder: 'Par ko vēlaties runāt?',
+      preferredTimeLabel: 'Vēlamais zvana laiks',
+      preferredTimePlaceholder: 'Kad jums ērtāk?',
+      timeAsap: 'Tūlīt pat',
+      timeMorning: 'Rītos (8:00-12:00)',
+      timeAfternoon: 'Pēcpusdienā (12:00-17:00)',
+      timeEvening: 'Vakarā (17:00-20:00)',
+      timeEmailOnly: 'Tikai e-pastā',
+      messageLabel: 'Ziņa',
+      messagePlaceholder: 'Pastāstiet īsi, kas jums nepieciešams...',
+      consentText: 'Es piekrītu manu datu apstrādei, lai saņemtu komerciālu piedāvājumu un sazinātos par pakalpojumu nosacījumiem.',
+      consentAlert: 'Lūdzu apstipriniet, ka piekrītat datu apstrādei.',
+      submitButton: 'Nosūtīt ziņu',
+      submitting: 'Nosūta...',
+      submitNote: 'Nosūtot formu, jūs piekrītat saziņai par piedāvājumu. Mēs sazināsimies 24h laikā.',
+      successTitle: 'Ziņa nosūtīta!',
+      successDesc: 'Mēs sazināsimies ar jums tuvākajā laikā.',
+      companyInfo: 'Uzņēmuma informācija',
+      legalAddress: 'Juridiskā adrese:',
+      legalAddressValue: 'Bauskas iela 2, Daugavpils, LV-5417',
+      stationAddress: 'Stacijas adrese:',
+      stationAddressValue: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      contactPersons: 'Kontaktpersonas',
+      location: 'Atrašanās vieta',
+      bioStation: 'Biometāna ražošanas stacija:',
+      bioStationAddress: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      coordinates: 'Koordinātes: 56.4808°N, 23.0573°E',
+      techService: 'Tehniskais serviss:',
+      techServiceHours: 'Darba laiks: 24/7 ekstrenais dienests',
+    },
+  },
+
+  // ============================================================
+  // 🇷🇺 РУССКИЙ
+  // ============================================================
+  ru: {
+    nav: {
+      home: 'Главная',
+      about: 'О компании',
+      services: 'Услуги',
+      projects: 'Проекты',
+      partners: 'Партнёрам',
+      investors: 'Инвесторам',
+      documents: 'Документы',
+      contacts: 'Контакты',
+      calculator: 'ROI калькулятор',
+    },
+
+    hero: {
+      slogan: 'Биомасса → Биометан',
+      title: 'От органических отходов к чистой энергии',
+      subtitle:
+        'SIA "Ainavas Nams" — латвийский проект циркулярной экономики, который превращает жиры, пищевые и сельскохозяйственные отходы в биогаз, биометан, биополимеры и технологический CO₂. Мы объединяем современные технологии, логистику и инвестиции для создания реальной ценности из отходов.',
+      cta: {
+        collection: 'Заказать сбор отходов',
+        investment: 'Узнать об инвестициях',
+        contact: 'Связаться',
+        order: 'Заказать услугу',
+        projects: 'Смотреть проекты',
+      },
+      metrics: {
+        collected: 'Тонн собранных отходов',
+        partners: 'Активных партнёров',
+        energy: 'МВт·ч биометана в год',
+        co2: 'Сокращение CO₂',
+      },
+      process: {
+        collection: 'Сбор',
+        processing: 'Переработка',
+        biomethane: 'Биометан',
+      },
+    },
+
+    how: {
+      title: 'Как это работает',
+      subtitle: 'Краткое описание рабочего процесса — от сбора отходов до производства биометана',
+      step1: 'Звонок или заявка на сайте',
+      step2: 'Сбор вакуумной машиной',
+      step3: 'Документация и сертифицированная сдача',
+      step4: 'Механическая очистка и разделение',
+      step5: 'Переработка в биометан и выделение CO₂',
+    },
+
+    mission: {
+      title: 'Наша миссия',
+      text: 'Создать замкнутый и устойчивый цикл, в котором органические отходы становятся ценным ресурсом.',
+    },
+
+    vision: {
+      title: 'Видение до 2030 года',
+      text: 'Стать ведущим независимым производителем биометана в Балтии.',
+    },
+
+    services: {
+      title: 'Наши услуги',
+      grease: {
+        title: 'Сбор жиров и масел',
+        desc: 'Собираем отработанные масла, жиры и пищевые остатки вакуумными машинами.',
+      },
+      biomethane: {
+        title: 'Биометановая станция в Бене',
+        desc: 'Современная станция производства биометана с полным циклом.',
+      },
+      cleaning: {
+        title: 'Высоконапорная очистка',
+        desc: 'Промышленная очистка трубопроводов высоконапорным оборудованием.',
+      },
+      legal: {
+        title: 'Легальная утилизация',
+        desc: 'Документированная, отслеживаемая и легальная сдача жиров.',
+      },
+    },
+
+    stats: {
+      title: 'Наши достижения в цифрах',
+      subtitle: 'Доказанные результаты в производстве биометана и управлении отходами',
+      investment: 'привлечено инвестиций',
+      roi: 'средняя доходность для инвесторов',
+      processed: 'тонн переработано сырья в год',
+      energy: 'МВт·ч биометана в год',
+    },
+
+    servicesGrid: {
+      grease: {
+        desc: 'Собираем отработанные масла, жиры и пищевые остатки вакуумными машинами. Отходы направляются на механическую очистку и затем перерабатываются в биометан.',
+        stats: '12 000+ тонн в год',
+      },
+      biomethane: {
+        desc: 'Современная станция производства биометана с полным циклом. Проект CH₄ Future с мембранной технологией очистки и улавливанием CO₂.',
+        stats: '26 951 МВт·ч в год',
+      },
+      cleaning: {
+        desc: 'Предлагаем промышленную очистку трубопроводов высоконапорным оборудованием. Возможна комбинированная очистка с вакуумным отсосом.',
+        stats: '24/7 экстренная служба',
+      },
+      legal: {
+        desc: 'Обеспечиваем документированную, отслеживаемую и легальную сдачу жиров. Полное соответствие требованиям VVD, PVD, VID и APUS.',
+        stats: '200+ лицензированных партнёров',
+      },
+      learnMore: 'Узнать больше',
+    },
+
+    missionVision: {
+      mission: {
+        text1: 'Мы создаём чистую энергию из того, что раньше называли отходами.',
+        text2: 'SIA "Ainavas Nams" превращает жиры, пищевые и сельскохозяйственные отходы в устойчивую энергию, экологичные материалы и технологический CO₂.',
+        text3: 'Наша миссия — превратить переработку отходов не в обязанность, а в движущую силу развития. Мы верим, что каждый литр жира и каждый килограмм органики может стать ценностью: энергией, топливом, материалами и климатической выгодой.',
+      },
+      vision: {
+        title: 'Наше видение до 2030 года',
+        text1: 'Стать лидером Балтии в производстве биометана и инновациях циркулярной экономики',
+        text2: 'Наша долгосрочная цель — создать в Латвии масштабируемую, эффективную и устойчивую инфраструктуру, превращающую органические отходы в энергию, ресурсы и климатическую ценность.',
+        bullet1: 'Модернизировать и развить 5 биометановых станций в разных регионах',
+        bullet2: 'Переработать более 50 000 тонн отходов в год',
+        bullet3: 'Экспортировать биометан и CO₂ в Литву, Эстонию и Скандинавию',
+        bullet4: 'Развить производство биополимеров из вторичных жиров',
+      },
+      story: {
+        title: 'Наша история',
+        subtitle: 'От биогазовой станции в 2014 году — к экосистеме биометана в 2025',
+        text1: 'История SIA "Ainavas Nams" начинается ещё до юридической регистрации компании. В её основе — команда, опыт и инфраструктура SIA "Zemgales Enerģijas Parks", работающей в сфере биогаза в регионе Земгале с 2014 года.',
+        text2: 'С 2021 года под брендом "Zemgales Enerģijas Parks" работает промышленная биогазовая станция, включающая ферментационные реакторы, систему приёма сырья, линию очистки газа и лицензию на производство электроэнергии.',
+        y2014: 'Основание SIA "Zemgales Enerģijas Parks", запуск станции',
+        y2021: 'Запуск ферментации, договоры на теплоэнергию',
+        y2023: 'Регистрация SIA "Ainavas Nams", проектирование биометана',
+        y2025: 'Запуск METAN.LV: жиры → полимеры → биогаз → биометан → CO₂',
+      },
+    },
+
+    // ==== NEW: AdvantagesSection ====
+    advantages: {
+      title: 'Почему выбирают нас',
+      subtitle: 'Мы обеспечиваем полное соответствие требованиям VVD, PVD, VID и APUS — без нормативных рисков для вашего предприятия.',
+      items: {
+        fullCycle: {
+          title: 'Полный цикл — от отходов до чистой энергии',
+          desc: 'Мы управляем всеми этапами: сбором, ферментацией, очисткой, транспортировкой и реализацией. Это обеспечивает качество, прозрачность и контроль.',
+        },
+        licenses: {
+          title: 'Лицензии, сертификация и международные стандарты',
+          desc: 'Производство соответствует требованиям RED II, ISCC, GoO. У нас есть все необходимые разрешения на переработку отходов и производство энергии.',
+        },
+        logistics: {
+          title: 'Гибкая логистика с собственным автопарком',
+          desc: 'Наши вакуумные машины и партнёры обеспечивают сбор сырья по всему региону — каждый день.',
+        },
+        recycling: {
+          title: 'Вторичная переработка жиров и масел',
+          desc: 'Используем механическую очистку, центрифугирование и пастеризацию для получения ценных фракций даже из сложных остатков.',
+        },
+        economic: {
+          title: 'Доказанный экономический эффект',
+          desc: 'Себестоимость нашего биометана — одна из самых низких в регионе. Инвесторы получают стабильную доходность с прозрачной моделью.',
+        },
+        esg: {
+          title: 'ESG и управление климатическим воздействием',
+          desc: 'Каждый произведённый нами МВт·ч помогает сократить выбросы CO₂. Мы не просто нейтральны — мы создаём положительный климатический баланс.',
+        },
+      },
+      values: {
+        title: 'Наши ценности',
+        sustainability: {
+          title: 'Устойчивость',
+          desc: 'Полная система, в которой жиры превращаются в энергию, а остатки — в ценные ресурсы',
+        },
+        innovation: {
+          title: 'Инновации',
+          desc: 'Цифровые решения, интегрированные с системой APUS и требованиями контролирующих органов',
+        },
+        responsibility: {
+          title: 'Ответственность',
+          desc: 'Полное принятие нормативных рисков и соответствие требованиям VVD, PVD, VID',
+        },
+        partnership: {
+          title: 'Партнёрство',
+          desc: 'Прозрачное сотрудничество с HoReCa, производителями продуктов питания и логистическими компаниями',
+        },
+      },
+    },
+
+    // ==== NEW: CTASection ====
+    cta: {
+      title: 'Присоединяйтесь к циркулярной экономике',
+      subtitle: 'Мы создаём экосистему энергетики и окружающей среды нового поколения. Участвуйте — как получатель услуг, партнёр или инвестор.',
+      clients: {
+        title: 'Клиентам (услуги)',
+        desc: 'Работаем с HoReCa, производителями и перерабатывающим сектором',
+        item1: 'Сбор жиров и масел',
+        item2: 'Очистка жироуловителей',
+        item3: 'Полная документация и соответствие',
+        button: 'Заказать сбор отходов',
+      },
+      investors: {
+        title: 'Инвесторам',
+        desc: 'Биометан — первый шаг в вашей ESG-стратегии',
+        item1: 'Рентабельность до 38,6%',
+        item2: 'Сертификация RED II и ISCC',
+        item3: 'Экспортный потенциал в Балтию',
+        button: 'Узнать об инвестициях',
+      },
+      about: {
+        title: 'О SIA "Ainavas Nams"',
+        text: 'SIA "Ainavas Nams" — латвийская компания, основанная в 2020 году с целью развития циркулярной энергетики и перехода от производства электроэнергии к получению биометана и CO₂. Проект реализуется на базе существующей ферментационной станции, которой управляет SIA "Zemgales Enerģijas Parks", основанная в 2014 году.',
+      },
+    },
+
+    // ==== NEW: IndustrySpecialization ====
+    industry: {
+      title: 'Наша специализация',
+      subtitle: 'Профессиональный сервис для предприятий по всей Латвии • Рига, Юрмала и в радиусе 300 км',
+      horeca: {
+        title: 'Предприятия HoReCa',
+        subtitle: 'Рестораны • Кафе • Гостиницы',
+        desc: 'Специализируемся на сборе пищевых жиров и масел из ресторанов, кафе и гостиниц. Регулярная очистка и обслуживание жироуловителей.',
+        service1: 'Очистка жироуловителей',
+        service2: 'Сбор фритюрного масла',
+        service3: 'Регулярный график обслуживания',
+        stats: '500+ ресторанов',
+      },
+      fish: {
+        title: 'Рыбоперерабатывающие предприятия',
+        subtitle: 'Промышленные • Высокого качества',
+        desc: 'Специализированный сервис для рыбоперерабатывающих предприятий — утилизация рыбьего жира, сбор отходов и очистка труб.',
+        service1: 'Утилизация рыбьего жира',
+        service2: 'Промышленная очистка труб',
+        service3: 'Соответствие требованиям переработки',
+        stats: '50+ заводов',
+      },
+      food: {
+        title: 'Пищевые производства',
+        subtitle: 'Производства • Кооперативы • Фабрики',
+        desc: 'Предлагаем полный спектр услуг для пищевых производств — от сбора жиров до санитарной очистки.',
+        service1: 'Сбор пищевых жиров',
+        service2: 'Санитарная очистка канализации',
+        service3: 'Утилизация производственных отходов',
+        stats: '200+ производителей',
+      },
+      industrial: {
+        title: 'Промышленные объекты',
+        subtitle: 'Технические • Коммерческие • Логистические',
+        desc: 'Обеспечиваем промышленную очистку труб, обслуживание систем жироотведения и откачку жиросодержащих сточных вод.',
+        service1: 'Очистка трубопроводов от жиров',
+        service2: 'Обслуживание систем',
+        service3: 'Отведение жиросодержащих стоков',
+        stats: '100+ объектов',
+      },
+      footer: 'Лицензированные услуги • Полное документальное обеспечение • Соответствие VVD, PVD, VID',
+    },
+
+    // ==== NEW: FrequentlyAskedQuestions ====
+    faq: {
+      title: 'Часто задаваемые вопросы',
+      subtitle: 'Ответы на важнейшие вопросы об утилизации жиров и легальном обращении с отходами для предприятий',
+      urgent: 'Срочно',
+      q1: {
+        question: 'Жироуловитель засорился — что делать?',
+        answer: 'Прежде всего остановите работу оборудования и свяжитесь с лицензированным сервисом или оператором по обращению с жировыми отходами. Засорённый жироуловитель может вызвать протечки и неприятные запахи, поэтому незамедлительно проведите очистку с профессиональной помощью.\n\nНаша компания (SIA "Ainavas Nams") предлагает сертифицированную очистку жироуловителей — используем специализированную вакуумную технику и промывку высоким давлением, документируя ход работ. По завершении услуги выдаём акт подтверждения вывоза жировых отходов, который можно предъявить VID или VVD как доказательство законного сбора и утилизации.\n\nРегулярная профилактическая очистка жироуловителя поможет предотвратить подобные ситуации в будущем.',
+      },
+      q2: {
+        question: 'Куда сдать фритюрные жиры предприятиям?',
+        answer: 'Использованные фритюрные жиры и масла нельзя сливать в канализацию или выбрасывать с общими отходами — это регулируется требованиями охраны окружающей среды. Согласно правилам КМ Nr. 302, отработанные растительные масла и жиры классифицируются как отходы, которые необходимо сдавать лицензированному оператору.\n\nПредприятиям рекомендуется накапливать остывшие жиры в специальной закрытой ёмкости. Когда ёмкость заполнена (или по согласованному графику), оператор забирает жиры на утилизацию.\n\nНаша компания обеспечивает услугу сбора отработанных масел и жиров: предоставляем клиенту подходящие ёмкости для накопления и согласовываем частоту вывоза. Собранные жиры перерабатываются экологически — например, в производстве биометана.\n\nДля заказа сбора жиров свяжитесь с SIA "Ainavas Nams" — мы оперативно организуем вывоз по всей Латвии.',
+      },
+      q3: {
+        question: 'Как заключить договор на вывоз жиров?',
+        answer: 'Заключение договора с оператором по обращению с отходами — обязательный шаг для легальной утилизации жировых отходов предприятием (Закон об обращении с отходами обязывает производителя отходов иметь договор с оператором).\n\nДля заключения договора свяжитесь с нашими специалистами по телефону +371 27727724 или электронной почте. Мы уточним потребности вашего предприятия (объём жиров, частоту вывоза и т.д.) и подготовим договор со всеми условиями.\n\nДоговор можно заключить дистанционно (например, с электронной подписью) или лично. После заключения договора мы обеспечим необходимое оборудование (ёмкости для сбора жиров) и начнём регулярный вывоз по графику.\n\nВы получите гарантию законной и своевременной утилизации жировых отходов.',
+      },
+      q4: {
+        question: 'Какие документы нужны для утилизации?',
+        answer: 'Для сдачи жировых отходов на утилизацию предприятию необходимы два основных документа.\n\nВо-первых, заключённый договор с лицензированным оператором (например, с SIA "Ainavas Nams"), подтверждающий соглашение о сборе и переработке жиров.\n\nВо-вторых, акт подтверждения сдачи отходов — после каждого вывоза оператор выдаёт накладную (акт), где зафиксированы количество, вид отходов и дата сдачи.\n\nНаша компания оформляет всю необходимую документацию — клиент получает экземпляр договора и акт после каждого вывоза. Предпринимателю не нужно оформлять дополнительные разрешения при работе с лицензированным оператором.\n\nХраните полученные акты вместе с документацией предприятия — при необходимости их нужно предъявить контролирующим органам.',
+      },
+      additional: {
+        title: 'Другие популярные вопросы',
+        q1: 'Как часто нужно чистить жироуловитель предприятиям HoReCa?',
+        q2: 'Какие преимущества регулярного сбора жиров?',
+        q3: 'Что делать, если жироуловитель засорился в Риге срочно?',
+        q4: 'Как легально утилизировать жиры и масла после рыбопереработки?',
+      },
+      contact: {
+        title: 'Не нашли ответа на свой вопрос?',
+        desc: 'Свяжитесь с нашими экспертами — ответим на любой вопрос об утилизации жиров и документации',
+        askQuestion: 'Задать вопрос',
+      },
+    },
+
+    // ==== NEW: LegalDocumentation ====
+    legal: {
+      title: 'Юридическое обеспечение',
+      subtitle: 'Полная документация и соответствие нормативным актам • Лицензированные услуги для предприятий по всей Латвии',
+      features: {
+        contracts: {
+          title: 'Договоры на регулярное обслуживание',
+          desc: 'Заключаем договоры на вывоз жиров, утилизацию и обслуживание жироуловителей с полной юридической защитой.',
+          item1: 'Договор на вывоз пищевых жиров',
+          item2: 'Договор на утилизацию жиров',
+          item3: 'Договор на обслуживание жироуловителей',
+        },
+        licensed: {
+          title: 'Лицензированная утилизация жиров',
+          desc: 'Все наши услуги лицензированы и соответствуют требованиям охраны окружающей среды. Гарантируем легальное обращение с отходами.',
+          item1: 'Лицензии и разрешения VVD',
+          item2: 'Сертификаты соответствия PVD',
+          item3: 'Регистрация в APUS',
+        },
+        quality: {
+          title: 'Сертификация качества',
+          desc: 'Наша компания сертифицирована и соответствует всем стандартам качества в сфере обращения с отходами.',
+          item1: 'ISO 14001 экологический менеджмент',
+          item2: 'Система контроля качества',
+          item3: 'Регулярные аудиты качества',
+        },
+        compliance: {
+          title: 'Нормативное соответствие',
+          desc: 'Обеспечиваем полное соответствие нормативным актам Латвии и ЕС в сфере обращения с отходами.',
+          item1: 'Правила КМ Nr. 302 об отходах',
+          item2: 'Закон об обращении с отходами',
+          item3: 'Директивы ЕС об отходах',
+        },
+      },
+      process: {
+        title: 'Процесс документирования',
+        step1: { title: 'Заключение договора', desc: 'Свяжитесь с нами по телефону или электронной почте для заключения договора на вывоз и утилизацию жиров.' },
+        step2: { title: 'Подготовка документов', desc: 'Мы подготовим все необходимые документы и договоры в соответствии с потребностями вашего предприятия.' },
+        step3: { title: 'Оказание услуги', desc: 'После каждого вывоза жиров выдаём акт подтверждения легальной утилизации.' },
+        step4: { title: 'Хранение документации', desc: 'Храните полученные акты — они понадобятся для предъявления контролирующим органам VVD, PVD или VID.' },
+      },
+      cta: {
+        title: 'Нужны документы для утилизации?',
+        desc: 'Свяжитесь с нами для заключения договора на вывоз жиров и получения полной документации о легальной утилизации',
+        requestContract: 'Запросить договор',
+      },
+    },
+
+    // ==== NEW: CustomerTestimonials ====
+    testimonials: {
+      title: 'Что говорят наши клиенты',
+      subtitle: 'Доверие заслуживаем качественной работой, точной документацией и надёжным сервисом',
+      items: {
+        t1: {
+          name: 'Айя Калниня',
+          position: 'Заведующая кухней',
+          company: 'Ресторан "Mazā Parīze"',
+          text: 'Работаем с Ainavas Nams уже второй год. Они провели обслуживание наших жироуловителей быстро и качественно. Очень важно, что все документы оформляются в порядке — никогда не было проблем с проверками VVD.',
+          location: 'Рига',
+        },
+        t2: {
+          name: 'Марис Озолиньш',
+          position: 'Управляющий общепитом',
+          company: 'SIA "Gardēžu pasaule"',
+          text: 'У нас 4 ресторана в Риге и Даугавпилсе. Ainavas Nams решил нашу проблему с утилизацией масла. Теперь всё происходит по графику, без задержек. Цены разумные и сервис надёжный.',
+          location: 'Даугавпилс',
+        },
+        t3: {
+          name: 'Сандра Лиепиня',
+          position: 'Ассистент директора',
+          company: 'Гостиница "Jūrmala Resort"',
+          text: 'Очень нравится, что они сами связываются и напоминают о следующей очистке. Всё документируется, получаем детализированные отчёты. Наша бухгалтерия очень довольна качеством документов.',
+          location: 'Юрмала',
+        },
+        t4: {
+          name: 'Андрис Берзиньш',
+          position: 'Технический директор',
+          company: 'Пищевое производство "Latgales garša"',
+          text: 'Сотрудничаем уже 1,5 года. У них профессиональная вакуумная техника, которая позволяет быстро вывозить большие объёмы. Никогда не было такого, чтобы не приехали или опоздали. Рекомендую другим производителям.',
+          location: 'Даугавпилс',
+        },
+        t5: {
+          name: 'Илзе Спроге',
+          position: 'Заведующая столовой',
+          company: 'Детский сад "Saulīte"',
+          text: 'Важно было найти компанию, которая понимает нашу специфику — в детском саду особые требования к чистоте. Ainavas Nams работает быстро, тихо и без запаха. Дети даже не заметили работы.',
+          location: 'Рига',
+        },
+        t6: {
+          name: 'Гиртс Вилциньш',
+          position: 'Владелец',
+          company: 'Кафе "Pie upes"',
+          text: 'Маленькое кафе, но проблемы с жирами были большие. Теперь у нас регулярное обслуживание раз в месяц. Больше нет запахов на кухне и в канализации. Цена доступна даже для малого бизнеса.',
+          location: 'Елгава',
+        },
+      },
+      trust: {
+        clients: '200+',
+        clientsLabel: 'Довольных клиентов',
+        compliance: '100%',
+        complianceLabel: 'Соответствие документации',
+        emergency: '24/7',
+        emergencyLabel: 'Экстренный сервис',
+      },
+    },
+
+    // ==== NEW: PartnersLogos ====
+    partnersLogos: {
+      title: 'Наши партнёры и сертификации',
+      subtitle: 'Работаем с надёжными партнёрами и сертифицированы во всех необходимых областях',
+      partners: {
+        p1: { name: 'Союз самоуправлений Латвии', category: 'Муниципальный партнёр', desc: 'Сертифицированный поставщик услуг' },
+        p2: { name: 'HoReCa Latvija', category: 'Отраслевая ассоциация', desc: 'Официальный оператор отходов' },
+        p3: { name: 'Латвийский фонд охраны среды', category: 'Экологическая организация', desc: 'Поддержанный проект' },
+        p4: { name: 'ALTUM', category: 'Финансовый партнёр', desc: 'Поддержка инвестиций' },
+        p5: { name: 'Сертификация RED II', category: 'Международная сертификация', desc: 'Директива о возобновляемой энергии' },
+        p6: { name: 'ISCC Certification', category: 'Стандарт качества', desc: 'Сертификат устойчивости' },
+        p7: { name: 'VVD', category: 'Государственный контроль', desc: 'Лицензированный поставщик услуг' },
+        p8: { name: 'Zemgales Enerģijas Parks', category: 'Технический партнёр', desc: 'Производство биогаза' },
+      },
+      certTitle: 'Лицензии и сертификаты',
+      certSubtitle: 'Все необходимые разрешения и подтверждения качества',
+      certs: {
+        c1: { title: 'Лицензия VVD Nr. LI-1234', desc: 'Обращение с отходами', status: 'Активна' },
+        c2: { title: 'Лицензия PVD Nr. PV-5678', desc: 'Водоснабжение', status: 'Активна' },
+        c3: { title: 'ISO 14001:2015', desc: 'Система экологического менеджмента', status: 'Сертифицирован' },
+        c4: { title: 'HACCP', desc: 'Стандарт пищевой безопасности', status: 'Сертифицирован' },
+      },
+      trustStatement: '100% ЛЕГАЛЬНЫЕ И СЕРТИФИЦИРОВАННЫЕ УСЛУГИ',
+      trustDesc: 'Все наши услуги соответствуют VVD, PVD и международным стандартам. Мы гарантируем полное соответствие документации и отслеживаемость.',
+    },
+
+    // ==== NEW: TrustedPartners ====
+    trustedPartners: {
+      title: 'Наши партнёры и клиенты',
+      subtitle: 'Сотрудничаем с ведущими предприятиями Латвии и Балтийского региона',
+      techTitle: 'Технологические партнёры',
+      partners: {
+        p1: { name: 'AS "Virši–A"', type: 'Стратегический партнёр', desc: 'Главный партнёр по продаже электроэнергии' },
+        p2: { name: 'Horeca Solution', type: 'Технологический партнёр', desc: 'Профессиональные решения для сектора HoReCa' },
+        p3: { name: 'Horeca sprendimai', type: 'Бизнес-партнёр', desc: 'Решения по обращению с отходами' },
+        p4: { name: 'Bio-Venta', type: 'Экологический партнёр', desc: 'Сотрудничество по переработке биоотходов' },
+      },
+      clientsTitle: 'Доверяют нашим услугам',
+      activeClients: '200+ активных клиентов по всей Латвии',
+    },
+
+    // ==== NEW: PriorityContacts ====
+    priorityContacts: {
+      title: 'Свяжитесь с нашим руководителем технического сервиса:',
+      shortLabel: 'Руководитель технического сервиса',
+      trustBadge: 'Лицензированный партнёр с опытом работы в секторе HoReCa по всей Латвии',
+    },
+
+    // ==== NEW: EnhancedCTA ====
+    enhancedCta: {
+      homepage: {
+        title: 'Начните экономить уже сегодня!',
+        subtitle: 'Мы поможем вам создать эффективную систему управления отходами и начать экономить',
+      },
+      services: {
+        title: 'Нужна консультация?',
+        subtitle: 'Свяжитесь с нашими экспертами, чтобы выбрать наиболее подходящее решение для вашего предприятия',
+      },
+      calculator: {
+        title: 'Готовы начать экономить?',
+        subtitle: 'Свяжитесь с нашими экспертами для бесплатной консультации и точного предложения',
+      },
+      phone: {
+        title: 'Немедленная консультация',
+        desc: 'Позвоните руководителю технического сервиса — ответим на все вопросы',
+        callNow: 'Позвонить сейчас',
+        hours: 'Доступен 8:00-18:00',
+      },
+      email: {
+        title: 'Детальное предложение',
+        desc: 'Напишите на электронную почту с вашими потребностями — подготовим индивидуальное предложение',
+        writeEmail: 'Написать письмо',
+        response: 'Ответ в течение 24ч',
+      },
+      calc: {
+        title: 'Калькулятор услуг',
+        desc: 'Рассчитайте точную стоимость услуг в зависимости от ваших потребностей',
+        calculate: 'Рассчитать стоимость',
+        free: 'Бесплатный инструмент',
+      },
+      trust: {
+        licensed: 'Лицензированная услуга',
+        licensedDesc: 'Разрешения VVD и PVD',
+        emergency: '24/7 экстренный сервис',
+        emergencyDesc: 'Для быстрого решения проблем',
+        docs: 'Полная документация',
+        docsDesc: 'Отслеживаемость и соответствие',
+      },
+    },
+
+    investors: {
+      hero: {
+        title: 'Инвестировать в проект CH₄ Future',
+        subtitle:
+          'SIA "Ainavas Nams" приглашает стратегических инвесторов участвовать в создании современной станции производства биометана. Устойчивые инвестиции с высокой доходностью и проверенной инфраструктурой.',
+        download: 'Скачать бизнес-план',
+        contact: 'Связаться с руководителем проекта',
+      },
+      metrics: {
+        title: 'Основные финансовые показатели',
+        subtitle: 'Экономическая эффективность проекта CH₄ Future',
+      },
+      advantages: { title: 'Почему инвестировать в этот проект?' },
+      timeline: {
+        title: 'План реализации проекта',
+        subtitle: 'Основные этапы до полной производственной мощности',
+      },
+      docs: {
+        title: 'Документация для инвесторов',
+        subtitle: 'Подробная информация о проекте и расчёты',
+      },
+      partners: { title: 'Технологические партнёры' },
+      cta: {
+        title: 'Готовы инвестировать в будущее?',
+        subtitle:
+          'Присоединяйтесь к проекту CH₄ Future и станьте частью революции зелёной энергии в Латвии. Свяжитесь с нашей командой для подробной консультации.',
+      },
+    },
+
+    breadcrumb: {
+      services: 'Услуги',
+      projects: 'Проекты',
+      processing: 'Механическая переработка',
+      collection: 'Сбор жиров',
+      biomethane: 'Биометан',
+      calculator: 'ROI калькулятор',
+    },
+
+    processing: {
+      title: 'Механическая переработка',
+      subtitle:
+        'SIA "Ainavas Nams" разрабатывает инновационные решения для механической переработки органических отходов, включая центрифугирование, разработку биополимеров и высоконапорную очистку.',
+      contact: 'Связаться по поводу услуг',
+      solutions: { title: 'Наши технологические решения' },
+      process: { title: 'Процесс механической переработки' },
+      benefits: { title: 'Что вы получаете' },
+      partner: { title: 'Технологический партнёр' },
+      cta: { title: 'Нужна механическая переработка?' },
+    },
+
+    collection: {
+      title: 'Сбор жиров и масел',
+      subtitle:
+        'Мы решаем вопрос жировых отходов за вас — законно, безопасно и прозрачно. SIA "Ainavas Nams" предоставляет полный спектр услуг по сбору отходов FOG (жиры, масла, смазки) и очистке жироуловителей.',
+      services: { title: 'Включено в услугу' },
+      process: { title: 'Как происходит процесс' },
+      benefits: { title: 'Ваши преимущества' },
+      equipment: { title: 'Используемая техника' },
+      cta: { title: 'Нужна услуга сбора?' },
+    },
+
+    biomethane: {
+      title: 'Биогаз и биометан',
+      subtitle:
+        'Проект CH₄ Future основан на существующей станции в Бене, где планируется внедрение мембранной технологии очистки.',
+      metrics: { title: 'Ключевые показатели' },
+      process: { title: 'Как работает модель циркулярной экономики CH₄ Future' },
+      invest: { title: 'Почему инвестировать' },
+      partners: { title: 'Технологические партнёры' },
+      cta: { title: 'Готовы инвестировать?' },
+    },
+
+    calculator: {
+      title: 'ROI калькулятор',
+      subtitle:
+        'Рассчитайте доходность ваших инвестиций в проект CH₄ Future. Интерактивный калькулятор с детальными финансовыми показателями и анализом сценариев.',
+      parameters: { title: 'Параметры проекта' },
+      results: { title: 'Результаты расчёта' },
+      scenarios: { title: 'Анализ сценариев' },
+    },
+
+    partneriem: {
+      hero: {
+        ctaPrimary: 'Рассчитать стоимость по адресу',
+      },
+      calculator: {
+        locateButton: 'Определить координаты объекта (GPS)',
+        addressPlaceholder: 'Введите адрес объекта',
+        country: 'Страна',
+        zone: 'Зона',
+        distance: 'Расстояние',
+        price: 'Цена',
+      },
+      form: {
+        phone: 'Телефон',
+        email: 'Эл. почта',
+        note: 'Примечание',
+        submit: 'Получить ценовое предложение',
+      },
+    },
+
+    cookies: {
+      title: 'Настройки файлов cookie',
+      description:
+        'Мы используем файлы cookie для улучшения вашего опыта на нашем сайте. Выберите категории файлов cookie, которые вы хотите разрешить.',
+      acceptAll: 'Принять все',
+      rejectAll: 'Отклонить все',
+      settings: 'Настройки',
+      necessary: 'Необходимые cookie',
+      necessaryDesc:
+        'Эти файлы cookie необходимы для работы сайта и не могут быть отключены.',
+      analytics: 'Аналитические cookie',
+      analyticsDesc: 'Помогают нам понять, как посетители используют сайт.',
+      marketing: 'Маркетинговые cookie',
+      marketingDesc: 'Используются для показа релевантной рекламы.',
+      personalization: 'Персонализация',
+      personalizationDesc:
+        'Позволяют нам запоминать ваши предпочтения.',
+      save: 'Сохранить настройки',
+      back: 'Назад',
+    },
+
+    footer: {
+      description:
+        'SIA "Ainavas Nams" – надёжный партнёр в сфере управления отходами и производства биометана в Латвии.',
+      privacy: 'Политика конфиденциальности',
+      cookies: 'Политика cookie',
+    },
+    // ==== NEW: ContactsPage ====
+    contacts: {
+      heroTitle: 'Контакты',
+      heroSubtitle: 'Свяжитесь с нами для консультации по нашим услугам или для начала сотрудничества. Наша команда готова ответить на ваши вопросы.',
+      sendMessage: 'Отправить сообщение',
+      nameLabel: 'Имя',
+      namePlaceholder: 'Ваше имя',
+      phoneLabel: 'Телефон',
+      phonePlaceholder: '+371 20000000',
+      emailLabel: 'E-mail',
+      emailPlaceholder: 'your@email.com',
+      topicLabel: 'Тема',
+      topicPlaceholder: 'О чём хотите поговорить?',
+      preferredTimeLabel: 'Удобное время звонка',
+      preferredTimePlaceholder: 'Когда вам удобно?',
+      timeAsap: 'Как можно скорее',
+      timeMorning: 'Утром (8:00-12:00)',
+      timeAfternoon: 'Днём (12:00-17:00)',
+      timeEvening: 'Вечером (17:00-20:00)',
+      timeEmailOnly: 'Только по e-mail',
+      messageLabel: 'Сообщение',
+      messagePlaceholder: 'Расскажите кратко, что вам нужно...',
+      consentText: 'Я согласен на обработку моих данных для получения коммерческого предложения и связи по условиям услуг.',
+      consentAlert: 'Пожалуйста, подтвердите согласие на обработку данных.',
+      submitButton: 'Отправить сообщение',
+      submitting: 'Отправка...',
+      submitNote: 'Отправляя форму, вы соглашаетесь на связь по вашему запросу. Мы свяжемся с вами в течение 24 часов.',
+      successTitle: 'Сообщение отправлено!',
+      successDesc: 'Мы свяжемся с вами в ближайшее время.',
+      companyInfo: 'Информация о компании',
+      legalAddress: 'Юридический адрес:',
+      legalAddressValue: 'Bauskas iela 2, Daugavpils, LV-5417',
+      stationAddress: 'Адрес станции:',
+      stationAddressValue: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      contactPersons: 'Контактные лица',
+      location: 'Местоположение',
+      bioStation: 'Станция производства биометана:',
+      bioStationAddress: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      coordinates: 'Координаты: 56.4808°N, 23.0573°E',
+      techService: 'Техническая служба:',
+      techServiceHours: 'Режим работы: 24/7 экстренная служба',
+    },
+    // ==== NEW: ContactsPage ====
+    contacts: {
+      heroTitle: 'Контакты',
+      heroSubtitle: 'Свяжитесь с нами для консультации по нашим услугам или для начала сотрудничества. Наша команда готова ответить на ваши вопросы.',
+      sendMessage: 'Отправить сообщение',
+      nameLabel: 'Имя',
+      namePlaceholder: 'Ваше имя',
+      phoneLabel: 'Телефон',
+      phonePlaceholder: '+371 20000000',
+      emailLabel: 'E-mail',
+      emailPlaceholder: 'your@email.com',
+      topicLabel: 'Тема',
+      topicPlaceholder: 'О чём хотите поговорить?',
+      preferredTimeLabel: 'Удобное время звонка',
+      preferredTimePlaceholder: 'Когда вам удобно?',
+      timeAsap: 'Как можно скорее',
+      timeMorning: 'Утром (8:00-12:00)',
+      timeAfternoon: 'Днём (12:00-17:00)',
+      timeEvening: 'Вечером (17:00-20:00)',
+      timeEmailOnly: 'Только по e-mail',
+      messageLabel: 'Сообщение',
+      messagePlaceholder: 'Расскажите кратко, что вам нужно...',
+      consentText: 'Я согласен на обработку моих данных для получения коммерческого предложения и связи по условиям услуг.',
+      consentAlert: 'Пожалуйста, подтвердите согласие на обработку данных.',
+      submitButton: 'Отправить сообщение',
+      submitting: 'Отправка...',
+      submitNote: 'Отправляя форму, вы соглашаетесь на связь по вашему запросу. Мы свяжемся с вами в течение 24 часов.',
+      successTitle: 'Сообщение отправлено!',
+      successDesc: 'Мы свяжемся с вами в ближайшее время.',
+      companyInfo: 'Информация о компании',
+      legalAddress: 'Юридический адрес:',
+      legalAddressValue: 'Bauskas iela 2, Daugavpils, LV-5417',
+      stationAddress: 'Адрес станции:',
+      stationAddressValue: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      contactPersons: 'Контактные лица',
+      location: 'Местоположение',
+      bioStation: 'Станция производства биометана:',
+      bioStationAddress: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      coordinates: 'Координаты: 56.4808°N, 23.0573°E',
+      techService: 'Техническая служба:',
+      techServiceHours: 'Режим работы: 24/7 экстренная служба',
+    },
+  },
+
+  // ============================================================
+  // 🇱🇹 LIETUVIŲ
+  // ============================================================
+  lt: {
+    nav: {
+      home: 'Pradžia',
+      about: 'Apie mus',
+      services: 'Paslaugos',
+      projects: 'Projektai',
+      partners: 'Partneriams',
+      investors: 'Investuotojams',
+      documents: 'Dokumentai',
+      contacts: 'Kontaktai',
+      calculator: 'ROI skaičiuoklė',
+    },
+
+    hero: {
+      slogan: 'Biomasė → Biometanas',
+      title: 'Iš organinių atliekų – švari energija',
+      subtitle:
+        'SIA „Ainavas Nams" – Latvijos žiedinės ekonomikos projektas, paverčiantis riebalus, maisto ir žemės ūkio atliekas biodujas, biometanu, biopolimerais ir technologiniu CO₂. Jungiame modernias technologijas, logistiką ir investicijas, kad sukurtume tikrą vertę iš atliekų.',
+      cta: {
+        collection: 'Užsakyti atliekų surinkimą',
+        investment: 'Sužinoti apie investavimo galimybes',
+        contact: 'Susisiekti',
+        order: 'Užsakyti paslaugą',
+        projects: 'Žiūrėti projektus',
+      },
+      metrics: {
+        collected: 'Tonų surinktų atliekų',
+        partners: 'Aktyvių partnerių',
+        energy: 'MWh biometano per metus',
+        co2: 'CO₂ sumažinimas',
+      },
+      process: {
+        collection: 'Surinkimas',
+        processing: 'Perdirbimas',
+        biomethane: 'Biometanas',
+      },
+    },
+
+    how: {
+      title: 'Kaip tai veikia',
+      subtitle: 'Trumpa darbo proceso apžvalga — nuo atliekų surinkimo iki biometano gamybos',
+      step1: 'Skambutis arba užklausa svetainėje',
+      step2: 'Surinkimas vakuumine mašina',
+      step3: 'Dokumentacija ir sertifikuotas perdavimas',
+      step4: 'Mechaninis valymas ir atskyrimas',
+      step5: 'Perdirbimas į biometaną ir CO₂ atskyrimas',
+    },
+
+    mission: {
+      title: 'Mūsų misija',
+      text: 'Sukurti uždarą ir tvarų ciklą, kuriame organinės atliekos tampa vertingu ištekliumi.',
+    },
+
+    vision: {
+      title: 'Vizija iki 2030 metų',
+      text: 'Tapti pirmaujančiu nepriklausomu biometano gamintoju Baltijos šalyse.',
+    },
+
+    services: {
+      title: 'Mūsų paslaugos',
+      grease: {
+        title: 'Riebalų ir aliejaus surinkimas',
+        desc: 'Renkame panaudotus aliejus, riebalus ir maisto atliekas vakuuminėmis mašinomis.',
+      },
+      biomethane: {
+        title: 'Biometano stotis Bēnė',
+        desc: 'Moderni biometano gamybos stotis su pilnu ciklu.',
+      },
+      cleaning: {
+        title: 'Aukšto slėgio valymas',
+        desc: 'Pramoninis vamzdynų valymas aukšto slėgio įranga.',
+      },
+      legal: {
+        title: 'Legalus utilizavimas',
+        desc: 'Dokumentuotas, atsekamas ir legalus riebalų perdavimas.',
+      },
+    },
+
+    stats: {
+      title: 'Mūsų pasiekimai skaičiais',
+      subtitle: 'Įrodyti rezultatai biometano gamyboje ir atliekų tvarkyme',
+      investment: 'pritraukta investicijų',
+      roi: 'vidutinė investuotojų grąža',
+      processed: 'tonų perdirbtos žaliavos per metus',
+      energy: 'MWh biometano per metus',
+    },
+
+    servicesGrid: {
+      grease: {
+        desc: 'Renkame panaudotus aliejus, riebalus ir maisto atliekas vakuuminėmis mašinomis. Atliekos siunčiamos mechaniniam valymui ir vėliau perdirbamos į biometaną.',
+        stats: '12 000+ tonų per metus',
+      },
+      biomethane: {
+        desc: 'Moderni biometano gamybos stotis su pilnu ciklu. CH₄ Future projektas su membraninio valymo technologija ir CO₂ sugavimu.',
+        stats: '26 951 MWh per metus',
+      },
+      cleaning: {
+        desc: 'Siūlome pramoninį vamzdynų valymą aukšto slėgio įranga. Galimas kombinuotas valymas su vakuuminiais siurbliais.',
+        stats: '24/7 skubioji tarnyba',
+      },
+      legal: {
+        desc: 'Užtikriname dokumentuotą, atsekamą ir legalų riebalų perdavimą. Pilnas atitikimas VVD, PVD, VID ir APUS reikalavimams.',
+        stats: '200+ licencijuotų partnerių',
+      },
+      learnMore: 'Sužinoti daugiau',
+    },
+
+    missionVision: {
+      mission: {
+        text1: 'Mes kuriame švarią energiją iš to, kas anksčiau buvo vadinama atliekomis.',
+        text2: 'SIA „Ainavas Nams" paverčia riebalus, maisto ir žemės ūkio atliekas tvaria energija, ekologiškomis medžiagomis ir technologiniu CO₂.',
+        text3: 'Mūsų misija — paversti atliekų perdirbimą ne pareiga, o vystymosi varomąja jėga. Tikime, kad kiekvienas litras riebalų ir kiekvienas kilogramas organinių medžiagų gali tapti vertybe: energija, kuru, medžiagomis ir klimato nauda.',
+      },
+      vision: {
+        title: 'Mūsų vizija iki 2030 metų',
+        text1: 'Tapti Baltijos lyderiu biometano gamyboje ir žiedinės ekonomikos inovacijose',
+        text2: 'Mūsų ilgalaikis tikslas — sukurti Latvijoje keičiamo masto, efektyvią ir tvarią infrastruktūrą, paverčiančią organines atliekas energija, ištekliais ir klimatine verte.',
+        bullet1: 'Modernizuoti ir vystyti 5 biometano stotis skirtinguose regionuose',
+        bullet2: 'Perdirbti daugiau nei 50 000 tonų atliekų per metus',
+        bullet3: 'Eksportuoti biometaną ir CO₂ į Lietuvą, Estiją ir Skandinaviją',
+        bullet4: 'Vystyti biopolimerų gamybą iš antrinių riebalų',
+      },
+      story: {
+        title: 'Mūsų istorija',
+        subtitle: 'Nuo biodujų stoties 2014 m. — iki biometano ekosistemos 2025 m.',
+        text1: 'SIA „Ainavas Nams" istorija prasideda dar prieš įmonės juridinę registraciją. Jos pagrindas — komanda, patirtis ir infrastruktūra iš SIA „Zemgales Enerģijas Parks", veikiančios biodujų srityje Žiemgalos regione nuo 2014 m.',
+        text2: 'Nuo 2021 m. po „Zemgales Enerģijas Parks" prekės ženklu veikia pramoninė biodujų stotis, apimanti fermentacijos reaktorius, žaliavų priėmimo sistemą, dujų valymo liniją ir elektros energijos gamybos licenciją.',
+        y2014: 'SIA „Zemgales Enerģijas Parks" įkūrimas, stoties paleidimas',
+        y2021: 'Fermentacijos paleidimas, šilumos energijos sutartys',
+        y2023: 'SIA „Ainavas Nams" registracija, biometano projektavimas',
+        y2025: 'METAN.LV paleidimas: riebalai → polimerai → biodujos → biometanas → CO₂',
+      },
+    },
+
+    // ==== NEW: AdvantagesSection ====
+    advantages: {
+      title: 'Kodėl mus renkasi',
+      subtitle: 'Užtikriname visišką atitiktį VVD, PVD, VID ir APUS reikalavimams — be norminių rizikų jūsų įmonei.',
+      items: {
+        fullCycle: {
+          title: 'Pilnas ciklas — nuo atliekų iki švarios energijos',
+          desc: 'Valdome visus etapus: surinkimą, fermentaciją, valymą, transportavimą ir realizavimą. Tai užtikrina kokybę, skaidrumą ir kontrolę.',
+        },
+        licenses: {
+          title: 'Licencijos, sertifikavimas ir tarptautiniai standartai',
+          desc: 'Gamyba atitinka RED II, ISCC, GoO reikalavimus. Turime visus reikalingus leidimus atliekų perdirbimui ir energijos gamybai.',
+        },
+        logistics: {
+          title: 'Lanksti logistika su savo autoparku',
+          desc: 'Mūsų vakuuminės mašinos ir partneriai užtikrina žaliavų surinkimą visame regione — kiekvieną dieną.',
+        },
+        recycling: {
+          title: 'Antrinis riebalų ir aliejaus perdirbimas',
+          desc: 'Naudojame mechaninį valymą, centrifugavimą ir pasterizavimą vertingoms frakcijoms gauti net iš sudėtingų likučių.',
+        },
+        economic: {
+          title: 'Įrodytas ekonominis efektas',
+          desc: 'Mūsų biometano savikaina — viena žemiausių regione. Investuotojai gauna stabilią grąžą su skaidriu modeliu.',
+        },
+        esg: {
+          title: 'ESG ir klimato poveikio valdymas',
+          desc: 'Kiekviena mūsų pagaminta MWh padeda mažinti CO₂ emisijas. Mes ne tik neutralūs — kuriame teigiamą klimato balansą.',
+        },
+      },
+      values: {
+        title: 'Mūsų vertybės',
+        sustainability: {
+          title: 'Tvarumas',
+          desc: 'Pilna sistema, kurioje riebalai virsta energija, o likučiai — vertingais ištekliais',
+        },
+        innovation: {
+          title: 'Inovacijos',
+          desc: 'Skaitmeniniai sprendimai, integruoti su APUS sistema ir priežiūros institucijų reikalavimais',
+        },
+        responsibility: {
+          title: 'Atsakomybė',
+          desc: 'Pilnas norminių rizikų prisiėmimas ir atitiktis VVD, PVD, VID reikalavimams',
+        },
+        partnership: {
+          title: 'Partnerystė',
+          desc: 'Skaidrus bendradarbiavimas su HoReCa, maisto gamintojais ir logistikos įmonėmis',
+        },
+      },
+    },
+
+    // ==== NEW: CTASection ====
+    cta: {
+      title: 'Prisijunkite prie žiedinės ekonomikos',
+      subtitle: 'Kuriame naujos kartos energetikos ir aplinkos ekosistemą. Dalyvaukite — kaip paslaugų gavėjas, partneris ar investuotojas.',
+      clients: {
+        title: 'Klientams (paslaugos)',
+        desc: 'Dirbame su HoReCa, gamintojais ir perdirbimo sektoriumi',
+        item1: 'Riebalų ir aliejaus surinkimas',
+        item2: 'Riebalų gaudyklių valymas',
+        item3: 'Pilna dokumentacija ir atitiktis',
+        button: 'Užsakyti atliekų surinkimą',
+      },
+      investors: {
+        title: 'Investuotojams',
+        desc: 'Biometanas — pirmas žingsnis jūsų ESG strategijoje',
+        item1: 'Pelningumas iki 38,6%',
+        item2: 'RED II ir ISCC sertifikavimas',
+        item3: 'Eksporto potencialas į Baltiją',
+        button: 'Sužinoti apie investavimo galimybes',
+      },
+      about: {
+        title: 'Apie SIA „Ainavas Nams"',
+        text: 'SIA „Ainavas Nams" — Latvijos įmonė, įkurta 2020 m. siekiant plėtoti žiedinę energetiką ir pereiti nuo elektros energijos gamybos prie biometano ir CO₂ gavybos. Projektas vykdomas esamos fermentacijos stoties pagrindu, kurią valdo SIA „Zemgales Enerģijas Parks", įkurta 2014 m.',
+      },
+    },
+
+    // ==== NEW: IndustrySpecialization ====
+    industry: {
+      title: 'Mūsų specializacija',
+      subtitle: 'Profesionalus aptarnavimas įmonėms visoje Latvijoje • Rygoje, Jūrmaloje ir 300 km spinduliu',
+      horeca: {
+        title: 'HoReCa įmonės',
+        subtitle: 'Restoranai • Kavinės • Viešbučiai',
+        desc: 'Specializuojamės maisto riebalų ir aliejaus surinkime iš restoranų, kavinių ir viešbučių. Reguliarus riebalų gaudyklių valymas ir priežiūra.',
+        service1: 'Riebalų gaudyklių valymas',
+        service2: 'Kepimo aliejaus surinkimas',
+        service3: 'Reguliarus aptarnavimo grafikas',
+        stats: '500+ restoranų',
+      },
+      fish: {
+        title: 'Žuvų perdirbimo įmonės',
+        subtitle: 'Pramoninės • Aukštos kokybės',
+        desc: 'Specializuotas aptarnavimas žuvų perdirbimo įmonėms — žuvų riebalų utilizavimas, atliekų surinkimas ir vamzdžių valymas.',
+        service1: 'Žuvų riebalų utilizavimas',
+        service2: 'Pramoninis vamzdžių valymas',
+        service3: 'Atliekų perdirbimo atitiktis',
+        stats: '50+ gamyklų',
+      },
+      food: {
+        title: 'Maisto gamybos įmonės',
+        subtitle: 'Gamyklos • Kooperatyvai • Fabrikai',
+        desc: 'Siūlome visą paslaugų spektrą maisto gamybos įmonėms — nuo riebalų surinkimo iki sanitarinio valymo.',
+        service1: 'Maisto riebalų surinkimas',
+        service2: 'Sanitarinis kanalizacijos valymas',
+        service3: 'Gamybinių atliekų utilizavimas',
+        stats: '200+ gamintojų',
+      },
+      industrial: {
+        title: 'Pramoniniai objektai',
+        subtitle: 'Techniniai • Komerciniai • Logistikos',
+        desc: 'Atliekame pramoninį vamzdžių valymą, riebalų šalinimo sistemų priežiūrą ir riebaluotų nuotekų siurbimą.',
+        service1: 'Vamzdynų valymas nuo riebalų',
+        service2: 'Sistemų aptarnavimas',
+        service3: 'Riebaluotų nuotekų šalinimas',
+        stats: '100+ objektų',
+      },
+      footer: 'Licencijuotos paslaugos • Pilnas dokumentinis aptarnavimas • VVD, PVD, VID atitiktis',
+    },
+
+    // ==== NEW: FrequentlyAskedQuestions ====
+    faq: {
+      title: 'Dažniausiai užduodami klausimai',
+      subtitle: 'Atsakymai į svarbiausius klausimus apie riebalų utilizavimą ir legalų atliekų tvarkymą įmonėms',
+      urgent: 'Skubu',
+      q1: {
+        question: 'Riebalų gaudyklė užsikimšo — ką daryti?',
+        answer: 'Pirmiausia sustabdykite įrangos darbą ir susisiekite su licencijuotu servisu arba riebalų atliekų operatoriumi. Užsikimšusi riebalų gaudyklė gali sukelti nuotėkius ir nemalonius kvapus, todėl nedelsiant atlikite valymą su profesionalia pagalba.\n\nMūsų įmonė (SIA „Ainavas Nams") siūlo sertifikuotą riebalų gaudyklių valymą — naudojame specializuotą vakuuminę techniką ir aukšto slėgio plovimą, dokumentuodami darbo eigą. Baigus paslaugą, išduodame patvirtinimo aktą apie riebalų atliekų išvežimą.\n\nReguliarus profilaktinis riebalų gaudyklės valymas padės išvengti tokių situacijų ateityje.',
+      },
+      q2: {
+        question: 'Kur atiduoti kepimo riebalus įmonėms?',
+        answer: 'Panaudotų kepimo riebalų ir aliejaus negalima pilti į kanalizaciją ar mesti su bendromis atliekomis — tai reguliuoja aplinkos apsaugos reikalavimai. Pagal KM taisykles Nr. 302, panaudoti augaliniai aliejai ir riebalai klasifikuojami kaip atliekos, kurias reikia perduoti licencijuotam operatoriui.\n\nĮmonėms rekomenduojama kaupti atvėsintus riebalus specialiame uždarame konteineryje. Kai konteineris pilnas, operatorius surenka riebalus utilizavimui.\n\nMūsų įmonė teikia panaudotų aliejų ir riebalų surinkimo paslaugą: pateikiame klientui tinkamas talpas kaupimui ir suderinami išvežimo dažnumą.\n\nNorėdami užsakyti riebalų surinkimą, susisiekite su SIA „Ainavas Nams".',
+      },
+      q3: {
+        question: 'Kaip sudaryti sutartį dėl riebalų išvežimo?',
+        answer: 'Sutarties sudarymas su atliekų operatoriumi — privalomas žingsnis, kad įmonė legaliai utilizuotų riebalų atliekas (Atliekų tvarkymo įstatymas numato, kad atliekų gamintojas turi turėti sutartį su operatoriumi).\n\nNorėdami sudaryti sutartį, susisiekite su mūsų specialistais telefonu +371 27727724 arba el. paštu. Mes patikslinsime jūsų įmonės poreikius ir parengsime sutartį su visomis sąlygomis.\n\nSutartį galima sudaryti nuotoliniu būdu arba asmeniškai. Po sutarties sudarymo mes aprūpinsime reikiama įranga ir pradėsime reguliarų riebalų išvežimą pagal grafiką.',
+      },
+      q4: {
+        question: 'Kokie dokumentai reikalingi utilizavimui?',
+        answer: 'Kad įmonė galėtų perduoti riebalų atliekas utilizavimui, reikalingi du pagrindiniai dokumentai.\n\nPirma, sudaryta sutartis su licencijuotu atliekų operatoriumi (pavyzdžiui, su SIA „Ainavas Nams"), patvirtinanti susitarimą dėl riebalų surinkimo ir perdirbimo.\n\nAntra, atliekų perdavimo patvirtinimas — po kiekvieno riebalų išvežimo operatorius išduoda važtaraštį (aktą), kuriame fiksuojamas atliekų kiekis, rūšis ir perdavimo data.\n\nMūsų įmonė sutvarko visą reikiamą dokumentaciją. Verslininkui nereikia tvarkyti papildomų leidimų dirbant su licencijuotu operatoriumi.\n\nSaugokite gautus aktus kartu su įmonės dokumentacija.',
+      },
+      additional: {
+        title: 'Kiti populiarūs klausimai',
+        q1: 'Kaip dažnai reikia valyti riebalų gaudyklę HoReCa įmonėms?',
+        q2: 'Kokie reguliaraus riebalų surinkimo privalumai?',
+        q3: 'Ką daryti, jei riebalų gaudyklė užsikimšo Rygoje skubiai?',
+        q4: 'Kaip legaliai utilizuoti riebalus ir aliejų po žuvų perdirbimo?',
+      },
+      contact: {
+        title: 'Neradote atsakymo į savo klausimą?',
+        desc: 'Susisiekite su mūsų ekspertais — atsakysime į bet kokį klausimą apie riebalų utilizavimą ir dokumentaciją',
+        askQuestion: 'Užduoti klausimą',
+      },
+    },
+
+    // ==== NEW: LegalDocumentation ====
+    legal: {
+      title: 'Teisinis užtikrinimas',
+      subtitle: 'Pilna dokumentacija ir atitiktis norminiams aktams • Licencijuotos paslaugos įmonėms visoje Latvijoje',
+      features: {
+        contracts: {
+          title: 'Sutartys dėl reguliaraus aptarnavimo',
+          desc: 'Sudarome sutartis dėl riebalų išvežimo, utilizavimo ir riebalų gaudyklių priežiūros su pilna teisine apsauga.',
+          item1: 'Sutartis dėl maisto riebalų išvežimo',
+          item2: 'Sutartis dėl riebalų utilizavimo',
+          item3: 'Sutartis dėl riebalų gaudyklės priežiūros',
+        },
+        licensed: {
+          title: 'Licencijuotas riebalų utilizavimas',
+          desc: 'Visos mūsų paslaugos licencijuotos ir atitinka aplinkos apsaugos reikalavimus. Garantuojame legalų atliekų tvarkymą.',
+          item1: 'VVD licencijos ir leidimai',
+          item2: 'PVD atitikties sertifikatai',
+          item3: 'APUS registracija',
+        },
+        quality: {
+          title: 'Kokybės sertifikavimas',
+          desc: 'Mūsų įmonė sertifikuota ir atitinka visus kokybės standartus atliekų tvarkymo srityje.',
+          item1: 'ISO 14001 aplinkos vadyba',
+          item2: 'Kokybės kontrolės sistema',
+          item3: 'Reguliarūs kokybės auditai',
+        },
+        compliance: {
+          title: 'Norminė atitiktis',
+          desc: 'Užtikriname pilną atitiktį Latvijos ir ES norminiams aktams atliekų tvarkymo srityje.',
+          item1: 'KM taisyklės Nr. 302 dėl atliekų',
+          item2: 'Atliekų tvarkymo įstatymas',
+          item3: 'ES direktyvos dėl atliekų',
+        },
+      },
+      process: {
+        title: 'Dokumentavimo procesas',
+        step1: { title: 'Sutarties sudarymas', desc: 'Susisiekite su mumis telefonu arba el. paštu, kad sudarytumėte sutartį dėl riebalų išvežimo ir utilizavimo.' },
+        step2: { title: 'Dokumentų paruošimas', desc: 'Mes parengsime visus reikalingus dokumentus ir sutartis pagal jūsų įmonės poreikius.' },
+        step3: { title: 'Paslaugos teikimas', desc: 'Po kiekvieno riebalų išvežimo išduodame patvirtinimo aktą apie legalų utilizavimą.' },
+        step4: { title: 'Dokumentacijos saugojimas', desc: 'Saugokite gautus aktus — juos reikės pateikti VVD, PVD ar VID kontroliuojančioms institucijoms.' },
+      },
+      cta: {
+        title: 'Reikia dokumentų utilizavimui?',
+        desc: 'Susisiekite su mumis, kad sudarytumėte sutartį dėl riebalų išvežimo ir gautumėte pilną dokumentaciją apie legalų utilizavimą',
+        requestContract: 'Prašyti sutarties',
+      },
+    },
+
+    // ==== NEW: CustomerTestimonials ====
+    testimonials: {
+      title: 'Ką sako mūsų klientai',
+      subtitle: 'Pasitikėjimą pelname kokybiškų darbu, tikslia dokumentacija ir patikimu aptarnavimu',
+      items: {
+        t1: {
+          name: 'Aija Kalniņa',
+          position: 'Virtuvės vadovė',
+          company: 'Restoranas „Mazā Parīze"',
+          text: 'Su Ainavas Nams dirbame jau antrus metus. Jie atliko mūsų riebalų gaudyklių priežiūrą greitai ir kokybiškai. Labai svarbu, kad visi dokumentai tvarkomi tvarkingai — niekada nebuvo problemų su VVD patikromis.',
+          location: 'Ryga',
+        },
+        t2: {
+          name: 'Māris Ozoliņš',
+          position: 'Maitinimo vadovas',
+          company: 'SIA „Gardēžu pasaule"',
+          text: 'Turime 4 restoranus Rygoje ir Daugpilyje. Ainavas Nams išsprendė mūsų aliejaus utilizavimo problemą. Dabar viskas vyksta pagal grafiką, be vėlavimų. Kainos protingos ir paslauga patikima.',
+          location: 'Daugpilis',
+        },
+        t3: {
+          name: 'Sandra Liepiņa',
+          position: 'Įmonės direktorės asistentė',
+          company: 'Viešbutis „Jūrmala Resort"',
+          text: 'Labai patinka, kad jie patys susisiekia ir primena apie kitą valymą. Viskas dokumentuojama, gauname detalias ataskaitas. Mūsų buhalterija labai patenkinta dokumentų kokybe.',
+          location: 'Jūrmala',
+        },
+        t4: {
+          name: 'Andris Bērziņš',
+          position: 'Techninis direktorius',
+          company: 'Maisto gamykla „Latgales garša"',
+          text: 'Bendradarbiaujame jau 1,5 metų. Jie turi profesionalią vakuuminę techniką, kuri leidžia greitai išvežti didelius kiekius. Niekada nebuvo, kad neatvyktų ar vėluotų. Rekomenduoju kitiems gamintojams.',
+          location: 'Daugpilis',
+        },
+        t5: {
+          name: 'Ilze Sproģe',
+          position: 'Valgyklos vadovė',
+          company: 'Darželis „Saulīte"',
+          text: 'Svarbu buvo rasti įmonę, kuri supranta mūsų specifiką — darželyje ypatingi švaros reikalavimai. Ainavas Nams dirba greitai, tyliai ir be kvapo. Vaikai net nepastebėjo darbų.',
+          location: 'Ryga',
+        },
+        t6: {
+          name: 'Ģirts Vilciņš',
+          position: 'Savininkas',
+          company: 'Kavinė „Pie upes"',
+          text: 'Maža kavinė, bet problemos su riebalais buvo didelės. Dabar turime reguliarų aptarnavimą kartą per mėnesį. Nebėra kvapų virtuvėje ir kanalizacijoje. Kaina prieinama net mažam verslui.',
+          location: 'Jelgava',
+        },
+      },
+      trust: {
+        clients: '200+',
+        clientsLabel: 'Patenkintų klientų',
+        compliance: '100%',
+        complianceLabel: 'Dokumentacijos atitiktis',
+        emergency: '24/7',
+        emergencyLabel: 'Skubus aptarnavimas',
+      },
+    },
+
+    // ==== NEW: PartnersLogos ====
+    partnersLogos: {
+      title: 'Mūsų partneriai ir sertifikavimai',
+      subtitle: 'Dirbame su patikimais partneriais ir esame sertifikuoti visose reikiamose srityse',
+      partners: {
+        p1: { name: 'Latvijos savivaldybių sąjunga', category: 'Savivaldybių partneris', desc: 'Sertifikuotas paslaugų teikėjas' },
+        p2: { name: 'HoReCa Latvija', category: 'Pramonės asociacija', desc: 'Oficialus atliekų operatorius' },
+        p3: { name: 'Latvijos aplinkos fondas', category: 'Aplinkos organizacija', desc: 'Palaikomas projektas' },
+        p4: { name: 'ALTUM', category: 'Finansų partneris', desc: 'Investicijų palaikymas' },
+        p5: { name: 'RED II sertifikavimas', category: 'Tarptautinis sertifikavimas', desc: 'Atsinaujinančios energijos direktyva' },
+        p6: { name: 'ISCC Certification', category: 'Kokybės standartas', desc: 'Tvarumo sertifikatas' },
+        p7: { name: 'VVD', category: 'Valstybinė kontrolė', desc: 'Licencijuotas paslaugų teikėjas' },
+        p8: { name: 'Zemgales Enerģijas Parks', category: 'Techninis partneris', desc: 'Biodujų gamyba' },
+      },
+      certTitle: 'Licencijos ir sertifikatai',
+      certSubtitle: 'Visi reikalingi leidimai ir kokybės patvirtinimai',
+      certs: {
+        c1: { title: 'VVD Licencija Nr. LI-1234', desc: 'Atliekų tvarkymas', status: 'Aktyvi' },
+        c2: { title: 'PVD Licencija Nr. PV-5678', desc: 'Vandens tvarkymas', status: 'Aktyvi' },
+        c3: { title: 'ISO 14001:2015', desc: 'Aplinkos vadybos sistema', status: 'Sertifikuotas' },
+        c4: { title: 'HACCP', desc: 'Maisto saugos standartas', status: 'Sertifikuotas' },
+      },
+      trustStatement: '100% LEGALIOS IR SERTIFIKUOTOS PASLAUGOS',
+      trustDesc: 'Visos mūsų paslaugos atitinka VVD, PVD ir tarptautinius standartus. Garantuojame pilną dokumentacijos atitiktį ir atsekamumą.',
+    },
+
+    // ==== NEW: TrustedPartners ====
+    trustedPartners: {
+      title: 'Mūsų partneriai ir klientai',
+      subtitle: 'Bendradarbiaujame su pirmaujančiomis Latvijos ir Baltijos regiono įmonėmis',
+      techTitle: 'Technologijų partneriai',
+      partners: {
+        p1: { name: 'AS „Virši–A"', type: 'Strateginis partneris', desc: 'Pagrindinis elektros energijos prekybos partneris' },
+        p2: { name: 'Horeca Solution', type: 'Technologijų partneris', desc: 'Profesionalūs sprendimai HoReCa sektoriui' },
+        p3: { name: 'Horeca sprendimai', type: 'Verslo partneris', desc: 'Atliekų tvarkymo sprendimai' },
+        p4: { name: 'Bio-Venta', type: 'Ekologinis partneris', desc: 'Biologinių atliekų perdirbimo bendradarbiavimas' },
+      },
+      clientsTitle: 'Pasitiki mūsų paslaugomis',
+      activeClients: '200+ aktyvių klientų visoje Latvijoje',
+    },
+
+    // ==== NEW: PriorityContacts ====
+    priorityContacts: {
+      title: 'Susisiekite su mūsų techninio aptarnavimo vadovu:',
+      shortLabel: 'Techninio aptarnavimo vadovas',
+      trustBadge: 'Licencijuotas partneris su patirtimi HoReCa sektoriuje visoje Latvijoje',
+    },
+
+    // ==== NEW: EnhancedCTA ====
+    enhancedCta: {
+      homepage: {
+        title: 'Pradėkite taupyti jau šiandien!',
+        subtitle: 'Padėsime jums sukurti efektyvią atliekų tvarkymo sistemą ir pradėti taupyti',
+      },
+      services: {
+        title: 'Reikia konsultacijos?',
+        subtitle: 'Susisiekite su mūsų ekspertais, kad pasirinktumėte tinkamiausią sprendimą jūsų įmonei',
+      },
+      calculator: {
+        title: 'Pasiruošę pradėti taupyti?',
+        subtitle: 'Susisiekite su mūsų ekspertais nemokamam konsultavimui ir tiksliam pasiūlymui',
+      },
+      phone: {
+        title: 'Neatidėliotina konsultacija',
+        desc: 'Skambinkite techninio aptarnavimo vadovui — atsakysime į visus klausimus',
+        callNow: 'Skambinti dabar',
+        hours: 'Pasiekiamas 8:00-18:00',
+      },
+      email: {
+        title: 'Detalus pasiūlymas',
+        desc: 'Rašykite el. laišką su jūsų poreikiais — parengsime individualų pasiūlymą',
+        writeEmail: 'Rašyti el. laišką',
+        response: 'Atsakymas per 24 val.',
+      },
+      calc: {
+        title: 'Paslaugų skaičiuoklė',
+        desc: 'Apskaičiuokite tikslias paslaugų kainas priklausomai nuo jūsų poreikių',
+        calculate: 'Apskaičiuoti kainas',
+        free: 'Nemokamas įrankis',
+      },
+      trust: {
+        licensed: 'Licencijuota paslauga',
+        licensedDesc: 'VVD ir PVD leidimai',
+        emergency: '24/7 skubus aptarnavimas',
+        emergencyDesc: 'Greitam problemų sprendimui',
+        docs: 'Pilna dokumentacija',
+        docsDesc: 'Atsekamumas ir atitiktis',
+      },
+    },
+
+    investors: {
+      hero: {
+        title: 'Investuoti į CH₄ Future projektą',
+        subtitle:
+          'SIA „Ainavas Nams" kviečia strateginius investuotojus dalyvauti kuriant modernią biometano gamybos stotį. Tvarios investicijos su aukšta grąža ir patikrinta infrastruktūra.',
+        download: 'Atsisiųsti verslo planą',
+        contact: 'Susisiekti su projekto vadovu',
+      },
+      metrics: {
+        title: 'Pagrindiniai finansiniai rodikliai',
+        subtitle: 'CH₄ Future projekto ekonominis efektyvumas',
+      },
+      advantages: { title: 'Kodėl investuoti į šį projektą?' },
+      timeline: {
+        title: 'Projekto įgyvendinimo planas',
+        subtitle: 'Pagrindiniai etapai iki pilno gamybos pajėgumo',
+      },
+      docs: {
+        title: 'Dokumentacija investuotojams',
+        subtitle: 'Detali projekto informacija ir skaičiavimai',
+      },
+      partners: { title: 'Technologijų partneriai' },
+      cta: {
+        title: 'Pasiruošę investuoti į ateitį?',
+        subtitle:
+          'Prisijunkite prie CH₄ Future projekto ir tapkite Latvijos žaliosios energetikos revoliucijos dalimi. Susisiekite su mūsų komanda detaliai konsultacijai.',
+      },
+    },
+
+    breadcrumb: {
+      services: 'Paslaugos',
+      projects: 'Projektai',
+      processing: 'Mechaninis perdirbimas',
+      collection: 'Riebalų surinkimas',
+      biomethane: 'Biometanas',
+      calculator: 'ROI skaičiuoklė',
+    },
+
+    processing: {
+      title: 'Mechaninis perdirbimas',
+      subtitle:
+        'SIA „Ainavas Nams" kuria inovatyvius sprendimus organinių atliekų mechaniniam perdirbimui, įskaitant centrifugavimą, biopolimerų kūrimą ir aukšto slėgio valymo paslaugas.',
+      contact: 'Susisiekti dėl paslaugų',
+      solutions: { title: 'Mūsų technologiniai sprendimai' },
+      process: { title: 'Mechaninio perdirbimo procesas' },
+      benefits: { title: 'Ką jūs gaunate' },
+      partner: { title: 'Technologijų partneris' },
+      cta: { title: 'Reikia mechaninio perdirbimo?' },
+    },
+
+    collection: {
+      title: 'Riebalų ir aliejaus atliekų surinkimas',
+      subtitle:
+        'Mes išsprendžiame riebalų atliekų klausimą už jus – legaliai, saugiai ir skaidriai. SIA „Ainavas Nams" teikia pilną paslaugų spektrą FOG (riebalai, aliejus, tepalai) atliekų surinkimui ir riebalų gaudyklių valymui.',
+      services: { title: 'Įtraukta į paslaugą' },
+      process: { title: 'Kaip vyksta procesas' },
+      benefits: { title: 'Jūsų nauda' },
+      equipment: { title: 'Naudojama technika' },
+      cta: { title: 'Reikia surinkimo paslaugos?' },
+    },
+
+    biomethane: {
+      title: 'Biodujos ir biometanas',
+      subtitle:
+        'CH₄ Future projektas paremtas esama stotimi Bēnė, kur planuojama membraninio valymo technologijos įdiegimas.',
+      metrics: { title: 'Pagrindiniai rodikliai' },
+      process: { title: 'Kaip veikia CH₄ Future žiedinės ekonomikos modelis' },
+      invest: { title: 'Kodėl investuoti' },
+      partners: { title: 'Technologijų partneriai' },
+      cta: { title: 'Pasiruošę investuoti?' },
+    },
+
+    calculator: {
+      title: 'ROI skaičiuoklė',
+      subtitle:
+        'Apskaičiuokite savo investicijų grąžą CH₄ Future projekte. Interaktyvi skaičiuoklė su detaliais finansiniais rodikliais ir scenarijų analize.',
+      parameters: { title: 'Projekto parametrai' },
+      results: { title: 'Skaičiavimo rezultatai' },
+      scenarios: { title: 'Scenarijų analizė' },
+    },
+
+    partneriem: {
+      hero: {
+        ctaPrimary: 'Apskaičiuoti kainą pagal adresą',
+      },
+      calculator: {
+        locateButton: 'Nustatyti objekto koordinates (GPS)',
+        addressPlaceholder: 'Įveskite objekto adresą',
+        country: 'Šalis',
+        zone: 'Zona',
+        distance: 'Atstumas',
+        price: 'Kaina',
+      },
+      form: {
+        phone: 'Telefonas',
+        email: 'El. paštas',
+        note: 'Pastaba',
+        submit: 'Gauti kainų pasiūlymą',
+      },
+    },
+
+    cookies: {
+      title: 'Slapukų nustatymai',
+      description:
+        'Naudojame slapukus, kad pagerintume jūsų patirtį mūsų svetainėje. Pasirinkite slapukų kategorijas, kurias norite leisti.',
+      acceptAll: 'Priimti visus',
+      rejectAll: 'Atmesti visus',
+      settings: 'Nustatymai',
+      necessary: 'Būtini slapukai',
+      necessaryDesc:
+        'Šie slapukai yra būtini svetainės veikimui ir negali būti išjungti.',
+      analytics: 'Analitiniai slapukai',
+      analyticsDesc: 'Padeda mums suprasti, kaip lankytojai naudojasi svetaine.',
+      marketing: 'Rinkodaros slapukai',
+      marketingDesc: 'Naudojami aktualiai reklamai rodyti.',
+      personalization: 'Personalizavimas',
+      personalizationDesc:
+        'Leidžia mums prisiminti jūsų nuostatas.',
+      save: 'Išsaugoti nustatymus',
+      back: 'Atgal',
+    },
+
+    footer: {
+      description:
+        'SIA „Ainavas Nams" – patikimas partneris atliekų tvarkyme ir biometano gamyboje Latvijoje.',
+      privacy: 'Privatumo politika',
+      cookies: 'Slapukų politika',
+    },
+    // ==== NEW: ContactsPage ====
+    contacts: {
+      heroTitle: 'Kontaktai',
+      heroSubtitle: 'Susisiekite su mumis dėl konsultacijos apie mūsų paslaugas arba bendradarbiavimo pradžios. Mūsų komanda pasirengusi atsakyti į jūsų klausimus.',
+      sendMessage: 'Siųsti žinutę',
+      nameLabel: 'Vardas',
+      namePlaceholder: 'Jūsų vardas',
+      phoneLabel: 'Telefonas',
+      phonePlaceholder: '+371 20000000',
+      emailLabel: 'El. paštas',
+      emailPlaceholder: 'your@email.com',
+      topicLabel: 'Tema',
+      topicPlaceholder: 'Apie ką norite kalbėti?',
+      preferredTimeLabel: 'Pageidaujamas skambučio laikas',
+      preferredTimePlaceholder: 'Kada jums patogiau?',
+      timeAsap: 'Kuo greičiau',
+      timeMorning: 'Ryte (8:00-12:00)',
+      timeAfternoon: 'Po pietų (12:00-17:00)',
+      timeEvening: 'Vakare (17:00-20:00)',
+      timeEmailOnly: 'Tik el. paštu',
+      messageLabel: 'Žinutė',
+      messagePlaceholder: 'Trumpai papasakokite, ko jums reikia...',
+      consentText: 'Sutinku, kad mano duomenys būtų tvarkomi komercinio pasiūlymo gavimui ir susisiekimui dėl paslaugų sąlygų.',
+      consentAlert: 'Prašome patvirtinti sutikimą dėl duomenų tvarkymo.',
+      submitButton: 'Siųsti žinutę',
+      submitting: 'Siunčiama...',
+      submitNote: 'Siųsdami formą, jūs sutinkate su susisiekimu dėl pasiūlymo. Susisieksime su jumis per 24 valandas.',
+      successTitle: 'Žinutė išsiųsta!',
+      successDesc: 'Susisieksime su jumis artimiausiu metu.',
+      companyInfo: 'Įmonės informacija',
+      legalAddress: 'Juridinis adresas:',
+      legalAddressValue: 'Bauskas iela 2, Daugavpils, LV-5417',
+      stationAddress: 'Stoties adresas:',
+      stationAddressValue: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      contactPersons: 'Kontaktiniai asmenys',
+      location: 'Vieta',
+      bioStation: 'Biometano gamybos stotis:',
+      bioStationAddress: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      coordinates: 'Koordinatės: 56.4808°N, 23.0573°E',
+      techService: 'Techninė tarnyba:',
+      techServiceHours: 'Darbo laikas: 24/7 avarinė tarnyba',
+    },
+    // ==== NEW: ContactsPage ====
+    contacts: {
+      heroTitle: 'Kontaktai',
+      heroSubtitle: 'Susisiekite su mumis dėl konsultacijos apie mūsų paslaugas arba bendradarbiavimo pradžios. Mūsų komanda pasirengusi atsakyti į jūsų klausimus.',
+      sendMessage: 'Siųsti žinutę',
+      nameLabel: 'Vardas',
+      namePlaceholder: 'Jūsų vardas',
+      phoneLabel: 'Telefonas',
+      phonePlaceholder: '+371 20000000',
+      emailLabel: 'El. paštas',
+      emailPlaceholder: 'your@email.com',
+      topicLabel: 'Tema',
+      topicPlaceholder: 'Apie ką norite kalbėti?',
+      preferredTimeLabel: 'Pageidaujamas skambučio laikas',
+      preferredTimePlaceholder: 'Kada jums patogiau?',
+      timeAsap: 'Kuo greičiau',
+      timeMorning: 'Ryte (8:00-12:00)',
+      timeAfternoon: 'Po pietų (12:00-17:00)',
+      timeEvening: 'Vakare (17:00-20:00)',
+      timeEmailOnly: 'Tik el. paštu',
+      messageLabel: 'Žinutė',
+      messagePlaceholder: 'Trumpai papasakokite, ko jums reikia...',
+      consentText: 'Sutinku, kad mano duomenys būtų tvarkomi komercinio pasiūlymo gavimui ir susisiekimui dėl paslaugų sąlygų.',
+      consentAlert: 'Prašome patvirtinti sutikimą dėl duomenų tvarkymo.',
+      submitButton: 'Siųsti žinutę',
+      submitting: 'Siunčiama...',
+      submitNote: 'Siųsdami formą, jūs sutinkate su susisiekimu dėl pasiūlymo. Susisieksime su jumis per 24 valandas.',
+      successTitle: 'Žinutė išsiųsta!',
+      successDesc: 'Susisieksime su jumis artimiausiu metu.',
+      companyInfo: 'Įmonės informacija',
+      legalAddress: 'Juridinis adresas:',
+      legalAddressValue: 'Bauskas iela 2, Daugavpils, LV-5417',
+      stationAddress: 'Stoties adresas:',
+      stationAddressValue: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      contactPersons: 'Kontaktiniai asmenys',
+      location: 'Vieta',
+      bioStation: 'Biometano gamybos stotis:',
+      bioStationAddress: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      coordinates: 'Koordinatės: 56.4808°N, 23.0573°E',
+      techService: 'Techninė tarnyba:',
+      techServiceHours: 'Darbo laikas: 24/7 avarinė tarnyba',
+    },
+  },
+
+  // ============================================================
+  // 🇬🇧 ENGLISH
+  // ============================================================
+  en: {
+    nav: {
+      home: 'Home',
+      about: 'About Us',
+      services: 'Services',
+      projects: 'Projects',
+      partners: 'Partners',
+      investors: 'Investors',
+      documents: 'Documents',
+      contacts: 'Contacts',
+      calculator: 'ROI Calculator',
+    },
+
+    hero: {
+      slogan: 'Biomass → Biomethane',
+      title: 'From Organic Waste to Clean Energy',
+      subtitle:
+        'SIA "Ainavas Nams" is a Latvian circular economy project that converts fats, food and agricultural waste into biogas, biomethane, biopolymers and technological CO₂. We combine modern technologies, logistics and investments to create real value from waste.',
+      cta: {
+        collection: 'Request waste collection',
+        investment: 'Learn about investment opportunities',
+        contact: 'Contact Us',
+        order: 'Order Service',
+        projects: 'View Projects',
+      },
+      metrics: {
+        collected: 'Tons of waste collected',
+        partners: 'Active partners',
+        energy: 'MWh of biomethane per year',
+        co2: 'CO₂ reduction',
+      },
+      process: {
+        collection: 'Collection',
+        processing: 'Processing',
+        biomethane: 'Biomethane',
+      },
+    },
+
+    how: {
+      title: 'How It Works',
+      subtitle: 'A brief overview of our process — from waste collection to biomethane production',
+      step1: 'Call or online application',
+      step2: 'Collection with vacuum machine',
+      step3: 'Documentation and certified delivery',
+      step4: 'Mechanical cleaning and separation',
+      step5: 'Processing to biomethane and CO₂ separation',
+    },
+
+    mission: {
+      title: 'Our Mission',
+      text: 'Create a closed and sustainable circular economy where organic waste becomes a valuable resource.',
+    },
+
+    vision: {
+      title: 'Vision by 2030',
+      text: 'Become the leading independent biomethane producer in the Baltics.',
+    },
+
+    services: {
+      title: 'Our Services',
+      grease: {
+        title: 'Grease & Oil Collection',
+        desc: 'We collect used oils, fats, and food waste with vacuum trucks.',
+      },
+      biomethane: {
+        title: 'Biomethane Station in Bēne',
+        desc: 'Modern biomethane production facility with full cycle processing.',
+      },
+      cleaning: {
+        title: 'High-Pressure Cleaning',
+        desc: 'Industrial pipeline cleaning with high-pressure equipment.',
+      },
+      legal: {
+        title: 'Legal Disposal',
+        desc: 'Documented, traceable, and legal fat disposal service.',
+      },
+    },
+
+    stats: {
+      title: 'Our Achievements in Numbers',
+      subtitle: 'Proven results in biomethane production and waste management',
+      investment: 'investment attracted',
+      roi: 'average ROI for investors',
+      processed: 'tons of raw materials processed annually',
+      energy: 'MWh of biomethane per year',
+    },
+
+    servicesGrid: {
+      grease: {
+        desc: 'We collect used oils, fats, and food waste with vacuum trucks. Waste is sent for mechanical cleaning and then processed into biomethane.',
+        stats: '12,000+ tons per year',
+      },
+      biomethane: {
+        desc: 'Modern biomethane production facility with full cycle. CH₄ Future project with membrane purification technology and CO₂ capture.',
+        stats: '26,951 MWh per year',
+      },
+      cleaning: {
+        desc: 'We offer industrial pipeline cleaning with high-pressure equipment. Combined cleaning with vacuum suction is available.',
+        stats: '24/7 emergency service',
+      },
+      legal: {
+        desc: 'We provide documented, traceable, and legal fat disposal. Full compliance with VVD, PVD, VID, and APUS requirements.',
+        stats: '200+ licensed partners',
+      },
+      learnMore: 'Learn More',
+    },
+
+    missionVision: {
+      mission: {
+        text1: 'We create clean energy from what was once called waste.',
+        text2: 'SIA "Ainavas Nams" transforms fats, food, and agricultural waste into sustainable energy, eco-friendly materials, and technological CO₂.',
+        text3: 'Our mission is to make waste processing not a duty but a driving force for development. We believe that every liter of fat and every kilogram of organic matter can become value: energy, fuel, materials, and climate benefit.',
+      },
+      vision: {
+        title: 'Our Vision to 2030',
+        text1: 'Become the Baltic leader in biomethane production and circular economy innovations',
+        text2: 'Our long-term goal is to build scalable, efficient, and sustainable infrastructure in Latvia that transforms organic waste into energy, resources, and climate value.',
+        bullet1: 'Modernize and develop 5 biomethane stations across different regions',
+        bullet2: 'Process more than 50,000 tons of waste per year',
+        bullet3: 'Export biomethane and CO₂ to Lithuania, Estonia, and Scandinavia',
+        bullet4: 'Develop biopolymer production from secondary fats',
+      },
+      story: {
+        title: 'Our Story',
+        subtitle: 'From a biogas station in 2014 — to a biomethane ecosystem in 2025',
+        text1: 'The story of SIA "Ainavas Nams" begins even before the company\'s legal registration. At its core is a team, experience, and infrastructure from SIA "Zemgales Enerģijas Parks", which has been operating in the biogas sector in the Zemgale region since 2014.',
+        text2: 'Since 2021, an industrial biogas station operates under the "Zemgales Enerģijas Parks" brand, including fermentation reactors, a raw material receiving system, a gas purification line, and an electricity production license.',
+        y2014: 'SIA "Zemgales Enerģijas Parks" founded, station launched',
+        y2021: 'Fermentation launch, thermal energy contracts',
+        y2023: 'SIA "Ainavas Nams" registered, biomethane design',
+        y2025: 'METAN.LV launch: fats → polymers → biogas → biomethane → CO₂',
+      },
+    },
+
+    // ==== NEW: AdvantagesSection ====
+    advantages: {
+      title: 'Why Choose Us',
+      subtitle: 'We ensure full compliance with VVD, PVD, VID and APUS requirements — without regulatory risks for your business.',
+      items: {
+        fullCycle: {
+          title: 'Full cycle — from waste to clean energy',
+          desc: 'We manage all stages: collection, fermentation, purification, transportation and sales. This ensures quality, transparency and control.',
+        },
+        licenses: {
+          title: 'Licenses, certification and international standards',
+          desc: 'Production meets RED II, ISCC, GoO requirements. We have all necessary permits for waste processing and energy production.',
+        },
+        logistics: {
+          title: 'Flexible logistics with own fleet',
+          desc: 'Our vacuum trucks and partners ensure raw material collection across the entire region — every day.',
+        },
+        recycling: {
+          title: 'Secondary fat and oil recycling',
+          desc: 'We use mechanical cleaning, centrifugation and pasteurization to obtain valuable fractions even from complex residues.',
+        },
+        economic: {
+          title: 'Proven economic impact',
+          desc: 'Our biomethane production cost is among the lowest in the region. Investors receive stable returns with a transparent model.',
+        },
+        esg: {
+          title: 'ESG and climate impact management',
+          desc: 'Every MWh we produce helps reduce CO₂ emissions. We are not just neutral — we create a positive climate balance.',
+        },
+      },
+      values: {
+        title: 'Our Values',
+        sustainability: {
+          title: 'Sustainability',
+          desc: 'A complete system where fats become energy and residues become valuable resources',
+        },
+        innovation: {
+          title: 'Innovation',
+          desc: 'Digital solutions integrated with the APUS system and supervisory authority requirements',
+        },
+        responsibility: {
+          title: 'Responsibility',
+          desc: 'Full assumption of regulatory risks and compliance with VVD, PVD, VID requirements',
+        },
+        partnership: {
+          title: 'Partnership',
+          desc: 'Transparent cooperation with HoReCa, food producers and logistics companies',
+        },
+      },
+    },
+
+    // ==== NEW: CTASection ====
+    cta: {
+      title: 'Join the Circular Economy',
+      subtitle: 'We are building a next-generation energy and environmental ecosystem. Participate — as a service recipient, cooperation partner or investor.',
+      clients: {
+        title: 'For Clients (Services)',
+        desc: 'We work with HoReCa, manufacturers and the processing sector',
+        item1: 'Grease and oil collection',
+        item2: 'Grease trap cleaning',
+        item3: 'Full documentation and compliance',
+        button: 'Request waste collection',
+      },
+      investors: {
+        title: 'For Investors',
+        desc: 'Biomethane — the first step in your ESG strategy',
+        item1: 'Profitability up to 38.6%',
+        item2: 'RED II and ISCC certification',
+        item3: 'Export potential to the Baltics',
+        button: 'Learn about investment opportunities',
+      },
+      about: {
+        title: 'About SIA "Ainavas Nams"',
+        text: 'SIA "Ainavas Nams" is a Latvian company founded in 2020 with the goal of developing circular energy and transitioning from electricity production to biomethane and CO₂ extraction. The project is being implemented on the basis of an existing fermentation station managed by SIA "Zemgales Enerģijas Parks", established in 2014.',
+      },
+    },
+
+    // ==== NEW: IndustrySpecialization ====
+    industry: {
+      title: 'Our Specialization',
+      subtitle: 'Professional service for businesses across Latvia • Riga, Jūrmala and within 300km radius',
+      horeca: {
+        title: 'HoReCa Businesses',
+        subtitle: 'Restaurants • Cafés • Hotels',
+        desc: 'We specialize in food fat and oil collection from restaurants, cafés and hotels. Regular grease trap cleaning and maintenance.',
+        service1: 'Grease trap cleaning',
+        service2: 'Frying oil collection',
+        service3: 'Regular service schedule',
+        stats: '500+ restaurants',
+      },
+      fish: {
+        title: 'Fish Processing Companies',
+        subtitle: 'Industrial • High Quality',
+        desc: 'Specialized service for fish processing companies — fish fat disposal, waste collection and pipe cleaning.',
+        service1: 'Fish fat disposal',
+        service2: 'Industrial pipe cleaning',
+        service3: 'Waste processing compliance',
+        stats: '50+ factories',
+      },
+      food: {
+        title: 'Food Production Companies',
+        subtitle: 'Factories • Cooperatives • Plants',
+        desc: 'We offer a full range of services for food production companies — from fat collection to sanitary cleaning.',
+        service1: 'Food fat collection',
+        service2: 'Sanitary sewer cleaning',
+        service3: 'Production waste disposal',
+        stats: '200+ producers',
+      },
+      industrial: {
+        title: 'Industrial Facilities',
+        subtitle: 'Technical • Commercial • Logistics',
+        desc: 'We provide industrial pipe cleaning, grease drainage system maintenance and greasy wastewater pumping.',
+        service1: 'Pipeline degreasing',
+        service2: 'System maintenance',
+        service3: 'Greasy wastewater removal',
+        stats: '100+ facilities',
+      },
+      footer: 'Licensed services • Full documentation • VVD, PVD, VID compliance',
+    },
+
+    // ==== NEW: FrequentlyAskedQuestions ====
+    faq: {
+      title: 'Frequently Asked Questions',
+      subtitle: 'Answers to the most important questions about fat disposal and legal waste management for businesses',
+      urgent: 'Urgent',
+      q1: {
+        question: 'Grease trap is blocked — what to do?',
+        answer: 'First, stop the equipment and contact a licensed service or fat waste operator. A blocked grease trap can cause leaks and unpleasant odors, so immediately have it cleaned with professional help.\n\nOur company (SIA "Ainavas Nams") offers certified grease trap cleaning — we use specialized vacuum equipment and high-pressure flushing, documenting the work process. Upon completion, we issue a confirmation certificate for fat waste removal.\n\nRegular preventive grease trap cleaning will help prevent such situations in the future.',
+      },
+      q2: {
+        question: 'Where to dispose of frying fats for businesses?',
+        answer: 'Used frying fats and oils cannot be poured into the sewer or discarded with general waste — this is regulated by environmental protection requirements. According to CM Regulations No. 302, used vegetable oils and fats are classified as waste that must be handed over to a licensed waste operator.\n\nBusinesses are advised to accumulate cooled fats in a special sealed container. When the container is full, the waste operator collects the fats for disposal.\n\nOur company provides used oil and fat collection service: we supply clients with suitable containers and agree on collection frequency.\n\nTo arrange fat collection, contact SIA "Ainavas Nams" — we will promptly organize collection throughout Latvia.',
+      },
+      q3: {
+        question: 'How to sign a contract for fat removal?',
+        answer: 'Signing a contract with a waste operator is a mandatory step for legal disposal of fat waste by a business (the Waste Management Law requires waste generators to have a contract with an operator).\n\nTo sign a contract, contact our specialists at +371 27727724 or by email. We will clarify your business needs and prepare a contract with all conditions.\n\nThe contract can be signed remotely (e.g., with an electronic signature) or in person. After signing, we will provide the necessary equipment (fat collection containers) and begin regular collection according to the schedule.\n\nYou will have a guarantee of legal and timely fat waste disposal.',
+      },
+      q4: {
+        question: 'What documents are needed for disposal?',
+        answer: 'To hand over fat waste for disposal, a business needs two basic documents.\n\nFirst, a signed contract with a licensed waste operator (e.g., SIA "Ainavas Nams"), confirming the agreement for fat collection and processing.\n\nSecond, a waste transfer confirmation — after each fat waste removal, the service provider issues a waybill (confirmation certificate) recording the waste quantity, type and transfer date.\n\nOur company handles all necessary documentation. The entrepreneur does not need to arrange additional permits when working with a licensed operator.\n\nKeep the received certificates with your company documentation — they may need to be presented to supervisory authorities.',
+      },
+      additional: {
+        title: 'Other Popular Questions',
+        q1: 'How often should grease traps be cleaned for HoReCa businesses?',
+        q2: 'What are the benefits of regular fat collection?',
+        q3: 'What to do if a grease trap is blocked in Riga urgently?',
+        q4: 'How to legally dispose of fats and oils after fish processing?',
+      },
+      contact: {
+        title: 'Didn\'t find the answer to your question?',
+        desc: 'Contact our experts — we will answer any question about fat disposal and documentation',
+        askQuestion: 'Ask a question',
+      },
+    },
+
+    // ==== NEW: LegalDocumentation ====
+    legal: {
+      title: 'Legal Compliance',
+      subtitle: 'Full documentation and regulatory compliance • Licensed services for businesses across Latvia',
+      features: {
+        contracts: {
+          title: 'Regular service contracts',
+          desc: 'We sign contracts for fat removal, disposal and grease trap maintenance with full legal protection.',
+          item1: 'Food fat removal contract',
+          item2: 'Fat disposal contract',
+          item3: 'Grease trap maintenance contract',
+        },
+        licensed: {
+          title: 'Licensed fat disposal',
+          desc: 'All our services are licensed and comply with environmental protection requirements. We guarantee legal waste management.',
+          item1: 'VVD licenses and permits',
+          item2: 'PVD compliance certificates',
+          item3: 'APUS registration',
+        },
+        quality: {
+          title: 'Quality certification',
+          desc: 'Our company is certified and meets all quality standards in the waste management field.',
+          item1: 'ISO 14001 environmental management',
+          item2: 'Quality control system',
+          item3: 'Regular quality audits',
+        },
+        compliance: {
+          title: 'Regulatory compliance',
+          desc: 'We ensure full compliance with Latvian and EU regulations in the waste management field.',
+          item1: 'CM Regulations No. 302 on waste',
+          item2: 'Waste Management Law',
+          item3: 'EU waste directives',
+        },
+      },
+      process: {
+        title: 'Documentation Process',
+        step1: { title: 'Contract signing', desc: 'Contact us by phone or email to sign a contract for fat removal and disposal.' },
+        step2: { title: 'Document preparation', desc: 'We will prepare all necessary documents and contracts according to your business needs.' },
+        step3: { title: 'Service delivery', desc: 'After each fat removal, we issue a confirmation certificate for legal disposal.' },
+        step4: { title: 'Documentation storage', desc: 'Keep the received certificates — they will need to be presented to VVD, PVD or VID authorities.' },
+      },
+      cta: {
+        title: 'Need documents for disposal?',
+        desc: 'Contact us to sign a contract for fat removal and receive full documentation for legal disposal',
+        requestContract: 'Request a contract',
+      },
+    },
+
+    // ==== NEW: CustomerTestimonials ====
+    testimonials: {
+      title: 'What Our Clients Say',
+      subtitle: 'We earn trust through quality work, precise documentation and reliable service',
+      items: {
+        t1: {
+          name: 'Aija Kalniņa',
+          position: 'Kitchen Manager',
+          company: 'Restaurant "Mazā Parīze"',
+          text: 'We have been working with Ainavas Nams for the second year. They performed our grease trap maintenance quickly and with quality. Very important that all documents are handled properly — never had issues with VVD inspections.',
+          location: 'Riga',
+        },
+        t2: {
+          name: 'Māris Ozoliņš',
+          position: 'Catering Manager',
+          company: 'SIA "Gardēžu pasaule"',
+          text: 'We have 4 restaurants in Riga and Daugavpils. Ainavas Nams solved our oil disposal problem. Now everything runs on schedule, without delays. Prices are reasonable and service is reliable.',
+          location: 'Daugavpils',
+        },
+        t3: {
+          name: 'Sandra Liepiņa',
+          position: 'Director\'s Assistant',
+          company: 'Hotel "Jūrmala Resort"',
+          text: 'Really like that they contact us and remind about the next cleaning. Everything is documented, we receive detailed reports. Our accounting department is very satisfied with document quality.',
+          location: 'Jūrmala',
+        },
+        t4: {
+          name: 'Andris Bērziņš',
+          position: 'Technical Director',
+          company: 'Food Production "Latgales garša"',
+          text: 'We have been cooperating for 1.5 years. They have professional vacuum equipment that allows quick removal of large volumes. Never missed or was late. Recommend to other producers.',
+          location: 'Daugavpils',
+        },
+        t5: {
+          name: 'Ilze Sproģe',
+          position: 'Cafeteria Manager',
+          company: 'Kindergarten "Saulīte"',
+          text: 'It was important to find a company that understands our specifics — a kindergarten has special cleanliness requirements. Ainavas Nams works quickly, quietly and without odor. Children didn\'t even notice the work.',
+          location: 'Riga',
+        },
+        t6: {
+          name: 'Ģirts Vilciņš',
+          position: 'Owner',
+          company: 'Café "Pie upes"',
+          text: 'Small café, but the grease problems were big. Now we have regular maintenance once a month. No more odors in the kitchen and sewage. Price is affordable even for a small business.',
+          location: 'Jelgava',
+        },
+      },
+      trust: {
+        clients: '200+',
+        clientsLabel: 'Satisfied clients',
+        compliance: '100%',
+        complianceLabel: 'Documentation compliance',
+        emergency: '24/7',
+        emergencyLabel: 'Emergency service',
+      },
+    },
+
+    // ==== NEW: PartnersLogos ====
+    partnersLogos: {
+      title: 'Our Partners & Certifications',
+      subtitle: 'We work with trusted partners and are certified in all necessary areas',
+      partners: {
+        p1: { name: 'Latvian Association of Municipalities', category: 'Municipal partner', desc: 'Certified service provider' },
+        p2: { name: 'HoReCa Latvia', category: 'Industry association', desc: 'Official waste operator' },
+        p3: { name: 'Latvian Environmental Fund', category: 'Environmental organization', desc: 'Supported project' },
+        p4: { name: 'ALTUM', category: 'Financial partner', desc: 'Investment support' },
+        p5: { name: 'RED II Certification', category: 'International certification', desc: 'Renewable Energy Directive' },
+        p6: { name: 'ISCC Certification', category: 'Quality standard', desc: 'Sustainability certificate' },
+        p7: { name: 'VVD', category: 'State supervision', desc: 'Licensed service provider' },
+        p8: { name: 'Zemgales Enerģijas Parks', category: 'Technical partner', desc: 'Biogas production' },
+      },
+      certTitle: 'Licenses & Certificates',
+      certSubtitle: 'All necessary permits and quality confirmations',
+      certs: {
+        c1: { title: 'VVD License No. LI-1234', desc: 'Waste management', status: 'Active' },
+        c2: { title: 'PVD License No. PV-5678', desc: 'Water management', status: 'Active' },
+        c3: { title: 'ISO 14001:2015', desc: 'Environmental management system', status: 'Certified' },
+        c4: { title: 'HACCP', desc: 'Food safety standard', status: 'Certified' },
+      },
+      trustStatement: '100% LEGAL AND CERTIFIED SERVICES',
+      trustDesc: 'All our services comply with VVD, PVD and international standards. We guarantee full documentation compliance and traceability.',
+    },
+
+    // ==== NEW: TrustedPartners ====
+    trustedPartners: {
+      title: 'Our Partners & Clients',
+      subtitle: 'We cooperate with leading companies in Latvia and the Baltic region',
+      techTitle: 'Technology Partners',
+      partners: {
+        p1: { name: 'AS "Virši–A"', type: 'Strategic partner', desc: 'Main electricity sales partner' },
+        p2: { name: 'Horeca Solution', type: 'Technology partner', desc: 'Professional solutions for the HoReCa sector' },
+        p3: { name: 'Horeca sprendimai', type: 'Business partner', desc: 'Waste management solutions' },
+        p4: { name: 'Bio-Venta', type: 'Ecological partner', desc: 'Biological waste processing cooperation' },
+      },
+      clientsTitle: 'Trust Our Services',
+      activeClients: '200+ active clients across Latvia',
+    },
+
+    // ==== NEW: PriorityContacts ====
+    priorityContacts: {
+      title: 'Contact our technical service manager:',
+      shortLabel: 'Technical service manager',
+      trustBadge: 'Licensed partner with HoReCa sector experience across Latvia',
+    },
+
+    // ==== NEW: EnhancedCTA ====
+    enhancedCta: {
+      homepage: {
+        title: 'Start Saving Today!',
+        subtitle: 'We will help you create an efficient waste management system and start saving',
+      },
+      services: {
+        title: 'Need a Consultation?',
+        subtitle: 'Contact our experts to choose the most suitable solution for your business',
+      },
+      calculator: {
+        title: 'Ready to Start Saving?',
+        subtitle: 'Contact our experts for a free consultation and precise quote',
+      },
+      phone: {
+        title: 'Immediate Consultation',
+        desc: 'Call the technical service manager — we will answer all questions',
+        callNow: 'Call now',
+        hours: 'Available 8:00-18:00',
+      },
+      email: {
+        title: 'Detailed Quote',
+        desc: 'Write an email with your needs — we will prepare an individual offer',
+        writeEmail: 'Write email',
+        response: 'Response within 24h',
+      },
+      calc: {
+        title: 'Service Calculator',
+        desc: 'Calculate precise service costs depending on your needs',
+        calculate: 'Calculate costs',
+        free: 'Free tool',
+      },
+      trust: {
+        licensed: 'Licensed service',
+        licensedDesc: 'VVD and PVD permits',
+        emergency: '24/7 emergency service',
+        emergencyDesc: 'For quick problem solving',
+        docs: 'Full documentation',
+        docsDesc: 'Traceability and compliance',
+      },
+    },
+
+    investors: {
+      hero: {
+        title: 'Invest in CH₄ Future Project',
+        subtitle:
+          'SIA "Ainavas Nams" invites strategic investors to participate in creating a modern biomethane production facility. Sustainable investments with high returns and proven infrastructure.',
+        download: 'Download Business Plan',
+        contact: 'Contact Project Manager',
+      },
+      metrics: {
+        title: 'Key Financial Metrics',
+        subtitle: 'Economic effectiveness of CH₄ Future project',
+      },
+      advantages: { title: 'Why invest in this project?' },
+      timeline: {
+        title: 'Project Implementation Plan',
+        subtitle: 'Key stages to full production capacity',
+      },
+      docs: {
+        title: 'Documentation for Investors',
+        subtitle: 'Detailed project information and calculations',
+      },
+      partners: { title: 'Technology Partners' },
+      cta: {
+        title: 'Ready to invest in the future?',
+        subtitle:
+          "Join the CH₄ Future project and become part of Latvia's green energy revolution. Contact our team for detailed consultation.",
+      },
+    },
+
+    breadcrumb: {
+      services: 'Services',
+      projects: 'Projects',
+      processing: 'Mechanical Processing',
+      collection: 'Grease Collection',
+      biomethane: 'Biomethane',
+      calculator: 'ROI Calculator',
+    },
+
+    processing: {
+      title: 'Mechanical Processing',
+      subtitle:
+        'SIA "Ainavas Nams" develops innovative solutions for mechanical processing of organic waste, including centrifugation, biopolymer development, and high-pressure cleaning services.',
+      contact: 'Contact about services',
+      solutions: { title: 'Our technological solutions' },
+      process: { title: 'Mechanical processing process' },
+      benefits: { title: 'What you get' },
+      partner: { title: 'Technology partner' },
+      cta: { title: 'Need mechanical processing?' },
+    },
+
+    collection: {
+      title: 'Grease and oil waste collection',
+      subtitle:
+        'We solve the grease waste issue for you — legally, safely, and transparently. SIA "Ainavas Nams" provides a full range of services for FOG (fats, oils, grease) waste collection and grease trap cleaning.',
+      services: { title: 'Included in service' },
+      process: { title: 'How the process works' },
+      benefits: { title: 'Your benefits' },
+      equipment: { title: 'Equipment used' },
+      cta: { title: 'Need collection service?' },
+    },
+
+    biomethane: {
+      title: 'Biogas and biomethane',
+      subtitle:
+        'The CH₄ Future project is based on the existing station in Bēne, where membrane cleaning technology implementation is planned.',
+      metrics: { title: 'Key indicators' },
+      process: { title: 'How the CH₄ Future circular economy model works' },
+      invest: { title: 'Why invest' },
+      partners: { title: 'Technology partners' },
+      cta: { title: 'Ready to invest?' },
+    },
+
+    calculator: {
+      title: 'ROI Calculator',
+      subtitle:
+        'Calculate the return on your investment in the CH₄ Future project. Interactive calculator with detailed financial metrics and scenario analysis.',
+      parameters: { title: 'Project parameters' },
+      results: { title: 'Calculation results' },
+      scenarios: { title: 'Scenario analysis' },
+    },
+
+    partneriem: {
+      hero: {
+        ctaPrimary: 'Calculate price by address',
+      },
+      calculator: {
+        locateButton: 'Determine object coordinates (GPS)',
+        addressPlaceholder: 'Enter object address',
+        country: 'Country',
+        zone: 'Zone',
+        distance: 'Distance',
+        price: 'Price',
+      },
+      form: {
+        phone: 'Phone',
+        email: 'Email',
+        note: 'Note',
+        submit: 'Get price quote',
+      },
+    },
+
+    cookies: {
+      title: 'Cookie Settings',
+      description:
+        'We use cookies to enhance your experience on our website. Choose the cookie categories you want to allow.',
+      acceptAll: 'Accept All',
+      rejectAll: 'Reject All',
+      settings: 'Settings',
+      necessary: 'Necessary Cookies',
+      necessaryDesc:
+        'These cookies are essential for the website to function and cannot be disabled.',
+      analytics: 'Analytics Cookies',
+      analyticsDesc: 'Help us understand how visitors use the website.',
+      marketing: 'Marketing Cookies',
+      marketingDesc: 'Used to show relevant advertising.',
+      personalization: 'Personalization',
+      personalizationDesc: 'Allow us to remember your preferences.',
+      save: 'Save Settings',
+      back: 'Back',
+    },
+
+    footer: {
+      description:
+        'SIA "Ainavas Nams" – a trusted partner in waste management and biomethane production in Latvia.',
+      privacy: 'Privacy Policy',
+      cookies: 'Cookie Policy',
+    },
+    // ==== NEW: ContactsPage ====
+    contacts: {
+      heroTitle: 'Contacts',
+      heroSubtitle: 'Get in touch with us for a consultation about our services or to start a partnership. Our team is ready to answer your questions.',
+      sendMessage: 'Send Message',
+      nameLabel: 'Name',
+      namePlaceholder: 'Your name',
+      phoneLabel: 'Phone',
+      phonePlaceholder: '+371 20000000',
+      emailLabel: 'Email',
+      emailPlaceholder: 'your@email.com',
+      topicLabel: 'Topic',
+      topicPlaceholder: 'What would you like to discuss?',
+      preferredTimeLabel: 'Preferred call time',
+      preferredTimePlaceholder: 'When is convenient for you?',
+      timeAsap: 'As soon as possible',
+      timeMorning: 'Morning (8:00-12:00)',
+      timeAfternoon: 'Afternoon (12:00-17:00)',
+      timeEvening: 'Evening (17:00-20:00)',
+      timeEmailOnly: 'Email only',
+      messageLabel: 'Message',
+      messagePlaceholder: 'Briefly tell us what you need...',
+      consentText: 'I agree to the processing of my data to receive a commercial offer and to be contacted regarding service conditions.',
+      consentAlert: 'Please confirm that you agree to data processing.',
+      submitButton: 'Send Message',
+      submitting: 'Sending...',
+      submitNote: 'By submitting this form, you agree to be contacted about our offer. We will get back to you within 24 hours.',
+      successTitle: 'Message sent!',
+      successDesc: 'We will contact you shortly.',
+      companyInfo: 'Company Information',
+      legalAddress: 'Legal address:',
+      legalAddressValue: 'Bauskas iela 2, Daugavpils, LV-5417',
+      stationAddress: 'Station address:',
+      stationAddressValue: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      contactPersons: 'Contact Persons',
+      location: 'Location',
+      bioStation: 'Biomethane production station:',
+      bioStationAddress: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      coordinates: 'Coordinates: 56.4808°N, 23.0573°E',
+      techService: 'Technical service:',
+      techServiceHours: 'Working hours: 24/7 emergency service',
+    },
+    // ==== NEW: ContactsPage ====
+    contacts: {
+      heroTitle: 'Contacts',
+      heroSubtitle: 'Get in touch with us for a consultation about our services or to start a partnership. Our team is ready to answer your questions.',
+      sendMessage: 'Send Message',
+      nameLabel: 'Name',
+      namePlaceholder: 'Your name',
+      phoneLabel: 'Phone',
+      phonePlaceholder: '+371 20000000',
+      emailLabel: 'Email',
+      emailPlaceholder: 'your@email.com',
+      topicLabel: 'Topic',
+      topicPlaceholder: 'What would you like to discuss?',
+      preferredTimeLabel: 'Preferred call time',
+      preferredTimePlaceholder: 'When is convenient for you?',
+      timeAsap: 'As soon as possible',
+      timeMorning: 'Morning (8:00-12:00)',
+      timeAfternoon: 'Afternoon (12:00-17:00)',
+      timeEvening: 'Evening (17:00-20:00)',
+      timeEmailOnly: 'Email only',
+      messageLabel: 'Message',
+      messagePlaceholder: 'Briefly tell us what you need...',
+      consentText: 'I agree to the processing of my data to receive a commercial offer and to be contacted regarding service conditions.',
+      consentAlert: 'Please confirm that you agree to data processing.',
+      submitButton: 'Send Message',
+      submitting: 'Sending...',
+      submitNote: 'By submitting this form, you agree to be contacted about our offer. We will get back to you within 24 hours.',
+      successTitle: 'Message sent!',
+      successDesc: 'We will contact you shortly.',
+      companyInfo: 'Company Information',
+      legalAddress: 'Legal address:',
+      legalAddressValue: 'Bauskas iela 2, Daugavpils, LV-5417',
+      stationAddress: 'Station address:',
+      stationAddressValue: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      contactPersons: 'Contact Persons',
+      location: 'Location',
+      bioStation: 'Biomethane production station:',
+      bioStationAddress: 'Rūpniecības iela 2D, Bēne, Bēnes pag., Dobeles nov., LV-3711',
+      coordinates: 'Coordinates: 56.4808°N, 23.0573°E',
+      techService: 'Technical service:',
+      techServiceHours: 'Working hours: 24/7 emergency service',
+    },
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Helper: resolve a dot-notated key against the nested translations object
+// ---------------------------------------------------------------------------
+export function getTranslation(key: string, lang: Language = 'lv'): string {
+  const resolve = (obj: any, path: string): string | undefined => {
+    const parts = path.split('.');
+    let current = obj;
+    for (const part of parts) {
+      if (current && typeof current === 'object' && part in current) {
+        current = current[part];
+      } else {
+        return undefined;
+      }
+    }
+    return typeof current === 'string' ? current : undefined;
+  };
+
+  // Try requested language first, then fall back to default (lv)
+  return resolve(translations[lang], key)
+    ?? resolve(translations[defaultLocale], key)
+    ?? key;
+}
+
+// Convenience: return full translation object for a locale
+export function getTranslations(locale: Locale) {
+  return translations[locale] || translations[defaultLocale];
+}

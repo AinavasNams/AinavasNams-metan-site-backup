@@ -192,33 +192,9 @@ export const trackHighValuePageView = (pageType: string, pagePath: string) => {
 };
 
 // Функция для инициализации GTM событий на странице
+// Phone/email click tracking is handled via event delegation in Analytics.tsx handleClick
 export const initializePageTracking = (pageType: string, pagePath: string) => {
-  // Отслеживаем просмотр страницы
   trackHighValuePageView(pageType, pagePath);
-  
-  // Инициализация отслеживания кликов по телефону
-  document.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement;
-    const phoneLink = target.closest('a[href^="tel:"]');
-    
-    if (phoneLink) {
-      const phoneNumber = phoneLink.getAttribute('href')?.replace('tel:', '') || '';
-      trackPhoneCall(pageType, phoneNumber);
-    }
-  });
-  
-  // Инициализация отслеживания кликов по email
-  document.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement;
-    const emailLink = target.closest('a[href^="mailto:"]');
-    
-    if (emailLink) {
-      const emailAddress = emailLink.getAttribute('href')?.replace('mailto:', '') || '';
-      trackEmailClick(pageType, emailAddress);
-    }
-  });
-  
-  console.log(`📊 GTM tracking initialized for page: ${pageType}`);
 };
 
 // Событие: Пользовательское взаимодействие (скролл, время на странице)
@@ -238,6 +214,46 @@ export const trackUserEngagement = (engagementType: string, value: number) => {
 };
 
 // Экспорт всех функций для использования в компонентах
+
+// Стандартные GTM события для конверсий (используются в GTM/GA4/Google Ads тегах)
+export const pushFormSubmit = (formType: string, source: string, value: number = 60) => {
+  if (typeof window !== 'undefined') {
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'form_submit',
+      form_type: formType,
+      form_source: source,
+      conversion_value: value,
+      currency: 'EUR'
+    });
+    console.log('GTM form_submit:', formType, source);
+  }
+};
+
+export const pushPhoneClick = (source: string, phoneNumber: string) => {
+  if (typeof window !== 'undefined') {
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'phone_click',
+      phone_number: phoneNumber,
+      click_source: source
+    });
+    console.log('GTM phone_click:', source, phoneNumber);
+  }
+};
+
+export const pushEmailClick = (source: string, emailAddress: string) => {
+  if (typeof window !== 'undefined') {
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'email_click',
+      email_address: emailAddress,
+      click_source: source
+    });
+    console.log('GTM email_click:', source, emailAddress);
+  }
+};
+
 export default {
   sendGTMEvent,
   trackConsultationRequest,

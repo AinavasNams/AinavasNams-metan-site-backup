@@ -14,6 +14,7 @@ import { Phone, Mail, Send, CheckCircle } from 'lucide-react';
 import { trackCTA } from '@/components/Analytics';
 import { trackContactMethod } from '@/lib/analytics';
 import { trackContact, trackFormSubmission } from '@/lib/ga4-events';
+import { pushFormSubmit, pushPhoneClick, pushEmailClick } from '@/lib/gtm-events';
 import { sendEmailNotification } from '@/lib/email-automation';
 
 interface SimpleContactFormProps {
@@ -33,11 +34,11 @@ export function SimpleContactForm({
     name: '',
     phone: '',
     email: '',
+    company: '',
     service: '',
     message: ''
   });
 
-  console.log('SimpleContactForm component rendered with variant:', variant);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +48,7 @@ export function SimpleContactForm({
     trackContactMethod('form', 'contact_form', variant);
     trackCTA('form_submit', 'contact_form', 'form_submission');
     trackFormSubmission('contact_form', 'website', 50);
+    pushFormSubmit('contact_form', 'website', 50);
 
     try {
       const response = await fetch('/api/send-email', {
@@ -63,6 +65,7 @@ export function SimpleContactForm({
             name: formData.name,
             phone: formData.phone,
             email: formData.email,
+            company: formData.company,
             message: formData.message,
             service: formData.service,
             timestamp: new Date().toISOString(),
@@ -101,7 +104,6 @@ export function SimpleContactForm({
           });
         }
         
-        console.log('📊 Contact form conversion tracked with automation');
         
         // Use router.push instead of window.location.href to prevent React conflicts
         router.push('/paldies');
@@ -173,6 +175,8 @@ export function SimpleContactForm({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input
                   placeholder="Jūsu vārds *"
+                  id="contact-name"
+                  name="name"
                   value={formData.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                   required
@@ -182,6 +186,8 @@ export function SimpleContactForm({
                 <Input
                   placeholder="Telefons *"
                   type="tel"
+                  id="contact-phone"
+                  name="phone"
                   value={formData.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   onFocus={handlePhoneFocus}
@@ -192,16 +198,29 @@ export function SimpleContactForm({
               </div>
               
               <Input
-                placeholder="E-pasts"
+                placeholder="E-pasts *"
                 type="email"
+                id="contact-email"
+                name="email"
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
+                required
                 className="border-gray-300 focus:border-metan-primary bg-white"
                 style={{ backgroundColor: 'white' }}
               />
 
-              <Select onValueChange={(value) => handleInputChange('service', value)}>
-                <SelectTrigger className="border-gray-300 focus:border-metan-primary bg-white" style={{ backgroundColor: 'white' }}>
+              <Input
+                placeholder="Uzņēmums (nav obligāti)"
+                id="contact-company"
+                name="company"
+                value={formData.company}
+                onChange={(e) => handleInputChange('company', e.target.value)}
+                className="border-gray-300 focus:border-metan-primary bg-white"
+                style={{ backgroundColor: 'white' }}
+              />
+
+              <Select name="service" onValueChange={(value) => handleInputChange('service', value)}>
+                <SelectTrigger id="contact-service" className="border-gray-300 focus:border-metan-primary bg-white" style={{ backgroundColor: 'white' }}>
                   <SelectValue placeholder="Izvēlieties pakalpojumu" />
                 </SelectTrigger>
                 <SelectContent>
@@ -262,6 +281,8 @@ export function SimpleContactForm({
                 </label>
                 <Input
                   placeholder="Ievadiet savu vārdu"
+                  id="full-contact-name"
+                  name="name"
                   value={formData.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                   required
@@ -276,6 +297,8 @@ export function SimpleContactForm({
                 <Input
                   placeholder="+371 20000000"
                   type="tel"
+                  id="full-contact-phone"
+                  name="phone"
                   value={formData.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   onFocus={handlePhoneFocus}
@@ -286,26 +309,45 @@ export function SimpleContactForm({
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                E-pasta adrese
-              </label>
-              <Input
-                placeholder="jusu.epasts@email.lv"
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                className="border-gray-300 focus:border-metan-primary bg-white"
-                style={{ backgroundColor: 'white' }}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  E-pasta adrese *
+                </label>
+                <Input
+                  placeholder="jusu.epasts@email.lv"
+                  type="email"
+                  id="full-contact-email"
+                  name="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  required
+                  className="border-gray-300 focus:border-metan-primary bg-white"
+                  style={{ backgroundColor: 'white' }}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Uzņēmums
+                </label>
+                <Input
+                  placeholder="SIA / juridiskais nosaukums (nav obligāti)"
+                  id="full-contact-company"
+                  name="company"
+                  value={formData.company}
+                  onChange={(e) => handleInputChange('company', e.target.value)}
+                  className="border-gray-300 focus:border-metan-primary bg-white"
+                  style={{ backgroundColor: 'white' }}
+                />
+              </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Nepieciešamais pakalpojums
               </label>
-              <Select onValueChange={(value) => handleInputChange('service', value)}>
-                <SelectTrigger className="border-gray-300 focus:border-metan-primary bg-white" style={{ backgroundColor: 'white' }}>
+              <Select name="service" onValueChange={(value) => handleInputChange('service', value)}>
+                <SelectTrigger id="full-contact-service" className="border-gray-300 focus:border-metan-primary bg-white" style={{ backgroundColor: 'white' }}>
                   <SelectValue placeholder="Izvēlieties pakalpojumu" />
                 </SelectTrigger>
                 <SelectContent>
@@ -324,6 +366,8 @@ export function SimpleContactForm({
               </label>
               <Textarea
                 placeholder="Pastāstiet par savām vajadzībām..."
+                id="full-contact-message"
+                name="message"
                 value={formData.message}
                 onChange={(e) => handleInputChange('message', e.target.value)}
                 className="border-gray-300 focus:border-metan-primary min-h-[100px] bg-white"
@@ -367,14 +411,14 @@ export function SimpleContactForm({
               <p className="text-gray-600 mb-4">Vai dodiet mums ziņu tieši:</p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a 
-                  href="tel:+37127727724"
+                  href="tel:+37127727724" onClick={() => pushPhoneClick('contact_form', '+37127727724')}
                   className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors"
                 >
                   <Phone className="h-4 w-4" />
                   +371 27727724
                 </a>
                 <a 
-                  href="mailto:tsv@metan.lv"
+                  href="mailto:tsv@metan.lv" onClick={() => pushEmailClick('contact_form', 'tsv@metan.lv')}
                   className="flex items-center justify-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors"
                 >
                   <Mail className="h-4 w-4" />

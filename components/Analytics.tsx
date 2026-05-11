@@ -641,92 +641,19 @@ export default function Analytics() {
       }, 1000);
     }
 
-    // Отслеживание сабмитов форм, кликов CTA, кликов по телефону/почте
-    const trackFormClicks = () => {
-      // Формы
-      const forms = document.querySelectorAll('form');
-      forms.forEach((form, index) => {
-        form.addEventListener('submit', () => {
-          console.log('📝 Form submission detected:', form);
-
-          pushToDataLayer({
-            event: 'form_submission_conversion',
-            form_id: form.id || `form_${index}`,
-            form_action: (form as HTMLFormElement).action || window.location.href,
-            conversion_value: 1,
-            currency: 'USD',
-          });
-        });
-      });
-
-      // CTA-кнопки
-      const ctaButtons = document.querySelectorAll(
-        'button[type="submit"], a[href*="kontakti"], a[href*="konsultacija"], .cta-button'
-      );
-      ctaButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          console.log('🖱️ CTA button clicked:', button);
-
-          pushToDataLayer({
-            event: 'cta_click_conversion',
-            element_text: (button as HTMLElement).textContent || '',
-            timestamp: new Date().toISOString(),
-          });
-        });
-      });
-
-      // телефонные ссылки
-      const phoneLinks = document.querySelectorAll<HTMLAnchorElement>(
-        'a[href^="tel:"]'
-      );
-      phoneLinks.forEach((link) => {
-        link.addEventListener('click', () => {
-          console.log('📞 Phone link clicked:', link.href);
-          trackPhoneConversion(link.href.replace('tel:', ''));
-        });
-      });
-
-      // email ссылки
-      const emailLinks = document.querySelectorAll<HTMLAnchorElement>(
-        'a[href^="mailto:"]'
-      );
-      emailLinks.forEach((link) => {
-        link.addEventListener('click', () => {
-          console.log('📧 Email link clicked:', link.href);
-          trackContactInteraction('email_click', link.href.replace('mailto:', ''));
-        });
+    // Form submission tracking via event delegation (no per-element listeners)
+    const handleSubmit = (event: Event) => {
+      const form = event.target as HTMLFormElement;
+      if (form.tagName !== 'FORM') return;
+      pushToDataLayer({
+        event: 'form_submission_conversion',
+        form_id: form.id || 'unknown_form',
+        form_action: form.action || window.location.href,
+        conversion_value: 1,
+        currency: 'USD',
       });
     };
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', trackFormClicks);
-    } else {
-      trackFormClicks();
-    }
-
-    // Реинициализация при появлении новых форм (SPA-навигация)
-    const observer = new MutationObserver((mutations) => {
-      let shouldReinitialize = false;
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-          const hasNewForms = Array.from(mutation.addedNodes).some(
-            (node) => node.nodeType === 1 && (node as Element).tagName === 'FORM'
-          );
-          if (hasNewForms) {
-            shouldReinitialize = true;
-          }
-        }
-      });
-
-      if (shouldReinitialize) {
-        setTimeout(trackFormClicks, 500);
-      }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
+    document.addEventListener('submit', handleSubmit, { passive: true });
 
     // Отслеживание скролла
     let scrollDepthTracked = new Set<number>();
@@ -864,7 +791,7 @@ export default function Analytics() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('beforeunload', handleBeforeUnload);
       document.removeEventListener('click', handleClick);
-      observer.disconnect();
+      document.removeEventListener('submit', handleSubmit);
     };
   }, []);
 

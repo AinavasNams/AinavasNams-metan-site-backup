@@ -16,7 +16,7 @@ interface BreadcrumbsProps {
 }
 
 export default function Breadcrumbs({ items }: BreadcrumbsProps) {
-  const { t } = useTranslation();
+  const { t, localePath } = useTranslation();
 
   return (
     <nav className="py-4 bg-gray-50 border-b border-gray-100">
@@ -28,7 +28,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
           className="flex items-center space-x-2 text-sm"
         >
           <Link 
-            href="/" 
+            href={localePath('/')}
             className="flex items-center text-gray-500 hover:text-metan-primary transition-colors"
           >
             <Home className="h-4 w-4" />
@@ -43,7 +43,7 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 </span>
               ) : (
                 <Link 
-                  href={item.href}
+                  href={localePath(item.href)}
                   className="text-gray-500 hover:text-metan-primary transition-colors"
                 >
                   {t(item.labelKey)}

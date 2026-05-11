@@ -220,6 +220,8 @@ export default function MapCalculatorClient({ onResult, externalPin }: Props) {
     <div className="w-full">
       <div className="mb-4 flex gap-2">
         <input
+          id="map-search"
+          name="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}

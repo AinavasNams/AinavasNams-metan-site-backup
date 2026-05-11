@@ -1,8 +1,28 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-// ✅ KONFIGURĀCIJA: BĀZE BĒNE
-const BASE_COORDS = { lat: 56.4815, lon: 23.0618 }; // Bēne, Dobeles novads
+// Rate Limiting
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function checkRateLimit(ip: string, maxRequests: number = 10, windowMs: number = 60000): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+  
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + windowMs });
+    return true;
+  }
+  
+  if (record.count >= maxRequests) {
+    return false;
+  }
+  
+  record.count++;
+  return true;
+}
+
+// KONFIGURĀCIJA: BĀZE BĒNE
+const BASE_COORDS = { lat: 56.4815, lon: 23.0618 };
 
 type ZoneData = {
   id: string;
@@ -21,7 +41,6 @@ function normCC(v: any): 'lv' | 'lt' | '' {
   return '';
 }
 
-// ✅ ZONU LOĢIKA (Cenas ar atlaidi -15%)
 function getZoneData(km: number): ZoneData {
   if (km <= 50)  return { id: 'zone_1', title: 'Zona 1 (0-50 km)', price: 365, basePrice: 430 };
   if (km <= 100) return { id: 'zone_2', title: 'Zona 2 (50-100 km)', price: 400, basePrice: 480 };
@@ -30,9 +49,6 @@ function getZoneData(km: number): ZoneData {
   return { id: 'individual', title: 'Ārpus 200 km zonas', price: null, basePrice: null };
 }
 
-// -----------------------------
-// Google Distance Matrix (baseline)
-// -----------------------------
 async function googleMatrixDistanceKm(
   originLat: number,
   originLng: number,
@@ -71,11 +87,6 @@ async function googleMatrixDistanceKm(
   };
 }
 
-// -----------------------------
-// GraphHopper (LV-only via avoid_area)
-// -----------------------------
-
-// Rough Lithuania bbox (minLon,minLat,maxLon,maxLat). MVP-level (bbox), not a precise polygon.
 const LT_BBOX = {
   minLon: 20.9,
   minLat: 53.9,
@@ -83,8 +94,6 @@ const LT_BBOX = {
   maxLat: 56.5,
 };
 
-// GraphHopper expects avoid_area as a polygon string: "lat,lon|lat,lon|..."
-// We'll build a rectangle polygon around LT bbox.
 function makeAvoidAreaFromBBox(b: typeof LT_BBOX) {
   const p1 = `${b.minLat},${b.minLon}`;
   const p2 = `${b.minLat},${b.maxLon}`;
@@ -108,20 +117,14 @@ async function graphhopperDistanceKm(
 
   const params = new URLSearchParams();
   params.set('key', key);
-
-  // points: lat,lon
   params.append('point', `${originLat},${originLng}`);
   params.append('point', `${destLat},${destLng}`);
-
-  // vehicle profile (MVP = car)
   params.set('vehicle', vehicle);
-
   params.set('locale', 'en');
   params.set('instructions', 'false');
   params.set('calc_points', 'false');
 
   if (mode === 'lv_only') {
-    // Block LT as transit, only for LV objects
     params.set('avoid_area', makeAvoidAreaFromBBox(LT_BBOX));
   }
 
@@ -152,29 +155,26 @@ async function roadDistanceKm(
   destLng: number,
   mode: RouteMode
 ) {
-  // Enforce LV-only only when requested. Otherwise keep Google as before.
   if (mode === 'lv_only' && process.env.GRAPHOPPER_API_KEY) {
     return await graphhopperDistanceKm(originLat, originLng, destLat, destLng, mode);
   }
-
   return await googleMatrixDistanceKm(originLat, originLng, destLat, destLng);
 }
 
 function createTransporter() {
-  const host = process.env.SMTP_HOST || 'smtp.zoho.eu';
+  const host = process.env.SMTP_HOST;
   const port = Number(process.env.SMTP_PORT) || 465;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
+
+  if (!host || !user || !pass) {
+    throw new Error('SMTP credentials not configured');
+  }
 
   const secure =
     typeof process.env.SMTP_SECURE === 'string'
       ? process.env.SMTP_SECURE === 'true'
       : port === 465;
-
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
-
-  if (!user || !pass) {
-    throw new Error('SMTP credentials not configured');
-  }
 
   return nodemailer.createTransport({
     host,
@@ -186,9 +186,18 @@ function createTransporter() {
 
 export async function POST(request: Request) {
   try {
+    // Rate limiting
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    
+    if (!checkRateLimit(ip)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
 
-    // 1️⃣ APRĒĶINS
     if (body.action === 'calculate') {
       const { lat, lng } = body;
       const cc = normCC(body.countryCode ?? body.country_code);
@@ -197,8 +206,6 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Coordinates required' }, { status: 400 });
       }
 
-      // LV object => LV-only (no LT shortcuts)
-      // LT or unknown => cross-border allowed
       const routeMode: RouteMode = cc === 'lv' ? 'lv_only' : 'cross_border';
 
       const { km, minutes, provider } = await roadDistanceKm(
@@ -223,8 +230,6 @@ export async function POST(request: Request) {
         price: zone.price,
         basePrice: zone.basePrice,
         isIndividual: zone.price === null,
-
-        // debug fields (helpful for verifying)
         country_code: cc || undefined,
         routeMode,
         routeProvider: provider,
@@ -232,7 +237,6 @@ export async function POST(request: Request) {
       });
     }
 
-    // 2️⃣ LEAD → UZŅĒMUMAM
     if (body.action === 'submit_lead') {
       const { phone, email, address, zone, price, distance, isIndividual } = body.data || {};
       if (!phone) {
@@ -264,7 +268,6 @@ Cena: ${price ? price + ' €' : 'INDIVIDUĀLI'}
       return NextResponse.json({ success: true });
     }
 
-    // 3️⃣ APRĒĶINS → KLIENTAM
     if (body.action === 'send_to_customer') {
       const { email, address, zone, price, distance, isIndividual } = body.data || {};
       if (!email) {

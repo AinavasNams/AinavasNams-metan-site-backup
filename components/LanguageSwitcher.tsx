@@ -1,7 +1,6 @@
 'use client';
-
 import { useTranslation } from '@/hooks/useTranslation';
-import { Language } from '@/lib/translations';
+import { Language } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { 
   DropdownMenu, 
@@ -14,6 +13,7 @@ import { Globe } from 'lucide-react';
 const languages = [
   { code: 'lv' as Language, name: 'Latviešu', flag: '🇱🇻' },
   { code: 'ru' as Language, name: 'Русский', flag: '🇷🇺' },
+  { code: 'lt' as Language, name: 'Lietuvių', flag: '🇱🇹' },
   { code: 'en' as Language, name: 'English', flag: '🇬🇧' },
 ];
 

@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { motion, AnimatePresence } from 'framer-motion';
-import { trackConsultationRequest, trackPhoneCall } from '@/lib/gtm-events';
+import { trackConsultationRequest, trackPhoneCall, pushFormSubmit, pushPhoneClick } from '@/lib/gtm-events';
 import { trackContact, trackFormSubmission } from '@/lib/ga4-events';
 import { sendEmailNotification } from '@/lib/email-automation';
 
@@ -23,12 +23,23 @@ export default function ConsultationPopup() {
   });
 
   useEffect(() => {
+    // Don't show if already dismissed in this session
+    if (typeof window !== 'undefined' && sessionStorage.getItem('popup_dismissed')) {
+      return;
+    }
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 30000); // Показать через 30 секунд
+    }, 30000);
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleClose = () => {
+    setIsVisible(false);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('popup_dismissed', '1');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,9 +72,9 @@ export default function ConsultationPopup() {
         // Используем новые системы отслеживания
         trackConsultationRequest('popup_form', 'consultation_popup');
         trackFormSubmission('consultation_popup', 'popup_form', 60);
+        pushFormSubmit('consultation_popup', 'popup_form', 60);
         
         // Don't send email notification since there's no user email in popup
-        console.log('📊 Consultation popup conversion tracked');
         
         // Use router.push instead of window.location.href to prevent React conflicts
         router.push('/paldies/konsultacija');
@@ -79,9 +90,9 @@ export default function ConsultationPopup() {
   const handleCall = () => {
     // Используем новые системы отслеживания
     trackPhoneCall('popup', '+371 27727724');
+    pushPhoneClick('popup', '+37127727724');
     trackContact('phone', 'popup', 90);
     
-    console.log('📞 Popup phone call tracked');
     // Use window.location.href for phone calls as it's not causing React conflicts
     window.location.href = 'tel:+37127727724';
   };
@@ -95,6 +106,7 @@ export default function ConsultationPopup() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+        onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
       >
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
@@ -105,7 +117,7 @@ export default function ConsultationPopup() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setIsVisible(false)}
+            onClick={handleClose}
             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
           >
             <X className="h-5 w-5" />
@@ -147,7 +159,7 @@ export default function ConsultationPopup() {
               <div>
                 <Label htmlFor="popup-name">Vārds *</Label>
                 <Input
-                  id="popup-name"
+                  id="popup-name" name="name"
                   type="text"
                   required
                   value={formData.name}
@@ -160,7 +172,7 @@ export default function ConsultationPopup() {
               <div>
                 <Label htmlFor="popup-phone">Tālrunis *</Label>
                 <Input
-                  id="popup-phone"
+                  id="popup-phone" name="phone"
                   type="tel"
                   required
                   value={formData.phone}
@@ -173,7 +185,7 @@ export default function ConsultationPopup() {
               <div>
                 <Label htmlFor="popup-message">Jūsu jautājums</Label>
                 <Textarea
-                  id="popup-message"
+                  id="popup-message" name="message"
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}

@@ -25,7 +25,6 @@ export default function StickyPhone() {
     trackContact('phone', 'sticky_phone', 90);
     
     console.log('📞 Sticky phone call tracked with new system');
-    window.location.href = 'tel:+37127727724';
   };
 
   const handleEmailClick = () => {
@@ -34,7 +33,6 @@ export default function StickyPhone() {
     trackContact('email', 'sticky_phone', 50);
     
     console.log('📧 Sticky email click tracked');
-    window.location.href = 'mailto:tsv@metan.lv';
   };
 
   if (!isVisible) return null;
@@ -68,20 +66,22 @@ export default function StickyPhone() {
               Sazinieties ar mūsu tehnisko servisa vadītāju
             </p>
             <div className="space-y-2">
-              <Button
-                onClick={handleCall}
-                className="w-full bg-metan-primary hover:bg-metan-primary/90 text-white"
-              >
-                <Phone className="mr-2 h-4 w-4" />
-                +371 27727724
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full text-gray-700 border-gray-300 hover:bg-gray-50"
-                onClick={handleEmailClick}
-              >
-                tsv@metan.lv
-              </Button>
+              <a href="tel:+37127727724" onClick={handleCall}>
+                <Button
+                  className="w-full bg-metan-primary hover:bg-metan-primary/90 text-white"
+                >
+                  <Phone className="mr-2 h-4 w-4" />
+                  +371 27727724
+                </Button>
+              </a>
+              <a href="mailto:tsv@metan.lv" onClick={handleEmailClick}>
+                <Button
+                  variant="outline"
+                  className="w-full text-gray-700 border-gray-300 hover:bg-gray-50"
+                >
+                  tsv@metan.lv
+                </Button>
+              </a>
             </div>
           </motion.div>
         )}

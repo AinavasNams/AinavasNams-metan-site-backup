@@ -78,12 +78,14 @@ export default function CookieConsent() {
           console.log('✅ GTM consent event pushed to dataLayer');
         }
         
-        // Проверяем состояние GTM
-        if (window.google_tag_manager) {
-          console.log('✅ GTM Container GTM-5QTWHWF6 is active');
-        } else {
-          console.warn('⚠️ GTM Container GTM-5QTWHWF6 not found');
-        }
+        // GTM check с задержкой — скрипт грузится afterInteractive
+        setTimeout(() => {
+          if (window.google_tag_manager) {
+            console.log('✅ GTM Container GTM-5QTWHWF6 is active');
+          } else {
+            console.log('ℹ️ GTM still loading — consent queued in dataLayer');
+          }
+        }, 3000);
       })
     }
   }

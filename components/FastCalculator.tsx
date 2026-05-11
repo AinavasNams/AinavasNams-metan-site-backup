@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Calculator, Clock, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const SERVICE_PRICES = {
@@ -137,7 +138,6 @@ export default function FastCalculator() {
         });
       }
       
-      console.log('Fast calculator conversion tracked:', result);
     }
   };
 
@@ -152,8 +152,6 @@ export default function FastCalculator() {
       });
     }
     
-    console.log('Calculator contact request conversion tracked');
-    window.location.href = '/kontakti';
   };
 
   const resetCalculator = () => {
@@ -205,7 +203,7 @@ export default function FastCalculator() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Izvēlieties pakalpojumu</h3>
             <Select value={calculation.service} onValueChange={(value) => setCalculation({...calculation, service: value})}>
-              <SelectTrigger className="h-12 bg-white text-gray-900 border-gray-300">
+              <SelectTrigger id="calc-service" name="service" className="h-12 bg-white text-gray-900 border-gray-300">
                 <SelectValue placeholder="Kāds pakalpojums jums nepieciešams?" />
               </SelectTrigger>
               <SelectContent className="bg-white text-gray-900 border-gray-300">
@@ -223,7 +221,7 @@ export default function FastCalculator() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Jūsu uzņēmuma veids</h3>
             <Select value={calculation.businessType} onValueChange={(value) => setCalculation({...calculation, businessType: value})}>
-              <SelectTrigger className="h-12 bg-white text-gray-900 border-gray-300">
+              <SelectTrigger id="calc-business-type" name="businessType" className="h-12 bg-white text-gray-900 border-gray-300">
                 <SelectValue placeholder="Izvēlieties uzņēmuma veidu" />
               </SelectTrigger>
               <SelectContent className="bg-white text-gray-900 border-gray-300">
@@ -241,7 +239,7 @@ export default function FastCalculator() {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">Pakalpojuma biežums</h3>
             <Select value={calculation.frequency} onValueChange={(value) => setCalculation({...calculation, frequency: value})}>
-              <SelectTrigger className="h-12 bg-white text-gray-900 border-gray-300">
+              <SelectTrigger id="calc-frequency" name="frequency" className="h-12 bg-white text-gray-900 border-gray-300">
                 <SelectValue placeholder="Cik bieži nepieciešams pakalpojums?" />
               </SelectTrigger>
               <SelectContent className="bg-white text-gray-900 border-gray-300">
@@ -260,6 +258,8 @@ export default function FastCalculator() {
             <h3 className="text-lg font-semibold text-gray-900">Aptuvenais apjoms</h3>
             <Input
               type="number"
+              id="calc-volume"
+              name="volume"
               placeholder="Apjoms tonnās (ja zināms)"
               value={calculation.volume}
               onChange={(e) => setCalculation({...calculation, volume: e.target.value})}
@@ -421,11 +421,13 @@ export default function FastCalculator() {
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
-                onClick={handleContactRequest}
                 className="flex-1 bg-metan-primary hover:bg-metan-primary/90 text-white"
+                asChild
               >
-                Pieprasīt precīzu cenu
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <Link href="/kontakti" onClick={handleContactRequest}>
+                  Pieprasīt precīzu cenu
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
               <Button
                 onClick={resetCalculator}
