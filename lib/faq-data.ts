@@ -168,7 +168,41 @@ export const faqData: Record<string, Record<string, FAQItem[]>> = {
       { question: 'Kaip vyksta grindų trapų ir drenažo sistemų valymas?', answer: 'Naudojame aukšto slėgio plovimą (iki 200 bar) kartu su vakuuminiu siurbimu. Efektyvu prieš riebalų ir maisto nuosėdas.' },
       { question: 'Ar galite aptarnauti kelis nuomininkus viename terminale?', answer: 'Taip, koordinuojame grafiką su terminalo administracija. Kiekvienas nuomininkas gauna savo dokumentaciją ir sąskaitą.' }
     ]
-  }
+  },
+  'uco': {
+    lv: [
+      { question: 'Cik jūs maksājat par izlietoto cepšanas eļļu (UCO)?', answer: 'Tirgus likme — 0,40–0,55 €/L. Galīgā cena ir atkarīga no apjoma, regularitātes un eļļas kvalitātes. Konteineri un loģistika — bez maksas.' },
+      { question: 'Kā darbojas UCO bartera modelis?', answer: 'Savāktā UCO vērtība tiek ieskaitīta tauku uztvērēja apkopes rēķinā. Restorāns ar 200+ L mēnesī var saņemt apkopi pilnībā bez papildus maksas.' },
+      { question: 'Kādu dokumentāciju jūs sniedzat?', answer: 'Savākšanas aktu ar litru fiksāciju, EWC 19 08 09 atkritumu klasifikāciju, APUS datu ievadi klienta vārdā, sertificētu utilizācijas maršrutu un PVD pārbaudei gatavu dokumentu paketi.' },
+      { question: 'Vai jūs piegādājat konteinerus?', answer: 'Jā, piegādājam tīrus konteinerus jūsu virtuvē bez maksas un bez depozīta. Konteineri tiek mainīti pie katras savākšanas.' },
+      { question: 'Cik bieži jūs savācat UCO?', answer: 'Atkarībā no apjoma: parasti 1–4 reizes mēnesī. Vienojamies par fiksētu grafiku, lai izvairītos no avārijas zvaniem. Steidzami iespējams arī 24h laikā.' },
+      { question: 'Vai UCO savākšana ir pieejama visā Latvijā?', answer: 'Jā, 200 km rādiusā no Bēnes (visa Latvija). Lietuva — pēc individuālas vienošanās.' }
+    ],
+    ru: [
+      { question: 'Сколько вы платите за отработанное масло (UCO)?', answer: 'Рыночная ставка — 0,40–0,55 €/л. Окончательная цена зависит от объёма, регулярности и качества масла. Контейнеры и логистика — бесплатно.' },
+      { question: 'Как работает бартерная модель UCO?', answer: 'Стоимость собранного UCO зачитывается в счёт обслуживания жироуловителя. Ресторан с 200+ л в месяц может получить обслуживание полностью без доплаты.' },
+      { question: 'Какую документацию вы предоставляете?', answer: 'Акт сбора с фиксацией литража, EWC 19 08 09 классификацию отходов, подачу данных в APUS от имени клиента, сертифицированный маршрут утилизации и готовый пакет для проверок PVD.' },
+      { question: 'Вы поставляете контейнеры?', answer: 'Да, доставляем чистые контейнеры на вашу кухню бесплатно и без залога. Контейнеры заменяются при каждом сборе.' },
+      { question: 'Как часто вы собираете UCO?', answer: 'В зависимости от объёма: обычно 1–4 раза в месяц. Согласовываем фиксированный график, чтобы избежать аварийных звонков. Срочный сбор возможен в течение 24 часов.' },
+      { question: 'Доступен ли сбор UCO по всей Латвии?', answer: 'Да, в радиусе 200 км от Бене (вся Латвия). Литва — по индивидуальному соглашению.' }
+    ],
+    en: [
+      { question: 'How much do you pay for used cooking oil (UCO)?', answer: 'Market rate — €0.40–0.55/L. Final price depends on volume, regularity and oil quality. Containers and logistics — free of charge.' },
+      { question: 'How does the UCO barter model work?', answer: 'Collected UCO value is credited against grease trap service invoice. A restaurant generating 200+ L/month can receive maintenance fully covered with no extra cost.' },
+      { question: 'What documentation do you provide?', answer: 'Pickup record with liter count, EWC 19 08 09 waste classification, APUS data entry on client behalf, certified disposal route, and PVD-inspection-ready document pack.' },
+      { question: 'Do you supply containers?', answer: 'Yes, we deliver clean containers to your kitchen free of charge with no deposit required. Containers are exchanged at each pickup.' },
+      { question: 'How often do you collect UCO?', answer: 'Depends on volume: usually 1–4 times per month. We agree on a fixed schedule to avoid emergency calls. Urgent pickup possible within 24 hours.' },
+      { question: 'Is UCO collection available across Latvia?', answer: 'Yes, within 200 km radius from Bēne (all of Latvia). Lithuania — by individual agreement.' }
+    ],
+    lt: [
+      { question: 'Kiek mokate už naudotą kepimo aliejų (UCO)?', answer: 'Rinkos kaina — 0,40–0,55 €/l. Galutinė kaina priklauso nuo kiekio, reguliarumo ir aliejaus kokybės. Konteineriai ir logistika — nemokamai.' },
+      { question: 'Kaip veikia UCO barterio modelis?', answer: 'Surinkto UCO vertė įskaitoma į riebalų gaudyklės paslaugos sąskaitą. Restoranas su 200+ l per mėnesį gali gauti priežiūrą visiškai be papildomo mokėjimo.' },
+      { question: 'Kokią dokumentaciją pateikiate?', answer: 'Surinkimo aktą su litrų fiksavimu, EWC 19 08 09 atliekų klasifikaciją, APUS duomenų įvedimą kliento vardu, sertifikuotą utilizavimo maršrutą ir PVD-pasiruošusį dokumentų paketą.' },
+      { question: 'Ar pristatote konteinerius?', answer: 'Taip, pristatome švarius konteinerius į jūsų virtuvę nemokamai ir be užstato. Konteineriai keičiami kiekvieno paėmimo metu.' },
+      { question: 'Kaip dažnai surenkate UCO?', answer: 'Priklausomai nuo kiekio: paprastai 1–4 kartus per mėnesį. Sutariame fiksuotą grafiką, kad išvengtume avarinių skambučių. Skubus paėmimas galimas per 24 valandas.' },
+      { question: 'Ar UCO surinkimas prieinamas visoje Latvijoje?', answer: 'Taip, 200 km spinduliu nuo Bēnės (visa Latvija). Lietuva — pagal individualų susitarimą.' }
+    ]
+  },
 };
 
 export function getFAQsForLocale(locale: string, page: string): FAQItem[] {
