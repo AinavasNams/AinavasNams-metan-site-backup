@@ -1,12 +1,3 @@
-import { generateSEOMetadata } from '@/components/SEOHead';
-
-export const metadata = generateSEOMetadata({
-  title: 'Investoriem - CH₄ Future biometāna projekts | METAN.LV',
-  description: 'Investēt CH₄ Future projektā - biometāna ražošanas stacija ar 38,6% rentabilitāti un 2,6 gadu atdevi. Stratēģiskās investīcijas ar ISCC sertifikāciju un ESG atbilstību.',
-  canonical: 'https://metan.lv/lv/investoriem',
-  keywords: 'CH4 Future, biometāna investīcijas, zaļā enerģija, ESG investīcijas, bioekonomika, ISCC sertifikācija, rentabilitāte 38.6%, ilgtspējīgas investīcijas, Latvija'
-});
-
 export const investorStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',

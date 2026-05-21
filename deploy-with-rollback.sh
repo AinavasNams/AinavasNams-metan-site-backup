@@ -12,6 +12,7 @@ SOURCE_DIR="/root/metan-site"
 BACKUP_DIR="/root/metan-backup-$(date +%Y%m%d-%H%M%S)"
 LOCAL_DIR="/home/deploy/projects/metan-ssr-migration"
 SERVICE="metan-lv"
+KEEP_BACKUPS=5  # сколько последних бэкапов оставлять (чистка в конце успешного деплоя)
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -119,6 +120,7 @@ rsync -az --delete \
     --exclude='*.tar.gz' \
     --exclude='.env.production' \
     --exclude='deploy-with-rollback.sh' \
+    --exclude='.git' \
     -e ssh \
     $LOCAL_DIR/ $REMOTE:$SOURCE_DIR/
 
@@ -323,6 +325,32 @@ ssh $REMOTE "
     echo ''
     echo 'ALL CHECKS PASSED'
 "
+
+# ============================================================
+# STEP: Чистка старых бэкапов (только после успешного деплоя)
+# ============================================================
+CURRENT_STEP="cleanup-backups"
+log "Шаг: чистка старых бэкапов (оставляю последние $KEEP_BACKUPS)"
+ssh $REMOTE "
+    cd /root
+    backups=\$(ls -1d metan-backup-* 2>/dev/null | sort)
+    total=\$(echo \"\$backups\" | grep -c . || echo 0)
+    if [ \"\$total\" -le $KEEP_BACKUPS ]; then
+        echo \"Бэкапов: \$total ≤ $KEEP_BACKUPS, чистка не нужна\"
+    else
+        to_delete=\$((total - $KEEP_BACKUPS))
+        echo \"Бэкапов: \$total, удаляю \$to_delete самых старых:\"
+        echo \"\$backups\" | head -n \$to_delete | while read d; do
+            size=\$(du -sh \"\$d\" 2>/dev/null | cut -f1)
+            echo \"  - \$d (\$size)\"
+            find \"\$d\" -depth -delete
+        done
+    fi
+    echo ''
+    echo 'Свободно на /:'
+    df -h / | tail -1
+"
+log "Чистка завершена"
 
 log "=========================================="
 log "ДЕПЛОЙ ЗАВЕРШЁН УСПЕШНО!"

@@ -8,7 +8,7 @@ export function PartnersLogos() {
   const { t } = useTranslation();
 
   const partnerKeys = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'];
-  const certKeys = ['c1', 'c2', 'c3', 'c4'];
+  const certKeys = ['c1', 'c2', 'c3', 'c4', 'c5'];
 
   const partnerEmojis = ['🏛️', '🍽️', '🌿', '💰', '✅', '🔒', '🏢', '⚡'];
   const certEmojis = ['📋', '💧', '🌍', '🔬'];

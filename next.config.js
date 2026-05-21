@@ -44,6 +44,21 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    const segments = ['horeca', 'industrial', 'municipal', 'social', 'logistics'];
+    const locales = ['lv', 'ru', 'en', 'lt'];
+    const rules = [];
+    for (const seg of segments) {
+      for (const loc of locales) {
+        rules.push({
+          source: '/' + loc + '/' + seg,
+          destination: '/' + loc + '/pakalpojumi/' + seg,
+          permanent: true,
+        });
+      }
+    }
+    return rules;
+  },
 };
 
 module.exports = nextConfig;

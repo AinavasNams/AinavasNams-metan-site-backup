@@ -1,12 +1,3 @@
-import { generateSEOMetadata } from '@/components/SEOHead';
-
-export const metadata = generateSEOMetadata({
-  title: 'Pakalpojumi - Tauku atdalītāju tīrīšana un eļļas savākšana | METAN.LV',
-  description: 'SIA Ainavas Nams piedāvā sertificētus organisko atkritumu apsaimniekošanas pakalpojumus: tauku atdalītāju tīrīšana, eļļas savākšana, augstspiediena skalošana. VVD un PVD atbilstoši risinājumi.',
-  canonical: 'https://metan.lv/lv/pakalpojumi',
-  keywords: 'tauku atdalītāju tīrīšana, eļļas savākšana, augstspiediena skalošana, VVD atļaujas, PVD prasības, vakuuma mašīnas, grease trap cleaning, HoReCa pakalpojumi, legāla utilizācija'
-});
-
 export const servicesStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',

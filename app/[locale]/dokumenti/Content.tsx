@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { 
-  FileText, 
-  Download, 
+import {
+  FileText,
+  Download,
   Eye,
   Search,
   User,
@@ -28,102 +28,25 @@ import {
 import { motion } from 'framer-motion';
 import PriorityContacts from '@/components/PriorityContacts';
 import { trackFormSubmission } from '@/lib/ga4-events';
+import { useTranslation } from '@/hooks/useTranslation';
 
-const documents = [
-  {
-    id: 'hs10-manual',
-    title: 'HS10 — Dekantora iekārta',
-    description: 'Rokasgrāmata dekantora HS10 ekspluatācijai',
-    language: 'EN',
-    access: 'open',
-    size: '2.1 MB',
-    icon: FileCog,
-    url: 'https://drive.google.com/file/d/15usYRnrJG3tlW9Hk3F7s7OQAcsNwMD2u/view'
-  },
-  {
-    id: 'ek-atlauja',
-    title: 'EK atļauja (AN_EK)',
-    description: 'VVD izsniegta atļauja EK režīmā',
-    language: 'LV',
-    access: 'open',
-    size: '1.8 MB',
-    icon: Award,
-    url: 'https://drive.google.com/file/d/1JA-64lJtSLbZJEK0NmMoyaHLmBQk9Piy/view'
-  },
-  {
-    id: 'sprk-licence',
-    title: 'SPRK licence (AN_SPRK)',
-    description: 'Sabiedrisko pakalpojumu komisijas licence',
-    language: 'LV',
-    access: 'open',
-    size: '0.9 MB',
-    icon: Award,
-    url: 'https://drive.google.com/file/d/1eJzQCn_5SZPOcaFe2gqk7io12UhrQ_OE/view'
-  },
-  {
-    id: 'apliecinajums',
-    title: 'Apliecinājuma kopija',
-    description: 'Uzņēmuma reģistrēts apliecinājums',
-    language: 'LV',
-    access: 'open',
-    size: '1.2 MB',
-    icon: FileCheck,
-    url: 'https://drive.google.com/file/d/1C92WIuPoKYCJQ4FLHWHGGpIVvJCFFwgP/view'
-  },
-  {
-    id: 'ek-grozijumi',
-    title: 'EK grozījumi (AP25AA0011)',
-    description: 'Atļaujas grozījumi (19.03.2025)',
-    language: 'LV',
-    access: 'open',
-    size: '2.4 MB',
-    icon: FileText,
-    url: 'https://docs.google.com/document/d/10KE2AHpj5FFjsbsHEryiG28AOM1YOogT/edit'
-  },
-  {
-    id: 'business-plan-lv',
-    title: 'CH₄ Future — Biznesa plāns (LV)',
-    description: 'Pilna biznesa plāna versija latviešu valodā',
-    language: 'LV',
-    access: 'request',
-    size: '8.3 MB',
-    icon: Building,
-    documentType: 'business_plan_lv'
-  },
-  {
-    id: 'business-plan-ru',
-    title: 'CH₄ Future — Бизнес-план (RU)',
-    description: 'Полная версия бизнес плана на русском языке',
-    language: 'RU',
-    access: 'request',
-    size: '8.2 MB',
-    icon: Building,
-    documentType: 'business_plan_ru'
-  },
-  {
-    id: 'business-plan-en',
-    title: 'CH₄ Future — Business Plan (EN)',
-    description: 'Complete business plan version in English',
-    language: 'EN',
-    access: 'request',
-    size: '8.1 MB',
-    icon: Building,
-    documentType: 'business_plan_en'
-  },
-  {
-    id: 'financial-model',
-    title: 'Finanšu modelis',
-    description: 'Detalizēti finansiālie aprēķini 550m³/h ražošanai',
-    language: 'EN',
-    access: 'request',
-    size: '12.5 MB',
-    icon: FileSpreadsheet,
-    documentType: 'financial_model'
-  }
-];
+const CARD_KEYS = ['hs10', 'ek', 'sprk', 'apliecinajums', 'ap25', 'bpLv', 'bpRu', 'bpEn', 'finModel'] as const;
+
+const CARD_META: Record<string, { language: string; access: 'open' | 'request'; size: string; icon: any; url?: string; documentType?: string }> = {
+  hs10:          { language: 'EN', access: 'open',    size: '2.1 MB', icon: FileCog,        url: 'https://drive.google.com/file/d/15usYRnrJG3tlW9Hk3F7s7OQAcsNwMD2u/view' },
+  ek:            { language: 'LV', access: 'open',    size: '1.8 MB', icon: Award,          url: 'https://drive.google.com/file/d/1JA-64lJtSLbZJEK0NmMoyaHLmBQk9Piy/view' },
+  sprk:          { language: 'LV', access: 'open',    size: '0.9 MB', icon: Award,          url: 'https://drive.google.com/file/d/1eJzQCn_5SZPOcaFe2gqk7io12UhrQ_OE/view' },
+  apliecinajums: { language: 'LV', access: 'open',    size: '1.2 MB', icon: FileCheck,      url: 'https://drive.google.com/file/d/1C92WIuPoKYCJQ4FLHWHGGpIVvJCFFwgP/view' },
+  ap25:          { language: 'LV', access: 'open',    size: '2.4 MB', icon: FileText,       url: 'https://docs.google.com/document/d/10KE2AHpj5FFjsbsHEryiG28AOM1YOogT/edit' },
+  bpLv:          { language: 'LV', access: 'request', size: '8.3 MB', icon: Building,       documentType: 'business_plan_lv' },
+  bpRu:          { language: 'RU', access: 'request', size: '8.2 MB', icon: Building,       documentType: 'business_plan_ru' },
+  bpEn:          { language: 'EN', access: 'request', size: '8.1 MB', icon: Building,       documentType: 'business_plan_en' },
+  finModel:      { language: 'EN', access: 'request', size: '12.5 MB', icon: FileSpreadsheet, documentType: 'financial_model' },
+};
 
 export default function DocumentsPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedAccess, setSelectedAccess] = useState('all');
   const [requestForm, setRequestForm] = useState({
@@ -141,7 +64,13 @@ export default function DocumentsPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState('');
 
-  console.log('Documents page rendered');
+  // Build documents array from i18n + metadata
+  const documents = CARD_KEYS.map(key => ({
+    id: key,
+    title: t(`dokumenti.cards.${key}.title`),
+    description: t(`dokumenti.cards.${key}.desc`),
+    ...CARD_META[key],
+  }));
 
   // Manage body scroll when modal is open
   useEffect(() => {
@@ -150,11 +79,7 @@ export default function DocumentsPage() {
     } else {
       document.body.classList.remove('modal-open');
     }
-
-    // Cleanup on unmount
-    return () => {
-      document.body.classList.remove('modal-open');
-    };
+    return () => { document.body.classList.remove('modal-open'); };
   }, [showRequestForm]);
 
   // Handle Escape key to close modal
@@ -164,14 +89,10 @@ export default function DocumentsPage() {
         setShowRequestForm(false);
       }
     };
-
     if (showRequestForm) {
       document.addEventListener('keydown', handleEscape);
     }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
+    return () => { document.removeEventListener('keydown', handleEscape); };
   }, [showRequestForm]);
 
   const filteredDocuments = documents.filter(doc => {
@@ -190,15 +111,11 @@ export default function DocumentsPage() {
   };
 
   const submitRequest = async () => {
-    console.log('Document request submitted:', requestForm);
     setIsSubmitting(true);
-
     try {
       const response = await fetch('/api/send-agent-notification', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: 'document_request',
           to: 'tsv@metan.lv',
@@ -218,13 +135,9 @@ export default function DocumentsPage() {
       });
 
       if (response.ok) {
-        console.log('📧 Sending verification code to:', requestForm.email);
-        
         const verifyResponse = await fetch('/api/verify-email', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             action: 'send_code',
             email: requestForm.email,
@@ -243,13 +156,9 @@ export default function DocumentsPage() {
         });
 
         if (verifyResponse.ok) {
-          console.log('✅ Verification code sent successfully');
           setShowRequestForm(false);
           setShowVerification(true);
-          
-          // Track conversion
           trackFormSubmission('document_request', 'documents_page', 90);
-          console.log('📊 Document request conversion tracked');
         } else {
           throw new Error('Failed to send verification code');
         }
@@ -265,15 +174,11 @@ export default function DocumentsPage() {
   };
 
   const verifyCode = async () => {
-    console.log('Verifying code:', verificationCode);
     setIsVerifying(true);
-
     try {
       const response = await fetch('/api/verify-email', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'verify_code',
           email: requestForm.email,
@@ -282,14 +187,9 @@ export default function DocumentsPage() {
       });
 
       if (response.ok) {
-        console.log('✅ Email verified successfully');
-        
-        // Download the document
         const downloadResponse = await fetch('/api/download-document', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email: requestForm.email,
             documentType: requestForm.documentType
@@ -298,7 +198,6 @@ export default function DocumentsPage() {
 
         if (downloadResponse.ok) {
           const result = await downloadResponse.json();
-          console.log('📄 Document ready for download:', result);
           setDownloadUrl(result.downloadUrl);
           setShowVerification(false);
           setShowSuccess(true);
@@ -318,13 +217,7 @@ export default function DocumentsPage() {
   };
 
   const resetForm = () => {
-    setRequestForm({
-      name: '',
-      email: '',
-      company: '',
-      purpose: '',
-      documentType: ''
-    });
+    setRequestForm({ name: '', email: '', company: '', purpose: '', documentType: '' });
     setVerificationCode('');
     setDownloadUrl('');
     setShowRequestForm(false);
@@ -344,12 +237,10 @@ export default function DocumentsPage() {
             className="max-w-4xl"
           >
             <h1 className="text-4xl md:text-6xl font-bold text-metan-gray mb-6">
-              Dokumenti un licences
+              {t('dokumenti.heroTitle')}
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed mb-8">
-              Pārskatāma piekļuve oficiālajiem dokumentiem: sertifikātiem, atļaujām, biznesa plāniem 
-              un tehniskajiem aprakstiem. Daļa dokumentu pieejami tūlītējai apskatei, 
-              pārējie — pēc pieprasījuma.
+              {t('dokumenti.heroDesc')}
             </p>
           </motion.div>
         </div>
@@ -362,14 +253,14 @@ export default function DocumentsPage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-metan-primary bg-metan-light/50 rounded p-0.5" />
               <Input
-                placeholder="Meklēt dokumentus..."
+                placeholder={t('dokumenti.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 bg-white border-gray-300 focus:border-metan-primary"
                 style={{ backgroundColor: 'white' }}
               />
             </div>
-            
+
             <div className="flex gap-2">
               <Button
                 variant={selectedAccess === 'all' ? 'default' : 'outline'}
@@ -377,7 +268,7 @@ export default function DocumentsPage() {
                 size="sm"
                 className={selectedAccess === 'all' ? '' : 'text-gray-900 border-gray-300 hover:bg-gray-50'}
               >
-                Visi
+                {t('dokumenti.filterAll')}
               </Button>
               <Button
                 variant={selectedAccess === 'open' ? 'default' : 'outline'}
@@ -385,7 +276,7 @@ export default function DocumentsPage() {
                 size="sm"
                 className={selectedAccess === 'open' ? '' : 'text-gray-900 border-gray-300 hover:bg-gray-50'}
               >
-                Atvērti
+                {t('dokumenti.filterOpen')}
               </Button>
               <Button
                 variant={selectedAccess === 'request' ? 'default' : 'outline'}
@@ -393,7 +284,7 @@ export default function DocumentsPage() {
                 size="sm"
                 className={selectedAccess === 'request' ? '' : 'text-gray-900 border-gray-300 hover:bg-gray-50'}
               >
-                Pēc pieprasījuma
+                {t('dokumenti.filterRequest')}
               </Button>
             </div>
           </div>
@@ -421,11 +312,11 @@ export default function DocumentsPage() {
                       <div className="flex gap-2">
                         <Badge variant="outline">{doc.language}</Badge>
                         <Badge className={
-                          doc.access === 'open' 
-                            ? 'bg-green-100 text-green-800' 
+                          doc.access === 'open'
+                            ? 'bg-green-100 text-green-800'
                             : 'bg-metan-light text-metan-primary'
                         }>
-                          {doc.access === 'open' ? 'Atvērts' : 'Pēc pieprasījuma'}
+                          {doc.access === 'open' ? t('dokumenti.badgeOpen') : t('dokumenti.badgeRequest')}
                         </Badge>
                       </div>
                     </div>
@@ -433,43 +324,43 @@ export default function DocumentsPage() {
                       {doc.title}
                     </CardTitle>
                   </CardHeader>
-                  
+
                   <CardContent className="flex-1 flex flex-col">
                     <p className="text-gray-600 mb-4 flex-1">{doc.description}</p>
-                    
+
                     <div className="flex items-center justify-between mb-4">
                       <span className="text-sm text-gray-500">{doc.size}</span>
                     </div>
-                    
+
                     <div className="flex gap-2">
                       {doc.access === 'open' ? (
                         <>
-                          <Button 
-                            variant="outline" 
-                            size="sm" 
+                          <Button
+                            variant="outline"
+                            size="sm"
                             className="flex-1 text-gray-900 border-gray-300 hover:bg-gray-50"
                             onClick={() => window.open(doc.url, '_blank')}
                           >
                             <Eye className="h-4 w-4 mr-2" />
-                            Skatīt
+                            {t('dokumenti.btnView')}
                           </Button>
-                          <Button 
-                            size="sm" 
+                          <Button
+                            size="sm"
                             className="flex-1 metan-button-primary"
                             onClick={() => window.open(doc.url, '_blank')}
                           >
                             <Download className="h-4 w-4 mr-2" />
-                            Lejupielādēt
+                            {t('dokumenti.btnDownload')}
                           </Button>
                         </>
                       ) : (
-                        <Button 
-                          size="sm" 
+                        <Button
+                          size="sm"
                           className="w-full metan-button-primary"
                           onClick={() => handleDocumentRequest(doc.id)}
                         >
                           <Lock className="h-4 w-4 mr-2" />
-                          Pieprasīt piekļuvi
+                          {t('dokumenti.btnRequestAccess')}
                         </Button>
                       )}
                     </div>
@@ -482,8 +373,8 @@ export default function DocumentsPage() {
           {filteredDocuments.length === 0 && (
             <div className="text-center py-12">
               <FileText className="h-16 w-16 mx-auto text-gray-400 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">Dokumenti nav atrasti</h3>
-              <p className="text-gray-500">Mēģiniet mainīt meklēšanas kritērijus</p>
+              <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('dokumenti.noResults')}</h3>
+              <p className="text-gray-500">{t('dokumenti.noResultsDesc')}</p>
             </div>
           )}
         </div>
@@ -491,13 +382,9 @@ export default function DocumentsPage() {
 
       {/* Request Form Modal */}
       {showRequestForm && (
-        <div 
+        <div
           className="modal-overlay"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowRequestForm(false);
-            }
-          }}
+          onClick={(e) => { if (e.target === e.currentTarget) setShowRequestForm(false); }}
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -506,105 +393,50 @@ export default function DocumentsPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-metan-gray">Pieprasit dokumenta piekļuvi</h3>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowRequestForm(false)}
-                className="h-8 w-8 p-0 hover:bg-gray-100"
-              >
+              <h3 className="text-xl font-bold text-metan-gray">{t('dokumenti.modalTitle')}</h3>
+              <Button variant="ghost" size="sm" onClick={() => setShowRequestForm(false)} className="h-8 w-8 p-0 hover:bg-gray-100">
                 <X className="h-4 w-4" />
               </Button>
             </div>
-            
+
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Vārds un uzvārds *
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('dokumenti.labelName')} *</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-metan-primary bg-metan-light/50 rounded p-0.5" />
-                  <Input
-                    placeholder="Jūsu vārds"
-                    value={requestForm.name}
-                    onChange={(e) => setRequestForm({ ...requestForm, name: e.target.value })}
-                    className="pl-10 bg-white border-gray-300 focus:border-metan-primary"
-                    style={{ backgroundColor: 'white' }}
-                  />
-                </div>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  E-pasta adrese *
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-metan-primary bg-metan-light/50 rounded p-0.5" />
-                  <Input
-                    type="email"
-                    placeholder="jusu@epasts.lv"
-                    value={requestForm.email}
-                    onChange={(e) => setRequestForm({ ...requestForm, email: e.target.value })}
-                    className="pl-10 bg-white border-gray-300 focus:border-metan-primary"
-                    style={{ backgroundColor: 'white' }}
-                  />
+                  <Input placeholder={t('dokumenti.placeholderName')} value={requestForm.name} onChange={(e) => setRequestForm({ ...requestForm, name: e.target.value })} className="pl-10 bg-white border-gray-300 focus:border-metan-primary" style={{ backgroundColor: 'white' }} />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Uzņēmums
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('dokumenti.labelEmail')} *</label>
                 <div className="relative">
-                  <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-metan-primary bg-metan-light/50 rounded p-0.5" />
-                  <Input
-                    placeholder="Jūsu uzņēmuma nosaukums"
-                    value={requestForm.company}
-                    onChange={(e) => setRequestForm({ ...requestForm, company: e.target.value })}
-                    className="pl-10 bg-white border-gray-300 focus:border-metan-primary"
-                    style={{ backgroundColor: 'white' }}
-                  />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-metan-primary bg-metan-light/50 rounded p-0.5" />
+                  <Input type="email" placeholder={t('dokumenti.placeholderEmail')} value={requestForm.email} onChange={(e) => setRequestForm({ ...requestForm, email: e.target.value })} className="pl-10 bg-white border-gray-300 focus:border-metan-primary" style={{ backgroundColor: 'white' }} />
                 </div>
               </div>
-              
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Pieprasījuma mērķis *
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('dokumenti.labelCompany')}</label>
+                <div className="relative">
+                  <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-metan-primary bg-metan-light/50 rounded p-0.5" />
+                  <Input placeholder={t('dokumenti.placeholderCompany')} value={requestForm.company} onChange={(e) => setRequestForm({ ...requestForm, company: e.target.value })} className="pl-10 bg-white border-gray-300 focus:border-metan-primary" style={{ backgroundColor: 'white' }} />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('dokumenti.labelPurpose')} *</label>
                 <div className="relative">
                   <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-metan-primary bg-metan-light/50 rounded p-0.5" />
-                  <Textarea
-                    placeholder="Lūdzu, aprakstiet, kādam mērķim nepieciešams dokuments..."
-                    value={requestForm.purpose}
-                    onChange={(e) => setRequestForm({ ...requestForm, purpose: e.target.value })}
-                    className="pl-10 min-h-[100px] bg-white border-gray-300 focus:border-metan-primary"
-                    style={{ backgroundColor: 'white' }}
-                  />
+                  <Textarea placeholder={t('dokumenti.placeholderPurpose')} value={requestForm.purpose} onChange={(e) => setRequestForm({ ...requestForm, purpose: e.target.value })} className="pl-10 min-h-[100px] bg-white border-gray-300 focus:border-metan-primary" style={{ backgroundColor: 'white' }} />
                 </div>
               </div>
             </div>
-            
+
             <div className="flex gap-3 mt-6">
-              <Button
-                variant="outline"
-                onClick={() => setShowRequestForm(false)}
-                className="flex-1 text-gray-900 border-gray-300 hover:bg-gray-50"
-              >
-                Atcelt
-              </Button>
-              <Button
-                onClick={submitRequest}
-                className="flex-1 metan-button-primary"
-                disabled={!requestForm.name || !requestForm.email || !requestForm.purpose || isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Nosūta...
-                  </>
-                ) : (
-                  'Nosūtīt pieprasījumu'
-                )}
+              <Button variant="outline" onClick={() => setShowRequestForm(false)} className="flex-1 text-gray-900 border-gray-300 hover:bg-gray-50">{t('dokumenti.btnCancel')}</Button>
+              <Button onClick={submitRequest} className="flex-1 metan-button-primary" disabled={!requestForm.name || !requestForm.email || !requestForm.purpose || isSubmitting}>
+                {isSubmitting ? (<><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>{t('dokumenti.btnSubmitting')}</>) : t('dokumenti.btnSubmit')}
               </Button>
             </div>
           </motion.div>
@@ -614,71 +446,28 @@ export default function DocumentsPage() {
       {/* Email Verification Modal */}
       {showVerification && (
         <div className="modal-overlay">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="modal-content max-w-md"
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="modal-content max-w-md">
             <div className="text-center mb-6">
               <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
                 <Mail className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-xl font-bold text-metan-gray mb-2">
-                Apstipriniet e-pastu
-              </h3>
-              <p className="text-gray-600">
-                Ievadiet apstiprinājuma kodu, kas nosūtīts uz jūsu e-pastu
-              </p>
+              <h3 className="text-xl font-bold text-metan-gray mb-2">{t('dokumenti.verifyTitle')}</h3>
+              <p className="text-gray-600">{t('dokumenti.verifyDesc')}</p>
             </div>
-            
             <div className="mb-6">
-              <p className="text-sm text-gray-600 mb-2 text-center">
-                Mēs nosūtījām 6-zīmju kodu uz <strong>{requestForm.email}</strong>
-              </p>
-              <Input
-                placeholder="Apstiprinājuma kods"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
-                className="text-center text-lg font-mono tracking-widest"
-                maxLength={6}
-              />
-              <p className="text-xs text-gray-500 mt-2 text-center">
-                Kods derīgs 30 minūtes
-              </p>
+              <p className="text-sm text-gray-600 mb-2 text-center">{t('dokumenti.verifySent')} <strong>{requestForm.email}</strong></p>
+              <Input placeholder={t('dokumenti.verifyPlaceholder')} value={verificationCode} onChange={(e) => setVerificationCode(e.target.value)} className="text-center text-lg font-mono tracking-widest" maxLength={6} />
+              <p className="text-xs text-gray-500 mt-2 text-center">{t('dokumenti.verifyExpiry')}</p>
             </div>
-
             <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={() => setShowVerification(false)}
-                className="flex-1"
-              >
-                ← Atpakaļ
-              </Button>
-              <Button
-                onClick={verifyCode}
-                className="flex-1 metan-button-primary"
-                disabled={verificationCode.length !== 6 || isVerifying}
-              >
-                {isVerifying ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Pārbauda...
-                  </>
-                ) : (
-                  'Apstiprināt kodu'
-                )}
+              <Button variant="outline" onClick={() => setShowVerification(false)} className="flex-1">{t('dokumenti.btnBack')}</Button>
+              <Button onClick={verifyCode} className="flex-1 metan-button-primary" disabled={verificationCode.length !== 6 || isVerifying}>
+                {isVerifying ? (<><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>{t('dokumenti.btnVerifying')}</>) : t('dokumenti.btnVerify')}
               </Button>
             </div>
-
             <div className="text-center mt-4">
-              <button
-                className="text-sm text-metan-primary hover:underline"
-                onClick={() => {
-                  alert('Lūdzu pārbaudiet spam/junk mapi vai zvaniet: +371 27727724');
-                }}
-              >
-                Nesaņēmāt kodu? Nosūtīt vēlreiz
+              <button className="text-sm text-metan-primary hover:underline" onClick={() => alert('Lūdzu pārbaudiet spam/junk mapi vai zvaniet: +371 27727724')}>
+                {t('dokumenti.verifyResend')}
               </button>
             </div>
           </motion.div>
@@ -688,55 +477,30 @@ export default function DocumentsPage() {
       {/* Success Modal */}
       {showSuccess && (
         <div className="modal-overlay">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="modal-content max-w-md"
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="modal-content max-w-md">
             <div className="text-center mb-6">
               <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
                 <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-xl font-bold text-metan-gray mb-2">
-                Dokuments ir pieejams!
-              </h3>
-              <p className="text-gray-600">
-                Paldies par jūsu interesi par mūsu projektu! Dokuments ir pieejams lejupielādei.
-              </p>
+              <h3 className="text-xl font-bold text-metan-gray mb-2">{t('dokumenti.successTitle')}</h3>
+              <p className="text-gray-600">{t('dokumenti.successDesc')}</p>
             </div>
-
             <div className="bg-gray-50 p-4 rounded-lg mb-6">
               <div className="flex items-center gap-3">
                 <FileText className="w-6 h-6 text-metan-primary" />
                 <div className="flex-1">
-                  <div className="font-medium">
-                    {documents.find(d => d.documentType === requestForm.documentType)?.title}
-                  </div>
-                  <div className="text-sm text-gray-600">PDF formāts</div>
+                  <div className="font-medium">{documents.find(d => d.documentType === requestForm.documentType)?.title}</div>
+                  <div className="text-sm text-gray-600">PDF</div>
                 </div>
               </div>
             </div>
-
             <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={resetForm}
-                className="flex-1"
-              >
-                Aizvērt
-              </Button>
-              <Button
-                onClick={() => window.open(downloadUrl, '_blank')}
-                className="flex-1 metan-button-primary"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Lejupielādēt
+              <Button variant="outline" onClick={resetForm} className="flex-1">{t('dokumenti.btnClose')}</Button>
+              <Button onClick={() => window.open(downloadUrl, '_blank')} className="flex-1 metan-button-primary">
+                <Download className="w-4 h-4 mr-2" />{t('dokumenti.btnDownload')}
               </Button>
             </div>
-
-            <div className="text-center mt-4 text-sm text-gray-600">
-              💡 Saite ved uz Google Drive, kur var lejupielādēt PDF formātu
-            </div>
+            <div className="text-center mt-4 text-sm text-gray-600">💡 {t('dokumenti.downloadHint')}</div>
           </motion.div>
         </div>
       )}
@@ -752,49 +516,28 @@ export default function DocumentsPage() {
       <section className="py-20 bg-gray-50">
         <div className="metan-container">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-bold text-metan-gray mb-6">
-                Vajadzīga papildus informācija?
-              </h2>
-              <p className="text-lg text-gray-600 mb-8">
-                Ja neatrodat nepieciešamo dokumentu vai jums ir jautājumi par konkrētu licenci 
-                vai atļauju, sazinieties ar mums. Mēs nodrošināsim jums visu nepieciešamo informāciju.
-              </p>
-              
+            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+              <h2 className="text-3xl font-bold text-metan-gray mb-6">{t('dokumenti.infoTitle')}</h2>
+              <p className="text-lg text-gray-600 mb-8">{t('dokumenti.infoDesc')}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <Mail className="h-8 w-8 text-metan-primary mx-auto mb-3" />
-                  <h3 className="font-semibold mb-2">E-pasts</h3>
+                  <h3 className="font-semibold mb-2">{t('dokumenti.infoEmail')}</h3>
                   <p className="text-gray-600">ainavasnams@gmail.com</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <FileText className="h-8 w-8 text-metan-primary mx-auto mb-3" />
-                  <h3 className="font-semibold mb-2">Atbildes laiks</h3>
-                  <p className="text-gray-600">24 stundas darba dienās</p>
+                  <h3 className="font-semibold mb-2">{t('dokumenti.infoResponseTime')}</h3>
+                  <p className="text-gray-600">{t('dokumenti.infoResponseValue')}</p>
                 </div>
               </div>
-              
               <Button className="metan-button-primary">
-                <Mail className="mr-2 h-5 w-5" />
-                Sazināties par dokumentiem
+                <Mail className="mr-2 h-5 w-5" />{t('dokumenti.btnContactDocs')}
               </Button>
             </motion.div>
           </div>
         </div>
       </section>
-
-      {/* Hidden SEO content */}
-      <div style={{ display: 'none' }}>
-        <p>dokumenti licences atļaujas sertifikāti METAN.LV Ainavas Nams</p>
-        <p>VVD PVD SPRK EK atļauja HS10 dekantors biznesa plāns</p>
-        <p>CH4 Future finanšu modelis CNG iekārtas piedāvājums</p>
-        <p>biometāna ražošana tehniskie dokumenti investoriem</p>
-        <p>Biokona Suomen Biovoima atpakaļpirkuma opcija</p>
-      </div>
     </div>
   );
 }

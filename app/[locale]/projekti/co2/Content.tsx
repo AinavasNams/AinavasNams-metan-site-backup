@@ -6,9 +6,8 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import SEOHead from '@/components/SEOHead';
-import { 
-  Factory, 
+import {
+  Factory,
   TrendingUp, 
   Mail, 
   Users, 
@@ -143,11 +142,6 @@ export default function CO2ProjectPage() {
   
   return (
     <div className="min-h-screen bg-white">
-      <SEOHead 
-        title="CO₂ projekts - Nākotnes potenciāls oglekļa uztveršanā | METAN.LV"
-        description="Integrēts risinājums CO₂ uztveršanai un pārstrādei, kas papildina biometāna ražošanas ciklu. ROI <1.9 gadi, 630,000 € investīcijas."
-        keywords="CO2 uztveršana, oglekļa pārstrāde, biometāns, investīcijas, ESG, zaļā enerģija, Latvija"
-      />
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 to-white">
         <div className="metan-container">

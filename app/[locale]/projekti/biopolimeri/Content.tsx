@@ -3,9 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import SEOHead from '@/components/SEOHead';
-import { 
-  Beaker, 
+import {
+  Beaker,
   TrendingUp, 
   Recycle, 
   Zap, 
@@ -100,11 +99,6 @@ export default function BiopolimeriPage() {
   
   return (
     <div className="min-h-screen bg-white">
-      <SEOHead 
-        title="Biopolimēru projekts - Nākotnes investīcija aprites ekonomikā | METAN.LV"
-        description="Tauku un eļļu pārstrāde biopolimēru granulām. ROI <1.7 gadi, līdz 7.2 miljoni €/gadā. Kosmētika, farmācija, HoReCa, specializētie risinājumi."
-        keywords="biopolimēri, bioiepakojums, aprites ekonomika, investīcijas, tauku pārstrāde, ilgtspējīgs iepakojums, HoReCa, farmācija"
-      />
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-purple-50 to-white">
         <div className="metan-container">
