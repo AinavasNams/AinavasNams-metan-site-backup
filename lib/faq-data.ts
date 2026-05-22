@@ -169,6 +169,40 @@ export const faqData: Record<string, Record<string, FAQItem[]>> = {
       { question: 'Ar galite aptarnauti kelis nuomininkus viename terminale?', answer: 'Taip, koordinuojame grafiką su terminalo administracija. Kiekvienas nuomininkas gauna savo dokumentaciją ir sąskaitą.' }
     ]
   },
+  'grease-trap-landing': {
+    lv: [
+      { question: 'Cik maksā tauku uztvērēja tīrīšana Latvijā?', answer: 'Cena ir atkarīga no zonas (attāluma no Bēnes) un objekta lieluma. 12 mēnešu līgumam: 1. zona (0–50 km) — no 365 €, 2. zona (50–100 km, Rīga) — no 400 €, 3. zona — no 460 €, 4. zona — no 500 €. Vienreizēja tīrīšana — pēc pieprasījuma.' },
+      { question: 'Cik bieži jātīra tauku uztvērējs restorānā vai HoReCa objektā?', answer: 'Atkarībā no noslodzes — parasti reizi 1–3 mēnešos. PVD prasa regulāru apkopi. Mēs paši atgādinām par nākamo tīrīšanu un saskaņojam laiku.' },
+      { question: 'Vai jūs strādājat Rīgā?', answer: 'Jā, Rīga ir mūsu 2. zona (50–100 km no Bēnes). Apkalpojam visu Rīgu, Jūrmalu, Tukumu. Tīrīšana parasti notiek ārpus jūsu darba laika.' },
+      { question: 'Kāda dokumentācija tiek nodrošināta?', answer: 'Pilna pakete: tīrīšanas akts, EWC 19 08 09 atkritumu klasifikācija, APUS datu ievade klienta vārdā, sertificēts utilizācijas maršruts, PVD pārbaudei gatavi dokumenti.' },
+      { question: 'Vai izmantojat tikai vakuuma sūkni vai arī hidrodinamisko skalošanu?', answer: 'Izmantojam abus: 200 bar hidrodinamisko skalošanu + vakuuma nosūcēju. Atšķirībā no asenizatoriem, kas tikai izsūknē, mēs reāli iztīram uztvērēju un caurules.' },
+      { question: 'Vai varat veikt steidzamu tīrīšanu pirms PVD pārbaudes?', answer: 'Jā, 24 stundu laikā ar pilnu dokumentāciju. Zvaniet +371 27 727 724.' }
+    ],
+    ru: [
+      { question: 'Сколько стоит очистка жироуловителя в Латвии?', answer: 'Цена зависит от зоны (расстояние от Бене) и размера объекта. Договор на 12 месяцев: 1 зона (0–50 км) — от 365 €, 2 зона (50–100 км, Рига) — от 400 €, 3 зона — от 460 €, 4 зона — от 500 €. Разовая чистка — по запросу.' },
+      { question: 'Как часто нужно чистить жироуловитель в ресторане или HoReCa объекте?', answer: 'В зависимости от нагрузки — обычно раз в 1–3 месяца. PVD требует регулярного обслуживания. Мы сами напоминаем о следующей чистке и согласовываем время.' },
+      { question: 'Вы работаете в Риге?', answer: 'Да, Рига — наша 2 зона (50–100 км от Бене). Обслуживаем всю Ригу, Юрмалу, Тукумс. Чистка обычно проводится вне рабочего времени объекта.' },
+      { question: 'Какая документация предоставляется?', answer: 'Полный пакет: акт чистки, классификация отходов EWC 19 08 09, подача данных в APUS от имени клиента, сертифицированный маршрут утилизации, документы для проверок PVD.' },
+      { question: 'Используете только вакуумную откачку или и гидродинамическую промывку?', answer: 'Используем обе: гидродинамическую промывку 200 бар + вакуумное откачивание. В отличие от ассенизаторов, которые только откачивают, мы реально очищаем жироуловитель и трубы.' },
+      { question: 'Можете провести срочную чистку перед проверкой PVD?', answer: 'Да, в течение 24 часов с полной документацией. Звоните +371 27 727 724.' }
+    ],
+    en: [
+      { question: 'How much does grease trap cleaning cost in Latvia?', answer: 'Price depends on zone (distance from Bēne) and site size. 12-month contract: Zone 1 (0–50 km) — from €365, Zone 2 (50–100 km, Riga) — from €400, Zone 3 — from €460, Zone 4 — from €500. One-off cleaning — by request.' },
+      { question: 'How often should a grease trap be cleaned at a restaurant or HoReCa site?', answer: 'Depending on workload — typically every 1–3 months. PVD requires regular maintenance. We remind you of the next cleaning and schedule at your convenience.' },
+      { question: 'Do you work in Riga?', answer: 'Yes, Riga is in our Zone 2 (50–100 km from Bēne). We serve all of Riga, Jūrmala, Tukums. Cleaning is usually performed outside your business hours.' },
+      { question: 'What documentation is provided?', answer: 'Full package: cleaning record, EWC 19 08 09 waste classification, APUS data entry on client behalf, certified disposal route, PVD-inspection-ready documents.' },
+      { question: 'Do you use only vacuum pumping or also hydrodynamic flushing?', answer: 'Both: 200-bar hydrodynamic flushing + vacuum extraction. Unlike basic vacuum operators that only pump out, we actually clean the trap and pipes.' },
+      { question: 'Can you perform urgent cleaning before a PVD inspection?', answer: 'Yes, within 24 hours with full documentation. Call +371 27 727 724.' }
+    ],
+    lt: [
+      { question: 'Kiek kainuoja riebalų gaudyklės valymas Latvijoje?', answer: 'Kaina priklauso nuo zonos (atstumo nuo Bēnės) ir objekto dydžio. 12 mėn. sutartis: 1 zona (0–50 km) — nuo 365 €, 2 zona (50–100 km, Ryga) — nuo 400 €, 3 zona — nuo 460 €, 4 zona — nuo 500 €. Vienkartinis valymas — pagal užklausą.' },
+      { question: 'Kaip dažnai reikia valyti riebalų gaudyklę restorane ar HoReCa objekte?', answer: 'Priklausomai nuo apkrovos — paprastai kas 1–3 mėnesius. PVD reikalauja reguliarios priežiūros. Mes patys primename apie kitą valymą ir suderinsime laiką.' },
+      { question: 'Ar dirbate Rygoje?', answer: 'Taip, Ryga yra mūsų 2 zona (50–100 km nuo Bēnės). Aptarnaujame visą Rygą, Jūrmalą, Tukumą. Valymas paprastai atliekamas ne jūsų darbo metu.' },
+      { question: 'Kokia dokumentacija pateikiama?', answer: 'Pilnas paketas: valymo aktas, EWC 19 08 09 atliekų klasifikacija, APUS duomenų įvedimas kliento vardu, sertifikuotas utilizavimo maršrutas, PVD-pasiruošę dokumentai.' },
+      { question: 'Naudojate tik vakuuminį siurbimą ar ir hidrodinaminį plovimą?', answer: 'Naudojame abu: 200 barų hidrodinaminį plovimą + vakuuminį siurbimą. Skirtingai nuo bazinių vakuumo operatorių, kurie tik siurbia, mes realiai išvalome gaudyklę ir vamzdžius.' },
+      { question: 'Ar galite atlikti skubų valymą prieš PVD patikrinimą?', answer: 'Taip, per 24 valandas su pilna dokumentacija. Skambinkite +371 27 727 724.' }
+    ]
+  },
   'uco': {
     lv: [
       { question: 'Cik jūs maksājat par izlietoto cepšanas eļļu (UCO)?', answer: 'Tirgus likme — 0,40–0,55 €/L. Galīgā cena ir atkarīga no apjoma, regularitātes un eļļas kvalitātes. Konteineri un loģistika — bez maksas.' },
