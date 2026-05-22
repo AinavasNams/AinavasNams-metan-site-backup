@@ -14,6 +14,8 @@ import { motion } from 'framer-motion';
 import { trackPageView, trackCTA, trackServiceInterest, trackFormSubmission } from '@/components/Analytics';
 import { SimpleContactForm } from '@/components/SimpleContactForm';
 import PriorityContacts from '@/components/PriorityContacts';
+import PlainTextContactLine from '@/components/PlainTextContactLine';
+import PricingZonesSection from '@/components/PricingZonesSection';
 import { useTranslation } from '@/hooks/useTranslation';
 import { pushFormSubmit, trackPhoneCall } from '@/lib/gtm-events';
 import FAQSchema from '@/components/FAQSchema';
@@ -110,6 +112,7 @@ export default function MunicipalContent() {
             <p className="text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl">
               {t('municipalPage.heroDesc')}
             </p>
+            <PlainTextContactLine />
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
@@ -260,6 +263,8 @@ export default function MunicipalContent() {
       </section>
 
       {/* CTA + Form */}
+      <PricingZonesSection />
+
       <section id="forma" className="py-16 bg-gradient-to-br from-metan-light to-green-50">
         <div className="metan-container">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
